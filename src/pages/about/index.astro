@@ -1,0 +1,58 @@
+---
+import AtlasLayout from '../../layouts/AtlasLayout.astro';
+import VersionLabel from '../../components/VersionLabel.astro';
+import { AUTHOR_SITE, REPO_URL } from '../../config';
+import { atlasUrl } from '../../lib/entries';
+---
+
+<AtlasLayout
+  title="About"
+  description="The AI Evaluation Atlas is an independent research project by Monica Kodwani mapping how AI systems are tested, judged, audited, and monitored."
+  currentPath="about/"
+>
+  <header class="entry-header">
+    <p class="kicker">About the project</p>
+    <h1>About the Atlas</h1>
+  </header>
+
+  <div class="guide-prose" style="margin-top: 1.8rem;">
+    <p>
+      The AI Evaluation Atlas is an independent research project mapping how
+      AI systems are tested, judged, audited, and monitored. It focuses on the
+      evidence behind evaluation claims: what an instrument measures, how
+      reliable it is, and what decisions its results can reasonably support.
+    </p>
+    <p>
+      The Atlas exists because AI evaluation has outgrown its vocabulary.
+      Benchmarks, human studies, AI judges, red teams, audits, standards, and
+      observatories all produce “results,” and those results are routinely
+      asked to carry claims — about safety, fairness, reliability, and trust —
+      that they were never designed to support. The Atlas separates the
+      instrument from the inference: each entry states what an evaluation
+      measures and, just as prominently, what its results do not establish.
+    </p>
+    <p>
+      It is maintained by <a href={AUTHOR_SITE}>Monica Kodwani</a>, a
+      human-centered AI researcher whose doctoral work studies how people
+      audit and trust generative AI. The Atlas grew out of, and feeds back
+      into, ongoing research on AI evaluation science — including a planned
+      systematic review of the trustworthy-AI evaluation literature — and is
+      intended as a long-lived companion to that work.
+    </p>
+    <p>
+      The Atlas is an evolving research resource, not a finished reference.
+      The current release is <VersionLabel /> — it establishes the structure,
+      taxonomy, lifecycle map, and first entries, with many entries
+      deliberately published as marked drafts while source verification
+      proceeds. The <a href={atlasUrl('methodology/')}>methodology</a> explains
+      how entries are classified and verified, and the
+      <a href={atlasUrl('changelog/')}>changelog</a> records how the Atlas
+      changes over time.
+    </p>
+    <p>
+      The site is open source and lives in its own
+      <a href={REPO_URL}>project repository</a>. Corrections and source
+      suggestions are welcome.
+    </p>
+  </div>
+</AtlasLayout>

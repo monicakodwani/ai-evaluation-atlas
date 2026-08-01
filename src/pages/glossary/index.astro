@@ -1,0 +1,45 @@
+---
+import AtlasLayout from '../../layouts/AtlasLayout.astro';
+import RelatedEntries from '../../components/RelatedEntries.astro';
+import { GLOSSARY } from '../../data/glossary';
+---
+
+<AtlasLayout
+  title="Glossary"
+  description="Working definitions of core AI-evaluation terms: evaluation, benchmark, validity, reliability, audit, assurance, red teaming, monitoring, and more."
+  currentPath="glossary/"
+>
+  <header class="entry-header">
+    <p class="kicker">Reference</p>
+    <h1>Glossary</h1>
+    <p class="summary">
+      Working definitions for terms the Atlas uses precisely. Where a term has
+      a full concept entry, the definition links to it.
+    </p>
+  </header>
+
+  <div style="margin-top: 1.5rem;">
+    {
+      GLOSSARY.map((term) => (
+        <article class="glossary-item" id={term.id}>
+          <h2>
+            {term.term}{' '}
+            <a
+              href={`#${term.id}`}
+              aria-label={`Link to definition of ${term.term}`}
+              style="font-size:0.8rem; text-decoration:none;"
+            >
+              #
+            </a>
+          </h2>
+          <p>{term.definition}</p>
+          {term.related.length > 0 && (
+            <div class="g-links">
+              <RelatedEntries ids={term.related} />
+            </div>
+          )}
+        </article>
+      ))
+    }
+  </div>
+</AtlasLayout>

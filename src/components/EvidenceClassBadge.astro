@@ -1,0 +1,15 @@
+---
+import { EVIDENCE_CLASSES, type EvidenceClassKey } from '../data/vocabularies';
+
+interface Props {
+  value: EvidenceClassKey | string;
+}
+
+const { value } = Astro.props;
+const term = EVIDENCE_CLASSES[value as EvidenceClassKey];
+---
+
+<span class="badge badge-evidence" title={term?.description}>
+  <span class="badge-kind">Evidence:</span>
+  {term?.label ?? value}
+</span>

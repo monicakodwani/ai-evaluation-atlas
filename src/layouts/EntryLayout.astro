@@ -1,0 +1,243 @@
+---
+/**
+ * Detail page for any Atlas entry. Every entry type renders through this
+ * layout so the section order — including the prominent "What it does not
+ * establish" boundary — stays consistent across the whole Atlas.
+ */
+import { render } from 'astro:content';
+import AtlasLayout from './AtlasLayout.astro';
+import ClaimBoundary from '../components/ClaimBoundary.astro';
+import DraftNotice from '../components/DraftNotice.astro';
+import EntryBadge from '../components/EntryBadge.astro';
+import EntryMetadata from '../components/EntryMetadata.astro';
+import EvidenceClassBadge from '../components/EvidenceClassBadge.astro';
+import MaturityBadge from '../components/MaturityBadge.astro';
+import RelatedEntries from '../components/RelatedEntries.astro';
+import SourceList from '../components/SourceList.astro';
+import StatusBadge from '../components/StatusBadge.astro';
+import { getCollection } from 'astro:content';
+import { COLLECTION_PATHS } from '../data/vocabularies';
+import { atlasUrl, formatDate, type AtlasEntryRef } from '../lib/entries';
+
+interface Props {
+  entryRef: AtlasEntryRef;
+}
+
+const { entryRef } = Astro.props;
+const d = entryRef.entry.data;
+const { Content } = await render(entryRef.entry);
+const hasBody = (entryRef.entry.body ?? '').trim().length > 0;
+
+const guides = await getCollection('guides');
+const relatedGuides = guides
+  .filter((g) => d.related_guides.includes(g.data.id))
+  .sort((a, b) => a.data.order - b.data.order);
+
+const currentPath = `${COLLECTION_PATHS[entryRef.collection]}/${d.id}/`;
+
+let section = 0;
+const no = () => {
+  section += 1;
+  return `§${section}`;
+};
+---
+
+<AtlasLayout title={d.title} description={d.summary} currentPath={currentPath}>
+  <header class="entry-header">
+    <div class="badges">
+      <EntryBadge value={d.entry_type} />
+      <EvidenceClassBadge value={d.evidence_class} />
+      <MaturityBadge value={d.maturity} />
+      <StatusBadge value={d.status} />
+    </div>
+    <h1>{d.title}</h1>
+    {d.aliases.length > 0 && (
+      <p class="review-line">Also known as: {d.aliases.join(', ')}</p>
+    )}
+    <p class="summary">{d.summary}</p>
+    <p class="review-line">
+      Last reviewed {formatDate(d.last_reviewed)}
+      {d.reviewer && ` by ${d.reviewer}`} · Created {formatDate(d.created)}
+    </p>
+  </header>
+
+  <DraftNotice status={d.status} contentStatus={d.content_status} />
+
+  <div class="entry-body">
+    <div class="entry-main">
+      <section aria-labelledby="what-it-is">
+        <h2 id="what-it-is"><span class="sec-no">{no()}</span>What it is</h2>
+        {d.definition && <p>{d.definition}</p>}
+        {d.why_it_matters && <p>{d.why_it_matters}</p>}
+        {
+          hasBody && (
+            <div class="guide-prose">
+              <Content />
+            </div>
+          )
+        }
+      </section>
+
+      <section aria-labelledby="useful-for" class="appropriate-claims">
+        <h2 id="useful-for">
+          <span class="sec-no">{no()}</span>What it is useful for
+        </h2>
+        {
+          d.appropriate_claims.length > 0 ? (
+            <ul class="claim-list">
+              {d.appropriate_claims.map((c) => (
+                <li>{c}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>Appropriate claims for this entry have not been drafted yet.</p>
+          )
+        }
+      </section>
+
+      <section>
+        <span class="visually-hidden">{no()}</span>
+        <ClaimBoundary claims={d.inappropriate_claims} />
+        {
+          d.inappropriate_claims.length === 0 && (
+            <div class="claim-boundary">
+              <h2>What it does not establish</h2>
+              <p>
+                The claim boundary for this entry has not been drafted yet — a
+                defining section of every completed Atlas entry.
+              </p>
+            </div>
+          )
+        }
+      </section>
+
+      {
+        d.strengths.length > 0 && (
+          <section aria-labelledby="strengths">
+            <h2 id="strengths">
+              <span class="sec-no">{no()}</span>Strengths
+            </h2>
+            <ul class="claim-list">
+              {d.strengths.map((s) => (
+                <li>{s}</li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+
+      {
+        (d.limitations.length > 0 || d.known_failure_modes.length > 0) && (
+          <section aria-labelledby="limitations">
+            <h2 id="limitations">
+              <span class="sec-no">{no()}</span>Limitations and failure modes
+            </h2>
+            {d.limitations.length > 0 && (
+              <ul class="claim-list">
+                {d.limitations.map((s) => (
+                  <li>{s}</li>
+                ))}
+              </ul>
+            )}
+            {d.known_failure_modes.length > 0 && (
+              <>
+                <h3>Known failure modes</h3>
+                <ul class="claim-list">
+                  {d.known_failure_modes.map((s) => (
+                    <li>{s}</li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </section>
+        )
+      }
+
+      <section aria-labelledby="evidence-quality">
+        <h2 id="evidence-quality">
+          <span class="sec-no">{no()}</span>Evidence quality
+        </h2>
+        <p>
+          The Atlas reports evidence in categories rather than collapsing it
+          into a single score.
+        </p>
+        <div class="evidence-grid">
+          <div class="cell">
+            <h3>Reliability evidence</h3>
+            <p>{d.reliability_evidence ?? 'Not yet documented.'}</p>
+          </div>
+          <div class="cell">
+            <h3>Validity evidence</h3>
+            <p>{d.validity_evidence ?? 'Not yet documented.'}</p>
+          </div>
+          <div class="cell">
+            <h3>Reproducibility</h3>
+            <p>{d.reproducibility_notes ?? 'Not yet documented.'}</p>
+          </div>
+          <div class="cell">
+            <h3>Adoption evidence</h3>
+            <p>{d.adoption_evidence ?? 'Not yet documented.'}</p>
+          </div>
+          <div class="cell">
+            <h3>Source status</h3>
+            <p>{d.source_status ?? 'Sources not yet reviewed.'}</p>
+          </div>
+        </div>
+      </section>
+
+      {
+        (d.related_entries.length > 0 || relatedGuides.length > 0) && (
+          <section aria-labelledby="related">
+            <h2 id="related">
+              <span class="sec-no">{no()}</span>Related entries
+            </h2>
+            <RelatedEntries ids={d.related_entries} />
+            {relatedGuides.length > 0 && (
+              <>
+                <h3>Related guides</h3>
+                <ul class="related-list">
+                  {relatedGuides.map((g) => (
+                    <li>
+                      <a href={atlasUrl(`guides/${g.data.id}/`)}>
+                        {g.data.title}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </section>
+        )
+      }
+
+      <section aria-labelledby="sources">
+        <h2 id="sources"><span class="sec-no">{no()}</span>Sources</h2>
+        {
+          d.primary_sources.length === 0 && d.secondary_sources.length === 0 ? (
+            <p>
+              No source records attached yet. This entry’s status is shown in
+              its header badge.
+            </p>
+          ) : (
+            <>
+              {d.primary_sources.length > 0 && (
+                <>
+                  <h3>Primary sources</h3>
+                  <SourceList ids={d.primary_sources} />
+                </>
+              )}
+              {d.secondary_sources.length > 0 && (
+                <>
+                  <h3>Secondary sources</h3>
+                  <SourceList ids={d.secondary_sources} />
+                </>
+              )}
+            </>
+          )
+        }
+      </section>
+    </div>
+
+    <EntryMetadata ref={entryRef} />
+  </div>
+</AtlasLayout>

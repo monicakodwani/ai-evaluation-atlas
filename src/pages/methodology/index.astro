@@ -1,0 +1,197 @@
+---
+import AtlasLayout from '../../layouts/AtlasLayout.astro';
+import VersionLabel from '../../components/VersionLabel.astro';
+import {
+  CONTENT_STATUSES,
+  ENTRY_STATUSES,
+  EVIDENCE_CLASSES,
+  MATURITY_LEVELS,
+} from '../../data/vocabularies';
+import { ISSUES_URL } from '../../config';
+import { atlasUrl } from '../../lib/entries';
+---
+
+<AtlasLayout
+  title="Methodology"
+  description="How the AI Evaluation Atlas selects entries, assigns evidence classes and maturity, evaluates sources, represents disagreement, and handles corrections."
+  currentPath="methodology/"
+>
+  <header class="entry-header">
+    <p class="kicker">How the Atlas works</p>
+    <h1>Methodology</h1>
+    <p class="summary">
+      What qualifies for inclusion, how entries are categorized, how sources
+      are weighed, and why the Atlas refuses to collapse evidence into a
+      single score. <VersionLabel />
+    </p>
+  </header>
+
+  <div class="guide-layout" style="margin-top: 1.5rem;">
+    <article class="guide-prose">
+      <h2 id="inclusion">Inclusion scope</h2>
+      <p>The Atlas includes:</p>
+      <ul>
+        <li>evaluation methods;</li>
+        <li>benchmarks and suites;</li>
+        <li>evaluation infrastructures and harnesses;</li>
+        <li>human-evaluation methods;</li>
+        <li>automated evaluators, including AI judges;</li>
+        <li>red-team and safety-testing methods;</li>
+        <li>standards and governance frameworks;</li>
+        <li>observatories and monitoring systems;</li>
+        <li>audits and assurance approaches;</li>
+        <li>documentation artifacts such as model and system cards;</li>
+        <li>research concepts relevant to evaluation validity.</li>
+      </ul>
+      <p>
+        Inclusion is not endorsement. An entry appears because the practice is
+        consequential in how AI systems are evaluated — including practices
+        the evidence suggests are weak.
+      </p>
+
+      <h2 id="categorization">How entries are categorized</h2>
+      <p>
+        Every entry is classified along the controlled vocabularies defined in
+        the <a href={atlasUrl('taxonomy/')}>taxonomy</a>: entry type,
+        evaluation level, lifecycle stage, purpose, evaluator, environment,
+        scoring mechanism, and claimed construct. An entry can hold several
+        values on most dimensions; the first listed is treated as primary.
+        These vocabularies are versioned with the site so that
+        reclassification is visible in the change history.
+      </p>
+
+      <h2 id="evidence-classes">How evidence classes are assigned</h2>
+      <p>
+        Each entry receives exactly one of five evidence classes describing
+        how formalized and adopted the practice is. The classes are not a
+        quality ranking: a formal standard may still be underspecified, and an
+        experimental method may be technically strong.
+      </p>
+      <ul>
+        {
+          Object.values(EVIDENCE_CLASSES).map((c) => (
+            <li>
+              <strong>{c.label}.</strong> {c.description}
+            </li>
+          ))
+        }
+      </ul>
+      <p>
+        Assignment follows the strongest defensible reading of the evidence:
+        “formal standard or legal requirement” requires a published standard
+        or binding rule; “widely adopted industry practice” requires adoption
+        evidence beyond a handful of organizations; anything supported mainly
+        by proposals or early studies stays in the emerging or proposed
+        classes. Where a practice genuinely spans classes, the entry is
+        assigned the class that best describes its dominant use, and the
+        overlap is discussed in the entry text.
+      </p>
+
+      <h2 id="maturity">How maturity is assigned</h2>
+      <ul>
+        {
+          Object.values(MATURITY_LEVELS).map((m) => (
+            <li>
+              <strong>{m.label}.</strong> {m.description}
+            </li>
+          ))
+        }
+      </ul>
+      <p>
+        Maturity is about the practice; the evidence class is about its
+        formal and institutional standing. “Common but contested” is a
+        deliberate category: much of AI evaluation is exactly that.
+      </p>
+
+      <h2 id="sources">How sources are evaluated</h2>
+      <p>In support of any claim, the Atlas prefers, in order:</p>
+      <ol>
+        <li>the original peer-reviewed paper;</li>
+        <li>the official standard or regulation;</li>
+        <li>official technical documentation;</li>
+        <li>the original benchmark repository;</li>
+        <li>official government or institutional reports;</li>
+        <li>well-supported preprints;</li>
+        <li>secondary analyses.</li>
+      </ol>
+      <p>
+        Company technical reports are clearly labeled as such and treated as a
+        separate evidence class from peer-reviewed work. Commercial marketing
+        pages are not used as primary evidence for broad claims. Every source
+        record carries its own verification status, peer-review status, and
+        source type; see any entry’s Sources section.
+      </p>
+
+      <h2 id="disagreement">How disagreements are represented</h2>
+      <p>
+        Where the literature disagrees — on the validity of AI judges, on what
+        red-team findings imply about risk, on whether a benchmark measures
+        its named construct — entries state the disagreement rather than
+        resolving it. The “What it does not establish” section exists partly
+        for this: it records the claims that remain contested even when a
+        method is widely used.
+      </p>
+
+      <h2 id="statuses">Entry status</h2>
+      <p>Each entry carries a source-verification status:</p>
+      <ul>
+        {
+          Object.values(ENTRY_STATUSES).map((s) => (
+            <li>
+              <strong>{s.label}.</strong> {s.description}
+            </li>
+          ))
+        }
+      </ul>
+      <p>And a content status:</p>
+      <ul>
+        {
+          Object.entries(CONTENT_STATUSES).map(([, s]) => (
+            <li>
+              <strong>{s.label}.</strong>
+            </li>
+          ))
+        }
+      </ul>
+      <p>
+        Every entry records a created date, a last-reviewed date, a reviewer,
+        and a source status. Honest incompleteness is preferred to polished
+        fabrication: a stub with accurate metadata is more useful than a
+        confident paragraph without sources.
+      </p>
+
+      <h2 id="no-single-score">Why there is no single score</h2>
+      <p>
+        The Atlas does not compute a trust score, a quality grade, or a
+        composite ranking for entries. Evidence about reliability, validity,
+        reproducibility, and adoption answers different questions; collapsing
+        them into one number would repeat the exact mistake the Atlas
+        documents in AI evaluation itself — treating an aggregate as a
+        measurement without establishing what it measures.
+      </p>
+
+      <h2 id="corrections">Corrections</h2>
+      <p>
+        Corrections, source suggestions, and disputes are welcome via the
+        <a href={ISSUES_URL}>issue tracker</a>. A correction that survives
+        review updates the entry and its last-reviewed date; material changes
+        are noted in the <a href={atlasUrl('changelog/')}>changelog</a>.
+      </p>
+    </article>
+
+    <nav class="toc" aria-label="Table of contents">
+      <h2>Contents</h2>
+      <ol>
+        <li><a href="#inclusion">Inclusion scope</a></li>
+        <li><a href="#categorization">Categorization</a></li>
+        <li><a href="#evidence-classes">Evidence classes</a></li>
+        <li><a href="#maturity">Maturity</a></li>
+        <li><a href="#sources">Source hierarchy</a></li>
+        <li><a href="#disagreement">Disagreement</a></li>
+        <li><a href="#statuses">Statuses</a></li>
+        <li><a href="#no-single-score">No single score</a></li>
+        <li><a href="#corrections">Corrections</a></li>
+      </ol>
+    </nav>
+  </div>
+</AtlasLayout>

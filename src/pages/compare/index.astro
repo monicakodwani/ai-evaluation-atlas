@@ -1,0 +1,167 @@
+---
+import AtlasLayout from '../../layouts/AtlasLayout.astro';
+import { getAllEntries } from '../../lib/entries';
+
+const all = await getAllEntries();
+---
+
+<AtlasLayout
+  title="Compare"
+  description="Compare two or three Atlas entries side by side: constructs, evaluators, scoring, evidence class, strengths, limitations, and claim boundaries."
+  currentPath="compare/"
+>
+  <header class="entry-header">
+    <p class="kicker">Side by side</p>
+    <h1>Compare entries</h1>
+    <p class="summary">
+      Pick two or three entries to compare what they evaluate, who does the
+      judging, and what their results can and cannot support. You can also
+      select entries from the
+      <a href={`${import.meta.env.BASE_URL}explore/`}>Explore page</a> and open
+      the comparison from there.
+    </p>
+  </header>
+
+  <form class="compare-picker" id="compare-picker">
+    {
+      [0, 1, 2].map((i) => (
+        <label>
+          <span class="visually-hidden">Entry {i + 1}</span>
+          <select data-slot={i} style="width:100%;">
+            <option value="">
+              {i < 2 ? `Entry ${i + 1}…` : 'Entry 3 (optional)…'}
+            </option>
+            {all.map((ref) => (
+              <option value={ref.entry.data.id}>{ref.entry.data.title}</option>
+            ))}
+          </select>
+        </label>
+      ))
+    }
+    <button class="btn btn-primary" type="submit" style="justify-self:start;">
+      Compare
+    </button>
+  </form>
+
+  <div id="compare-result" aria-live="polite"></div>
+</AtlasLayout>
+
+<script>
+  interface IndexedEntry {
+    id: string;
+    title: string;
+    url: string;
+    type: string;
+    summary: string;
+    constructs: string[];
+    levels: string[];
+    evaluators: string[];
+    scoring: string[];
+    evidence_class: string;
+    maturity: string;
+    status: string;
+    strengths: string[];
+    limitations: string[];
+    appropriate_claims: string[];
+    inappropriate_claims: string[];
+    source_status: string;
+    last_reviewed: string;
+  }
+
+  const base = document.querySelector('a.atlas-brand')?.getAttribute('href') ?? '/';
+  const resultEl = document.getElementById('compare-result') as HTMLElement;
+  const form = document.getElementById('compare-picker') as HTMLFormElement;
+  const slots = Array.from(
+    form.querySelectorAll<HTMLSelectElement>('select[data-slot]'),
+  );
+
+  let index: IndexedEntry[] | null = null;
+
+  async function loadIndex(): Promise<IndexedEntry[]> {
+    if (index) return index;
+    const res = await fetch(`${base}search-index.json`);
+    const data = (await res.json()) as { entries: IndexedEntry[] };
+    index = data.entries;
+    return index;
+  }
+
+  function esc(s: string): string {
+    const div = document.createElement('div');
+    div.textContent = s;
+    return div.innerHTML;
+  }
+
+  function listCell(items: string[]): string {
+    if (!items.length) return '<em>Not yet documented.</em>';
+    return `<ul>${items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>`;
+  }
+
+  function renderTable(entries: IndexedEntry[]) {
+    const rows: Array<[string, (e: IndexedEntry) => string]> = [
+      ['Entry type', (e) => esc(e.type)],
+      ['Claimed construct', (e) => esc(e.constructs.join(', ') || '—')],
+      ['Evaluation level', (e) => esc(e.levels.join(', ') || '—')],
+      ['Evaluator', (e) => esc(e.evaluators.join(', ') || '—')],
+      ['Scoring mechanism', (e) => esc(e.scoring.join(', ') || '—')],
+      ['Evidence class', (e) => esc(e.evidence_class)],
+      ['Maturity', (e) => esc(e.maturity)],
+      ['Strengths', (e) => listCell(e.strengths)],
+      ['Limitations', (e) => listCell(e.limitations)],
+      ['Appropriate claims', (e) => listCell(e.appropriate_claims)],
+      ['Does not establish', (e) => listCell(e.inappropriate_claims)],
+      ['Source status', (e) => `${esc(e.source_status)} (${esc(e.status)})`],
+    ];
+
+    const head = entries
+      .map((e) => `<th scope="col"><a href="${e.url}">${esc(e.title)}</a></th>`)
+      .join('');
+    const body = rows
+      .map(
+        ([label, fn]) =>
+          `<tr><th scope="row">${label}</th>${entries
+            .map((e) => `<td>${fn(e)}</td>`)
+            .join('')}</tr>`,
+      )
+      .join('');
+
+    resultEl.innerHTML = `
+      <div class="compare-table-wrap">
+        <table class="compare-table">
+          <caption class="visually-hidden">Entry comparison</caption>
+          <thead><tr><td></td>${head}</tr></thead>
+          <tbody>${body}</tbody>
+        </table>
+      </div>`;
+  }
+
+  async function renderFromIds(ids: string[]) {
+    const data = await loadIndex();
+    const chosen = ids
+      .map((id) => data.find((e) => e.id === id))
+      .filter((e): e is IndexedEntry => Boolean(e))
+      .slice(0, 3);
+    slots.forEach((s, i) => {
+      s.value = chosen[i]?.id ?? '';
+    });
+    if (chosen.length >= 2) {
+      renderTable(chosen);
+    } else if (ids.length > 0) {
+      resultEl.innerHTML =
+        '<p class="no-results">Select at least two valid entries to compare.</p>';
+    }
+  }
+
+  form.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const ids = slots.map((s) => s.value).filter(Boolean);
+    const params = new URLSearchParams();
+    if (ids.length) params.set('entries', ids.join(','));
+    history.replaceState(null, '', ids.length ? `?${params}` : location.pathname);
+    void renderFromIds(ids);
+  });
+
+  const initial = (new URLSearchParams(location.search).get('entries') ?? '')
+    .split(',')
+    .filter(Boolean);
+  if (initial.length) void renderFromIds(initial);
+</script>

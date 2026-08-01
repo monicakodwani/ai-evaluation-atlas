@@ -1,0 +1,332 @@
+---
+import AtlasLayout from '../../layouts/AtlasLayout.astro';
+import EntryCard from '../../components/EntryCard.astro';
+import { getAllEntries, atlasUrl } from '../../lib/entries';
+import {
+  CONSTRUCTS,
+  ENTRY_TYPES,
+  EVALUATION_LEVELS,
+  EVALUATOR_FILTERS,
+  EVIDENCE_CLASSES,
+  LIFECYCLE_STAGES,
+  MATURITY_LEVELS,
+  type Vocab,
+} from '../../data/vocabularies';
+
+const all = await getAllEntries();
+
+interface FilterGroup {
+  param: string;
+  legend: string;
+  vocab: Vocab;
+  open?: boolean;
+}
+
+const groups: FilterGroup[] = [
+  { param: 'type', legend: 'Entry type', vocab: ENTRY_TYPES, open: true },
+  { param: 'level', legend: 'Evaluation level', vocab: EVALUATION_LEVELS },
+  { param: 'stage', legend: 'Lifecycle stage', vocab: LIFECYCLE_STAGES },
+  { param: 'evidence', legend: 'Evidence class', vocab: EVIDENCE_CLASSES, open: true },
+  { param: 'construct', legend: 'Construct', vocab: CONSTRUCTS },
+  { param: 'evaluator', legend: 'Evaluator', vocab: EVALUATOR_FILTERS },
+  { param: 'maturity', legend: 'Maturity', vocab: MATURITY_LEVELS },
+];
+---
+
+<AtlasLayout
+  title="Explore"
+  description="Browse and filter every entry in the AI Evaluation Atlas: methods, benchmarks, standards, infrastructures, observatories, and concepts."
+  currentPath="explore/"
+>
+  <header class="entry-header">
+    <p class="kicker">Directory</p>
+    <h1>Explore the Atlas</h1>
+    <p class="summary">
+      Every entry, filterable by what it evaluates, the evidence class it
+      belongs to, and how mature it is. Search covers titles, aliases,
+      summaries, constructs, and tags.
+    </p>
+  </header>
+
+  <div class="explore-layout">
+    <button
+      class="btn btn-secondary filter-drawer-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="filter-panel"
+    >
+      Show filters
+    </button>
+
+    <div class="filter-panel" id="filter-panel">
+      <div class="filters-head">
+        <h2>Filters</h2>
+        <button class="clear-filters" type="button" id="clear-all">
+          Clear all
+        </button>
+      </div>
+      {
+        groups.map((g) => (
+          <details class="filter-group" open={g.open}>
+            <summary>{g.legend}</summary>
+            <ul>
+              {Object.entries(g.vocab).map(([key, term]) => (
+                <li>
+                  <label title={term.description}>
+                    <input
+                      type="checkbox"
+                      data-facet={g.param}
+                      value={key}
+                    />
+                    <span>{term.label}</span>
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </details>
+        ))
+      }
+    </div>
+
+    <div>
+      <label class="visually-hidden" for="explore-q">Search entries</label>
+      <input
+        id="explore-q"
+        class="explore-search"
+        type="search"
+        placeholder="Search entries — try “judge”, “contamination”, “agent”…"
+        autocomplete="off"
+      />
+
+      <div class="explore-controls">
+        <p class="count" id="result-count" role="status" aria-live="polite">
+          {all.length} entries
+        </p>
+        <label>
+          Sort by
+          <select id="sort-select">
+            <option value="title">Title</option>
+            <option value="reviewed">Last reviewed</option>
+            <option value="maturity">Maturity</option>
+          </select>
+        </label>
+        <div class="view-toggle" role="group" aria-label="View">
+          <button type="button" id="view-grid" aria-pressed="true">Grid</button>
+          <button type="button" id="view-list" aria-pressed="false">List</button>
+        </div>
+      </div>
+
+      <ul class="card-grid" id="entry-grid">
+        {all.map((ref) => <EntryCard ref={ref} compare={true} />)}
+      </ul>
+      <p class="no-results" id="no-results" hidden>
+        No entries match the current search and filters.
+      </p>
+    </div>
+  </div>
+
+  <div class="compare-tray" id="compare-tray">
+    <p style="font-weight:700; margin:0;">Compare</p>
+    <div class="picked" id="compare-picked"></div>
+    <a class="btn" id="compare-link" href={atlasUrl('compare/')}
+      >Compare selected</a
+    >
+    <button type="button" id="compare-clear">Clear</button>
+  </div>
+</AtlasLayout>
+
+<script>
+  const grid = document.getElementById('entry-grid') as HTMLElement;
+  const cards = Array.from(grid.querySelectorAll<HTMLElement>('.entry-card'));
+  const countEl = document.getElementById('result-count') as HTMLElement;
+  const noResults = document.getElementById('no-results') as HTMLElement;
+  const searchInput = document.getElementById('explore-q') as HTMLInputElement;
+  const sortSelect = document.getElementById('sort-select') as HTMLSelectElement;
+  const checkboxes = Array.from(
+    document.querySelectorAll<HTMLInputElement>('input[data-facet]'),
+  );
+
+  const FACETS = [
+    'type',
+    'level',
+    'stage',
+    'evidence',
+    'construct',
+    'evaluator',
+    'maturity',
+  ] as const;
+
+  const FACET_ATTR: Record<string, string> = {
+    type: 'type',
+    level: 'levels',
+    stage: 'lifecycle',
+    evidence: 'evidence',
+    construct: 'constructs',
+    evaluator: 'evaluators',
+    maturity: 'maturity',
+  };
+
+  const MATURITY_ORDER = [
+    'established',
+    'common-contested',
+    'emerging',
+    'experimental',
+    'draft',
+  ];
+
+  function selected(facet: string): string[] {
+    return checkboxes
+      .filter((c) => c.dataset.facet === facet && c.checked)
+      .map((c) => c.value);
+  }
+
+  function cardMatches(card: HTMLElement, q: string): boolean {
+    for (const facet of FACETS) {
+      const wanted = selected(facet);
+      if (wanted.length === 0) continue;
+      const have = (card.dataset[FACET_ATTR[facet] as string] ?? '').split(' ');
+      if (!wanted.some((w) => have.includes(w))) return false;
+    }
+    if (q) {
+      const hay = card.dataset.search ?? '';
+      const tokens = q.toLowerCase().split(/\s+/).filter(Boolean);
+      if (!tokens.every((t) => hay.includes(t))) return false;
+    }
+    return true;
+  }
+
+  function applySort() {
+    const mode = sortSelect.value;
+    const sorted = [...cards].sort((a, b) => {
+      if (mode === 'reviewed') {
+        return (b.dataset.reviewed ?? '').localeCompare(a.dataset.reviewed ?? '');
+      }
+      if (mode === 'maturity') {
+        return (
+          MATURITY_ORDER.indexOf(a.dataset.maturity ?? '') -
+            MATURITY_ORDER.indexOf(b.dataset.maturity ?? '') ||
+          (a.dataset.title ?? '').localeCompare(b.dataset.title ?? '')
+        );
+      }
+      return (a.dataset.title ?? '').localeCompare(b.dataset.title ?? '');
+    });
+    for (const card of sorted) grid.appendChild(card);
+  }
+
+  function syncUrl() {
+    const params = new URLSearchParams();
+    const q = searchInput.value.trim();
+    if (q) params.set('q', q);
+    for (const facet of FACETS) {
+      const vals = selected(facet);
+      if (vals.length) params.set(facet, vals.join(','));
+    }
+    if (sortSelect.value !== 'title') params.set('sort', sortSelect.value);
+    const qs = params.toString();
+    history.replaceState(null, '', qs ? `?${qs}` : location.pathname);
+  }
+
+  function update() {
+    const q = searchInput.value.trim().toLowerCase();
+    let shown = 0;
+    for (const card of cards) {
+      const match = cardMatches(card, q);
+      card.hidden = !match;
+      if (match) shown += 1;
+    }
+    countEl.textContent = `${shown} ${shown === 1 ? 'entry' : 'entries'}`;
+    noResults.hidden = shown !== 0;
+    applySort();
+    syncUrl();
+  }
+
+  /* Initialize from URL parameters (shareable filter links). */
+  const params = new URLSearchParams(location.search);
+  const initialQ = params.get('q');
+  if (initialQ) searchInput.value = initialQ;
+  const initialSort = params.get('sort');
+  if (initialSort && ['title', 'reviewed', 'maturity'].includes(initialSort)) {
+    sortSelect.value = initialSort;
+  }
+  for (const facet of FACETS) {
+    const vals = (params.get(facet) ?? '').split(',').filter(Boolean);
+    if (!vals.length) continue;
+    for (const c of checkboxes) {
+      if (c.dataset.facet === facet && vals.includes(c.value)) {
+        c.checked = true;
+        const group = c.closest('details');
+        if (group) group.open = true;
+      }
+    }
+  }
+
+  searchInput.addEventListener('input', update);
+  sortSelect.addEventListener('change', update);
+  for (const c of checkboxes) c.addEventListener('change', update);
+
+  document.getElementById('clear-all')?.addEventListener('click', () => {
+    searchInput.value = '';
+    for (const c of checkboxes) c.checked = false;
+    update();
+  });
+
+  /* Grid / list view toggle. */
+  const gridBtn = document.getElementById('view-grid') as HTMLButtonElement;
+  const listBtn = document.getElementById('view-list') as HTMLButtonElement;
+  function setView(list: boolean) {
+    grid.classList.toggle('as-list', list);
+    gridBtn.setAttribute('aria-pressed', String(!list));
+    listBtn.setAttribute('aria-pressed', String(list));
+  }
+  gridBtn.addEventListener('click', () => setView(false));
+  listBtn.addEventListener('click', () => setView(true));
+
+  /* Mobile filter drawer. */
+  const drawerToggle = document.querySelector<HTMLButtonElement>(
+    '.filter-drawer-toggle',
+  );
+  const panel = document.getElementById('filter-panel');
+  drawerToggle?.addEventListener('click', () => {
+    const open = panel?.classList.toggle('open') ?? false;
+    drawerToggle.setAttribute('aria-expanded', String(open));
+    drawerToggle.textContent = open ? 'Hide filters' : 'Show filters';
+  });
+
+  /* Compare tray (up to three entries). */
+  const tray = document.getElementById('compare-tray') as HTMLElement;
+  const picked = document.getElementById('compare-picked') as HTMLElement;
+  const compareLink = document.getElementById('compare-link') as HTMLAnchorElement;
+  const compareBase = compareLink.href.split('?')[0];
+  const compareBoxes = Array.from(
+    document.querySelectorAll<HTMLInputElement>('input[data-compare-id]'),
+  );
+
+  function updateTray() {
+    const chosen = compareBoxes.filter((c) => c.checked);
+    if (chosen.length > 3) {
+      const last = chosen[chosen.length - 1];
+      if (last) last.checked = false;
+      chosen.pop();
+    }
+    tray.classList.toggle('active', chosen.length >= 1);
+    picked.innerHTML = '';
+    for (const c of chosen) {
+      const card = c.closest<HTMLElement>('.entry-card');
+      const span = document.createElement('span');
+      span.textContent = card?.querySelector('h3, h2')?.textContent ?? c.value;
+      picked.appendChild(span);
+    }
+    const ids = chosen.map((c) => c.dataset.compareId).join(',');
+    compareLink.href = `${compareBase}?entries=${ids}`;
+    compareLink.style.display = chosen.length >= 2 ? '' : 'none';
+  }
+
+  for (const c of compareBoxes) c.addEventListener('change', updateTray);
+  document.getElementById('compare-clear')?.addEventListener('click', () => {
+    for (const c of compareBoxes) c.checked = false;
+    updateTray();
+  });
+
+  update();
+  updateTray();
+</script>

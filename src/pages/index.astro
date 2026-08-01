@@ -1,0 +1,199 @@
+---
+import AtlasLayout from '../layouts/AtlasLayout.astro';
+import EntryCard from '../components/EntryCard.astro';
+import { LIFECYCLE_CONTENT } from '../data/lifecycle';
+import { atlasUrl, getAllEntries } from '../lib/entries';
+import { getCollection } from 'astro:content';
+import {
+  ATLAS_DESCRIPTION,
+  ATLAS_NAME,
+  ATLAS_SUBTITLE,
+  ATLAS_VERSION,
+} from '../config';
+
+const all = await getAllEntries();
+const featured = all.filter((ref) => ref.entry.data.featured).slice(0, 6);
+
+const guides = (await getCollection('guides')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const previewGuides = guides.slice(0, 4);
+
+const entryPoints = [
+  {
+    title: 'Methods',
+    href: atlasUrl('explore/?type=method'),
+    text: 'Benchmarks, human evaluation, AI judges, red teaming, audits, monitoring, and other evaluation approaches.',
+  },
+  {
+    title: 'Benchmarks and suites',
+    href: atlasUrl('explore/?type=benchmark'),
+    text: 'Instruments used to compare capabilities, risks, safety properties, agents, and deployed systems.',
+  },
+  {
+    title: 'Standards and governance',
+    href: atlasUrl('explore/?type=standard'),
+    text: 'Formal standards, regulatory frameworks, assurance practices, documentation, and institutional evaluation.',
+  },
+  {
+    title: 'Evaluation science',
+    href: atlasUrl('explore/?type=concept'),
+    text: 'Validity, reliability, uncertainty, contamination, reproducibility, and the limits of evaluation claims.',
+  },
+];
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: ATLAS_NAME,
+  description: ATLAS_DESCRIPTION,
+  url: new URL(import.meta.env.BASE_URL, Astro.site).toString(),
+  author: { '@type': 'Person', name: 'Monica Kodwani' },
+};
+---
+
+<AtlasLayout description={ATLAS_DESCRIPTION} currentPath="">
+  <script
+    slot="head"
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(structuredData)}
+  />
+
+  <div class="atlas-hero">
+    <p class="kicker">An independent research project</p>
+    <h1>AI Evaluation Atlas</h1>
+    <p class="subheading">{ATLAS_SUBTITLE}</p>
+    <p class="lede">
+      AI evaluation now includes far more than benchmark accuracy. It spans
+      human judgment, AI-as-a-judge, red teaming, agent environments,
+      standards, audits, and post-deployment monitoring. The Atlas organizes
+      these approaches and asks a harder question: what evidence does each one
+      actually provide?
+    </p>
+    <div class="actions">
+      <a class="btn btn-primary" href={atlasUrl('explore/')}>Explore the Atlas</a>
+      <a class="btn btn-secondary" href={atlasUrl('methodology/')}
+        >How the Atlas works</a
+      >
+    </div>
+  </div>
+
+  <section aria-labelledby="proposition">
+    <div class="editorial-callout">
+      <p class="kicker" id="proposition">The Atlas’s central proposition</p>
+      <p>
+        A benchmark score is evidence about a defined task, scoring method,
+        model configuration, and test population. It is not, by itself,
+        evidence that a deployed system is safe, fair, reliable, or
+        trustworthy.
+      </p>
+    </div>
+  </section>
+
+  <section aria-labelledby="entry-points-heading">
+    <div class="section-head">
+      <h2 id="entry-points-heading">Four ways in</h2>
+    </div>
+    <ul class="entry-points">
+      {
+        entryPoints.map((p, i) => (
+          <li class="entry-point">
+            <p class="index-no">{String(i + 1).padStart(2, '0')}</p>
+            <h3>
+              <a href={p.href}>{p.title}</a>
+            </h3>
+            <p>{p.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section aria-labelledby="lifecycle-heading">
+    <div class="section-head">
+      <h2 id="lifecycle-heading">The evaluation lifecycle</h2>
+      <a class="more-link" href={atlasUrl('lifecycle/')}>Full lifecycle map →</a>
+    </div>
+    <p>
+      Evaluation is not a single pre-release event. Each stage asks different
+      questions and calls for different instruments.
+    </p>
+    <ol class="lifecycle-strip" style="margin-top: 1.1rem;">
+      {
+        LIFECYCLE_CONTENT.map((stage, i) => (
+          <li>
+            <a
+              href={atlasUrl(`lifecycle/#${stage.id}`)}
+              title={`Example methods: ${stage.strip.join(', ')}`}
+            >
+              {stage.title}
+            </a>
+            {i < LIFECYCLE_CONTENT.length - 1 && (
+              <span class="arrow" aria-hidden="true">
+                →
+              </span>
+            )}
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  {
+    featured.length > 0 && (
+      <section aria-labelledby="featured-heading">
+        <div class="section-head">
+          <h2 id="featured-heading">Featured entries</h2>
+          <a class="more-link" href={atlasUrl('explore/')}>
+            All entries →
+          </a>
+        </div>
+        <ul class="card-grid">
+          {featured.map((ref) => (
+            <EntryCard ref={ref} />
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <section aria-labelledby="guides-heading">
+    <div class="section-head">
+      <h2 id="guides-heading">Guides</h2>
+      <a class="more-link" href={atlasUrl('guides/')}>All guides →</a>
+    </div>
+    <ul class="card-grid">
+      {
+        previewGuides.map((g) => (
+          <li class="entry-card guide-card">
+            <p class="type-line">
+              <span>Guide {String(g.data.order).padStart(2, '0')}</span>
+              {g.data.content_status !== 'complete' &&
+                g.data.content_status !== 'substantive-draft' && (
+                  <span class="badge badge-status-draft">Draft in progress</span>
+                )}
+            </p>
+            <h3>
+              <a href={atlasUrl(`guides/${g.data.id}/`)}>{g.data.title}</a>
+            </h3>
+            <p class="summary">{g.data.summary}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section aria-labelledby="status-heading">
+    <h2 class="visually-hidden" id="status-heading">Project status</h2>
+    <div class="status-note">
+      <p>
+        <strong>Version {ATLAS_VERSION}.</strong> Version 0 establishes the
+        Atlas structure, taxonomy, and initial entries. Source verification and
+        content expansion are ongoing. See the
+        <a href={atlasUrl('methodology/')}>methodology</a> and the
+        <a href={atlasUrl('changelog/')}>changelog</a>.
+      </p>
+    </div>
+  </section>
+</AtlasLayout>

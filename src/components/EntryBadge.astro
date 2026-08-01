@@ -1,0 +1,15 @@
+---
+/** Entry-type badge (method, benchmark, standard, …). */
+import { ENTRY_TYPES, type EntryTypeKey } from '../data/vocabularies';
+
+interface Props {
+  value: EntryTypeKey | string;
+}
+
+const { value } = Astro.props;
+const term = ENTRY_TYPES[value as EntryTypeKey];
+---
+
+<span class="badge badge-type" title={term?.description}>
+  {term?.label ?? value}
+</span>

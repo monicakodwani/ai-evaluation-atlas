@@ -1,0 +1,14 @@
+---
+import { MATURITY_LEVELS, type MaturityKey } from '../data/vocabularies';
+
+interface Props {
+  value: MaturityKey | string;
+}
+
+const { value } = Astro.props;
+const term = MATURITY_LEVELS[value as MaturityKey];
+---
+
+<span class="badge badge-maturity" title={term?.description}>
+  {term?.label ?? value}
+</span>

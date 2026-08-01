@@ -1,0 +1,102 @@
+---
+import AtlasLayout from '../../layouts/AtlasLayout.astro';
+import RelatedEntries from '../../components/RelatedEntries.astro';
+import { LIFECYCLE_CONTENT } from '../../data/lifecycle';
+import { LIFECYCLE_STAGES } from '../../data/vocabularies';
+import { atlasUrl } from '../../lib/entries';
+---
+
+<AtlasLayout
+  title="Lifecycle"
+  description="Evaluation across the AI lifecycle, from design through retirement: the questions each stage asks, the methods that fit, and the evidence worth keeping."
+  currentPath="lifecycle/"
+>
+  <header class="entry-header">
+    <p class="kicker">Lifecycle map</p>
+    <h1>Evaluation across the lifecycle</h1>
+    <p class="summary">
+      Evaluation is not a single pre-release event. Each stage of a system’s
+      life asks different questions, calls for different instruments, and
+      should leave behind different evidence. A credible evaluation program
+      covers the whole arc — and keeps the records to show it.
+    </p>
+  </header>
+
+  <nav aria-label="Lifecycle stages" style="margin-top: 1.6rem;">
+    <ol class="lifecycle-strip">
+      {
+        LIFECYCLE_CONTENT.map((stage, i) => (
+          <li>
+            <a href={`#${stage.id}`}>{stage.title}</a>
+            {i < LIFECYCLE_CONTENT.length - 1 && (
+              <span class="arrow" aria-hidden="true">
+                →
+              </span>
+            )}
+          </li>
+        ))
+      }
+    </ol>
+  </nav>
+
+  {
+    LIFECYCLE_CONTENT.map((stage, i) => (
+      <article class="stage-block" id={stage.id}>
+        <p class="stage-no">
+          Stage {i + 1} of {LIFECYCLE_CONTENT.length}
+        </p>
+        <h2>{stage.title}</h2>
+        <p>{LIFECYCLE_STAGES[stage.id].description}</p>
+        <div class="stage-cols">
+          <div>
+            <h3>Central questions</h3>
+            <ul>
+              {stage.questions.map((q) => (
+                <li>{q}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3>Suitable methods</h3>
+            <ul>
+              {stage.methods.map((m) => (
+                <li>{m}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3>Evidence to retain</h3>
+            <ul>
+              {stage.records.map((r) => (
+                <li>{r}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <p class="common-failure">
+          <strong>Common failure:</strong> {stage.commonFailure}
+        </p>
+        {stage.related.length > 0 && (
+          <div style="margin-top: 1rem;">
+            <h3
+              style="font-size:0.82rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--teal); margin-bottom:0.4rem;"
+            >
+              Related Atlas entries
+            </h3>
+            <RelatedEntries ids={stage.related} />
+          </div>
+        )}
+      </article>
+    ))
+  }
+
+  <section>
+    <div class="status-note">
+      <p>
+        Stage-by-stage method lists are starting points, not requirements. The
+        <a href={atlasUrl('methodology/')}>methodology</a> explains how the
+        Atlas assigns lifecycle stages to entries.
+      </p>
+    </div>
+  </section>
+</AtlasLayout>

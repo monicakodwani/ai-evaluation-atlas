@@ -1,0 +1,35 @@
+---
+import {
+  CONTENT_STATUSES,
+  ENTRY_STATUSES,
+  labelOf,
+} from '../data/vocabularies';
+import { ISSUES_URL } from '../config';
+
+interface Props {
+  status: string;
+  contentStatus: string;
+}
+
+const { status, contentStatus } = Astro.props;
+const isDraftContent = contentStatus !== 'complete';
+const needsSources = status === 'needs-verification' || status === 'draft';
+---
+
+{
+  (isDraftContent || needsSources) && (
+    <aside class="draft-notice">
+      <p>
+        <strong>
+          {labelOf(CONTENT_STATUSES, contentStatus)} ·{' '}
+          {labelOf(ENTRY_STATUSES, status)}.
+        </strong>{' '}
+        {isDraftContent &&
+          'This entry is part of the Atlas’s Version 0 structure and is still being written. '}
+        {needsSources &&
+          'Its claims have not yet been independently checked against primary sources and may change on review. '}
+        <a href={ISSUES_URL}>Corrections are welcome.</a>
+      </p>
+    </aside>
+  )
+}

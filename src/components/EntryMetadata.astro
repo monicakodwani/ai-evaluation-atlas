@@ -1,0 +1,59 @@
+---
+/** Sticky classification panel shown alongside an entry detail page. */
+import {
+  ACCESS_MODELS,
+  CONSTRUCTS,
+  ENVIRONMENTS,
+  EVALUATION_LEVELS,
+  EVALUATOR_TYPES,
+  HUMAN_INVOLVEMENT,
+  LIFECYCLE_STAGES,
+  PURPOSES,
+  SCORING_MECHANISMS,
+  labelOf,
+  type Vocab,
+} from '../data/vocabularies';
+import type { AtlasEntryRef } from '../lib/entries';
+
+interface Props {
+  ref: AtlasEntryRef;
+}
+
+const { ref } = Astro.props;
+const d = ref.entry.data;
+
+function labels(vocab: Vocab, keys: string[]): string {
+  return keys.map((k) => labelOf(vocab, k)).join(' · ');
+}
+
+const allRows: Array<[string, string]> = [
+  ['Claimed constructs', labels(CONSTRUCTS, d.claimed_constructs)],
+  ['Evaluation level', labels(EVALUATION_LEVELS, d.evaluation_levels)],
+  ['Lifecycle stage', labels(LIFECYCLE_STAGES, d.lifecycle_stages)],
+  ['Purposes', labels(PURPOSES, d.purposes)],
+  ['Evaluator', labels(EVALUATOR_TYPES, d.evaluator_types)],
+  ['Environment', labels(ENVIRONMENTS, d.environments)],
+  ['Scoring', labels(SCORING_MECHANISMS, d.scoring_mechanisms)],
+  [
+    'Human involvement',
+    d.human_involvement ? labelOf(HUMAN_INVOLVEMENT, d.human_involvement) : '',
+  ],
+  ['Access model', d.access_model ? labelOf(ACCESS_MODELS, d.access_model) : ''],
+  ['Organization', d.organization ?? ''],
+];
+const rows = allRows.filter(([, v]) => v.length > 0);
+---
+
+<aside class="entry-aside" aria-labelledby="entry-classification">
+  <h2 id="entry-classification">Classification</h2>
+  <dl>
+    {
+      rows.map(([k, v]) => (
+        <div>
+          <dt>{k}</dt>
+          <dd>{v}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</aside>

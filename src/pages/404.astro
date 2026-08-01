@@ -1,0 +1,19 @@
+---
+import AtlasLayout from '../layouts/AtlasLayout.astro';
+import { atlasUrl } from '../lib/entries';
+---
+
+<AtlasLayout title="Page not found" currentPath="404/">
+  <header class="entry-header">
+    <p class="kicker">404</p>
+    <h1>Page not found</h1>
+    <p class="summary">
+      This page does not exist in the Atlas — or not yet. Entries are added
+      and renamed as the Atlas grows.
+    </p>
+  </header>
+  <p style="margin-top: 1.5rem;">
+    Try the <a href={atlasUrl('explore/')}>Explore page</a> or return to the
+    <a href={atlasUrl()}>Atlas home</a>.
+  </p>
+</AtlasLayout>

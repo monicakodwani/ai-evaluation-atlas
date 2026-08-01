@@ -1,0 +1,52 @@
+---
+import AtlasLayout from '../../layouts/AtlasLayout.astro';
+import VersionLabel from '../../components/VersionLabel.astro';
+---
+
+<AtlasLayout
+  title="Changelog"
+  description="Version history of the AI Evaluation Atlas."
+  currentPath="changelog/"
+>
+  <header class="entry-header">
+    <p class="kicker">Version history</p>
+    <h1>Changelog</h1>
+    <p class="summary">
+      Material changes to the Atlas — new entries, reclassifications, and
+      corrections — are recorded here. Current release: <VersionLabel />
+    </p>
+  </header>
+
+  <div class="guide-prose" style="margin-top: 1.8rem;">
+    <h2 id="v0-1">Version 0.1 — July 31, 2026</h2>
+    <p>Initial public release establishing the Atlas framework.</p>
+    <ul>
+      <li>
+        Site framework established as a standalone, statically generated
+        Astro project, with all content in editable Markdown files validated
+        at build time.
+      </li>
+      <li>
+        Taxonomy defined: eight entry types, five evidence classes, twelve
+        evaluation levels, nine lifecycle stages, and controlled vocabularies
+        for purpose, evaluator, environment, scoring mechanism, and construct.
+      </li>
+      <li>Lifecycle map added, covering design through retirement.</li>
+      <li>
+        Initial entries created: six substantive method entries, plus
+        structured draft stubs for named benchmarks, infrastructures,
+        standards, observatories, and evaluation-science concepts.
+      </li>
+      <li>
+        First two guides drafted (<em>What Counts as AI Evaluation?</em> and
+        <em>Evaluation Is Measurement</em>); remaining guides published as
+        structured outlines.
+      </li>
+      <li>
+        Source-verification workflow added: separate source records with
+        per-record verification status, and visible draft and
+        needs-verification badges on entries.
+      </li>
+    </ul>
+  </div>
+</AtlasLayout>

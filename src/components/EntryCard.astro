@@ -1,0 +1,112 @@
+---
+/**
+ * Catalogue-record card for one Atlas entry. Data attributes carry the
+ * filterable facets so the Explore page can filter server-rendered cards
+ * client-side without refetching content.
+ */
+import {
+  CONSTRUCTS,
+  ENTRY_TYPES,
+  EVALUATION_LEVELS,
+  labelOf,
+} from '../data/vocabularies';
+import { entryTypeOf, formatDate, type AtlasEntryRef } from '../lib/entries';
+import EvidenceClassBadge from './EvidenceClassBadge.astro';
+import MaturityBadge from './MaturityBadge.astro';
+import StatusBadge from './StatusBadge.astro';
+
+interface Props {
+  ref: AtlasEntryRef;
+  /** Show the compare checkbox (Explore page only). */
+  compare?: boolean;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { ref, compare = false, headingLevel = 'h3' } = Astro.props;
+const d = ref.entry.data;
+const type = entryTypeOf(ref);
+const Heading = headingLevel;
+
+const searchText = [
+  d.title,
+  ...d.aliases,
+  d.summary,
+  ...d.tags,
+  ...d.claimed_constructs.map((c) => labelOf(CONSTRUCTS, c)),
+  ENTRY_TYPES[type].label,
+  d.organization ?? '',
+  d.benchmark_family ?? '',
+]
+  .join(' ')
+  .toLowerCase();
+
+const primaryConstruct = d.claimed_constructs[0];
+const primaryLevel = d.evaluation_levels[0];
+const notEstablish = d.inappropriate_claims[0];
+---
+
+<li
+  class="entry-card"
+  data-id={d.id}
+  data-title={d.title.toLowerCase()}
+  data-search={searchText}
+  data-type={type}
+  data-levels={d.evaluation_levels.join(' ')}
+  data-lifecycle={d.lifecycle_stages.join(' ')}
+  data-evidence={d.evidence_class}
+  data-constructs={d.claimed_constructs.join(' ')}
+  data-evaluators={d.evaluator_filters.join(' ')}
+  data-maturity={d.maturity}
+  data-reviewed={d.last_reviewed.toISOString().slice(0, 10)}
+>
+  <p class="type-line">
+    <span>{ENTRY_TYPES[type].label}</span>
+    <StatusBadge value={d.status} />
+  </p>
+  <Heading><a href={ref.url}>{d.title}</a></Heading>
+  <p class="summary">{d.summary}</p>
+  <p class="badges">
+    <EvidenceClassBadge value={d.evidence_class} />
+    <MaturityBadge value={d.maturity} />
+  </p>
+  <div class="facts">
+    {
+      primaryConstruct && (
+        <p>
+          <span class="k">Primary construct:</span>{' '}
+          {labelOf(CONSTRUCTS, primaryConstruct)}
+        </p>
+      )
+    }
+    {
+      primaryLevel && (
+        <p>
+          <span class="k">Evaluation level:</span>{' '}
+          {labelOf(EVALUATION_LEVELS, primaryLevel)}
+        </p>
+      )
+    }
+  </div>
+  {
+    notEstablish && (
+      <p class="not-establish">
+        <strong>Does not establish:</strong> {notEstablish}
+      </p>
+    )
+  }
+  <div class="card-foot">
+    <span>Last reviewed {formatDate(d.last_reviewed)}</span>
+    {
+      compare && (
+        <label class="compare-pick">
+          <input
+            type="checkbox"
+            data-compare-id={d.id}
+            aria-label={`Select ${d.title} for comparison`}
+          />
+          Compare
+        </label>
+      )
+    }
+  </div>
+</li>

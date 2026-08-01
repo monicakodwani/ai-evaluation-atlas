@@ -1,0 +1,103 @@
+---
+import { atlasUrl } from '../lib/entries';
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '' } = Astro.props;
+
+const items = [
+  { label: 'Explore', path: 'explore/' },
+  { label: 'Taxonomy', path: 'taxonomy/' },
+  { label: 'Lifecycle', path: 'lifecycle/' },
+  { label: 'Guides', path: 'guides/' },
+  { label: 'Methodology', path: 'methodology/' },
+  { label: 'About', path: 'about/' },
+];
+
+function isCurrent(path: string): boolean {
+  if (!currentPath) return false;
+  return currentPath === path || currentPath.startsWith(path);
+}
+---
+
+<header class="atlas-header">
+  <div class="bar">
+    <a class="atlas-brand" href={atlasUrl()}>
+      <span class="name">AI Evaluation Atlas</span>
+      <span class="by">by Monica Kodwani</span>
+    </a>
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="atlas-nav">Menu</button
+    >
+    <nav id="atlas-nav" class="atlas-nav" aria-label="Atlas navigation">
+      {
+        items.map((item) => (
+          <a
+            href={atlasUrl(item.path)}
+            aria-current={isCurrent(item.path) ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <form
+        class="nav-search"
+        role="search"
+        action={atlasUrl('explore/')}
+        method="get"
+      >
+        <label class="visually-hidden" for="nav-search-input">Search the Atlas</label>
+        <input
+          id="nav-search-input"
+          type="search"
+          name="q"
+          placeholder="Search the Atlas…"
+        />
+      </form>
+      <button
+        id="atlas-theme-toggle"
+        class="theme-toggle"
+        type="button"
+        aria-pressed="false"
+      >
+        <span data-label>Dark mode</span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const nav = document.getElementById('atlas-nav');
+  toggle?.addEventListener('click', () => {
+    const open = nav?.classList.toggle('open') ?? false;
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+
+  const themeBtn = document.getElementById('atlas-theme-toggle');
+  const label = themeBtn?.querySelector('[data-label]');
+
+  function reflect() {
+    const dark = document.documentElement.dataset.theme === 'dark';
+    themeBtn?.setAttribute('aria-pressed', String(dark));
+    if (label) label.textContent = dark ? 'Light mode' : 'Dark mode';
+  }
+
+  themeBtn?.addEventListener('click', () => {
+    const next =
+      document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    try {
+      window.localStorage.setItem('mk-theme', next);
+    } catch {
+      /* private browsing */
+    }
+    reflect();
+  });
+  reflect();
+</script>

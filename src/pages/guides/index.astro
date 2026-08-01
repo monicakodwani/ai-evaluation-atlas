@@ -1,0 +1,62 @@
+---
+import { getCollection } from 'astro:content';
+import AtlasLayout from '../../layouts/AtlasLayout.astro';
+import StatusBadge from '../../components/StatusBadge.astro';
+import { CONTENT_STATUSES, labelOf } from '../../data/vocabularies';
+import { atlasUrl, readingTimeMinutes } from '../../lib/entries';
+
+const guides = (await getCollection('guides')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<AtlasLayout
+  title="Guides"
+  description="Editorial guides to AI evaluation: what counts as evaluation, why evaluation is measurement, benchmark limits, AI judges, red teaming, agents, and assurance."
+  currentPath="guides/"
+>
+  <header class="entry-header">
+    <p class="kicker">Editorial</p>
+    <h1>Guides</h1>
+    <p class="summary">
+      Longer-form explanations of the ideas the Atlas is built on. Guides are
+      written to be read start to finish; entries are written to be looked up.
+      Early guides carry visible draft status until their content and sources
+      are complete.
+    </p>
+  </header>
+
+  <ul class="card-grid as-list" style="margin-top: 2rem;">
+    {
+      guides.map((g) => {
+        const minutes = readingTimeMinutes(g.body);
+        const isDrafting =
+          g.data.content_status === 'outline' || g.data.content_status === 'stub';
+        return (
+          <li class="entry-card guide-card">
+            <p class="type-line">
+              <span>Guide {String(g.data.order).padStart(2, '0')}</span>
+              <span>
+                {isDrafting ? (
+                  <span class="badge badge-status-draft">Draft in progress</span>
+                ) : (
+                  <StatusBadge value={g.data.status} />
+                )}
+              </span>
+            </p>
+            <h2 style="font-family:var(--serif); font-size:1.3rem;">
+              <a href={atlasUrl(`guides/${g.data.id}/`)}>{g.data.title}</a>
+            </h2>
+            <p class="summary">{g.data.summary}</p>
+            <div class="card-foot">
+              <span>
+                {labelOf(CONTENT_STATUSES, g.data.content_status)} ·{' '}
+                {minutes} min read
+              </span>
+            </div>
+          </li>
+        );
+      })
+    }
+  </ul>
+</AtlasLayout>

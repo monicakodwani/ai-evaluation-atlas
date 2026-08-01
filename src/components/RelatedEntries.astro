@@ -1,0 +1,22 @@
+---
+import { resolveEntries } from '../lib/entries';
+
+interface Props {
+  ids: string[];
+}
+
+const { ids } = Astro.props;
+const related = await resolveEntries(ids);
+---
+
+{
+  related.length > 0 && (
+    <ul class="related-list">
+      {related.map((ref) => (
+        <li>
+          <a href={ref.url}>{ref.entry.data.title}</a>
+        </li>
+      ))}
+    </ul>
+  )
+}

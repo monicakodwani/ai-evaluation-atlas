@@ -1,0 +1,57 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import {
+  PEER_REVIEW_STATUSES,
+  SOURCE_TYPES,
+  VERIFICATION_STATUSES,
+  labelOf,
+} from '../data/vocabularies';
+
+interface Props {
+  /** ids of records in the sources collection. */
+  ids: string[];
+}
+
+const { ids } = Astro.props;
+
+const all = await getCollection('sources');
+const byId = new Map(all.map((s) => [s.data.id, s]));
+const records = ids
+  .map((id) => byId.get(id))
+  .filter((s): s is CollectionEntry<'sources'> => Boolean(s));
+---
+
+{
+  records.length > 0 && (
+    <ul class="source-list">
+      {records.map(({ data: s }) => (
+        <li>
+          <p class="src-title">
+            {s.url ? <a href={s.url}>{s.title}</a> : s.title}
+          </p>
+          <p class="src-meta">
+            {[
+              s.authors.length > 0 ? s.authors.join(', ') : s.organization,
+              s.year,
+              s.publication,
+              labelOf(SOURCE_TYPES, s.source_type),
+              labelOf(PEER_REVIEW_STATUSES, s.peer_review_status),
+            ]
+              .filter(Boolean)
+              .join(' · ')}
+            {s.doi && (
+              <>
+                {' · '}
+                <a href={`https://doi.org/${s.doi}`}>doi:{s.doi}</a>
+              </>
+            )}
+          </p>
+          <p class="src-meta">
+            {labelOf(VERIFICATION_STATUSES, s.verification_status)}
+            {s.notes ? ` — ${s.notes}` : ''}
+          </p>
+        </li>
+      ))}
+    </ul>
+  )
+}

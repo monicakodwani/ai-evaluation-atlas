@@ -1,0 +1,283 @@
+---
+import AtlasLayout from '../../layouts/AtlasLayout.astro';
+import { EVALUATION_LEVELS, EVIDENCE_CLASSES } from '../../data/vocabularies';
+import {
+  EVIDENCE_MAP_EXAMPLES,
+  LEVEL_DETAILS,
+  METHOD_MATRIX,
+} from '../../data/taxonomy';
+import { GLOSSARY } from '../../data/glossary';
+import { atlasUrl, getAllEntries } from '../../lib/entries';
+
+const all = await getAllEntries();
+const byId = new Map(all.map((ref) => [ref.entry.data.id, ref]));
+
+function maybeEntryLink(id?: string): string | undefined {
+  if (!id) return undefined;
+  return byId.get(id)?.url;
+}
+
+const glossaryById = new Map(GLOSSARY.map((t) => [t.id, t]));
+
+const matrixColumns = [
+  'Primary target',
+  'Evaluator',
+  'Typical output',
+  'Strength',
+  'Limitation',
+  'Maturity',
+  'Common use',
+];
+
+const evidenceClassKeys = Object.keys(EVIDENCE_CLASSES) as Array<
+  keyof typeof EVIDENCE_CLASSES
+>;
+---
+
+<AtlasLayout
+  title="Taxonomy"
+  description="A conceptual map of AI evaluation: what gets evaluated, the major method families, and how formal each practice actually is."
+  currentPath="taxonomy/"
+>
+  <header class="entry-header">
+    <p class="kicker">Conceptual map</p>
+    <h1>Taxonomy</h1>
+    <p class="summary">
+      Three views of the same field: the <em>objects</em> evaluation can
+      target, the <em>method families</em> used to produce evidence, and the
+      <em>evidence classes</em> that describe how formalized each practice is.
+      Categories overlap constantly — the taxonomy is a checklist for
+      describing an evaluation, not a partition.
+    </p>
+  </header>
+
+  <nav class="view-tabs" aria-label="Taxonomy views">
+    <a href="#view-objects" aria-current="true">A · Evaluation object</a>
+    <a href="#view-methods">B · Method matrix</a>
+    <a href="#view-evidence">C · Evidence and adoption</a>
+  </nav>
+
+  <section id="view-objects" aria-labelledby="view-objects-h">
+    <h2 id="view-objects-h">View A — What is being evaluated</h2>
+    <p style="max-width: 46rem; margin-top: 0.6rem;">
+      Evaluation objects form a rough stack, from datasets up to societal
+      impact. Results at one level do not automatically transfer to another —
+      most overstated claims in AI evaluation come from silently crossing
+      these levels.
+    </p>
+    {
+      LEVEL_DETAILS.map((level, i) => {
+        const term = EVALUATION_LEVELS[level.id];
+        return (
+          <article class="tax-level" id={`level-${level.id}`}>
+            <p class="level-index">Level {String(i + 1).padStart(2, '0')}</p>
+            <h3>{term.label}</h3>
+            <p>{term.description}</p>
+            <dl>
+              <dt>Typical questions</dt>
+              <dd>
+                <ul>
+                  {level.questions.map((q) => (
+                    <li>{q}</li>
+                  ))}
+                </ul>
+              </dd>
+              <dt>Common methods</dt>
+              <dd>{level.methods.join(' · ')}</dd>
+              <dt>Examples</dt>
+              <dd>{level.examples.join(' · ')}</dd>
+              <dt>Common validity mistake</dt>
+              <dd>
+                <span class="mistake">{level.validityMistake}</span>
+              </dd>
+              <dt>In the Atlas</dt>
+              <dd>
+                <a href={atlasUrl(`explore/?level=${level.id}`)}>
+                  Entries at this level →
+                </a>
+              </dd>
+            </dl>
+          </article>
+        );
+      })
+    }
+  </section>
+
+  <section id="view-methods" aria-labelledby="view-methods-h">
+    <h2 id="view-methods-h">View B — Method matrix</h2>
+    <p style="max-width: 46rem; margin: 0.6rem 0 1.2rem;">
+      Twelve method families compared on what they target, who evaluates, and
+      what their results can and cannot carry. Terms like
+      {' '}
+      {
+        ['red-teaming', 'audit', 'monitoring'].map((id, i) => {
+          const t = glossaryById.get(id);
+          return t ? (
+            <>
+              {i > 0 && ', '}
+              <span class="term-tip">
+                <a href={atlasUrl(`glossary/#${t.id}`)}>{t.term.toLowerCase()}</a>
+                <span class="tip-body" role="tooltip">
+                  {t.definition}
+                </span>
+              </span>
+            </>
+          ) : null;
+        })
+      }
+      {' '}are defined in the <a href={atlasUrl('glossary/')}>glossary</a>.
+    </p>
+
+    <div class="table-wrap matrix-table-wrap">
+      <table class="atlas-table">
+        <caption>Evaluation method families at a glance</caption>
+        <thead>
+          <tr>
+            <th scope="col">Method</th>
+            {matrixColumns.map((c) => <th scope="col">{c}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {
+            METHOD_MATRIX.map((row) => {
+              const href = maybeEntryLink(row.entryId);
+              return (
+                <tr>
+                  <th scope="row">
+                    {href ? <a href={href}>{row.method}</a> : row.method}
+                  </th>
+                  <td>{row.target}</td>
+                  <td>{row.evaluator}</td>
+                  <td>{row.output}</td>
+                  <td>{row.strength}</td>
+                  <td>{row.limitation}</td>
+                  <td>{row.maturity}</td>
+                  <td>{row.commonUse}</td>
+                </tr>
+              );
+            })
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="method-cards">
+      {
+        METHOD_MATRIX.map((row) => {
+          const href = maybeEntryLink(row.entryId);
+          return (
+            <details>
+              <summary>{row.method}</summary>
+              <dl>
+                <dt>Primary target</dt>
+                <dd>{row.target}</dd>
+                <dt>Evaluator</dt>
+                <dd>{row.evaluator}</dd>
+                <dt>Typical output</dt>
+                <dd>{row.output}</dd>
+                <dt>Strength</dt>
+                <dd>{row.strength}</dd>
+                <dt>Limitation</dt>
+                <dd>{row.limitation}</dd>
+                <dt>Maturity</dt>
+                <dd>{row.maturity}</dd>
+                <dt>Common use</dt>
+                <dd>{row.commonUse}</dd>
+              </dl>
+              {href && (
+                <p style="margin-top:0.6rem;">
+                  <a href={href}>Full Atlas entry →</a>
+                </p>
+              )}
+            </details>
+          );
+        })
+      }
+    </div>
+  </section>
+
+  <section id="view-evidence" aria-labelledby="view-evidence-h">
+    <h2 id="view-evidence-h">View C — Evidence and adoption map</h2>
+    <p style="max-width: 46rem; margin-top: 0.6rem;">
+      Every Atlas entry is assigned one of five evidence classes. The classes
+      describe <em>how formalized and adopted</em> a practice is — they are not
+      a ranking from bad to good. A formal standard may still be
+      underspecified; an experimental method may be technically strong but not
+      yet widely adopted. Practices can straddle classes, and several examples
+      below deliberately appear in more than one.
+    </p>
+
+    <div class="status-note" style="margin: 1.2rem 0 1.6rem;">
+      <p>
+        <strong>Adoption is not the same as validity.</strong> A method can be
+        widely used because it is cheap or convenient while remaining poorly
+        validated for a particular claim.
+      </p>
+    </div>
+
+    {
+      evidenceClassKeys.map(
+        (key, i) => {
+          const cls = EVIDENCE_CLASSES[key];
+          const examples = EVIDENCE_MAP_EXAMPLES.filter((e) =>
+            e.classes.includes(key),
+          );
+          return (
+            <article class="tax-level" id={`evidence-${key}`}>
+              <p class="level-index">Class {i + 1} of 5</p>
+              <h3>{cls.label}</h3>
+              <p>{cls.description}</p>
+              {examples.length > 0 && (
+                <dl>
+                  <dt>Examples</dt>
+                  <dd>
+                    <ul>
+                      {examples.map((e) => {
+                        const href = maybeEntryLink(e.entryId);
+                        return (
+                          <li>
+                            {href ? <a href={href}>{e.label}</a> : e.label}
+                            {e.classes.length > 1 && (
+                              <em> (spans classes)</em>
+                            )}{' '}
+                            — {e.note}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </dd>
+                </dl>
+              )}
+            </article>
+          );
+        },
+      )
+    }
+  </section>
+</AtlasLayout>
+
+<script>
+  /* Highlight the active view tab while scrolling between the three views. */
+  const tabs = Array.from(
+    document.querySelectorAll<HTMLAnchorElement>('.view-tabs a'),
+  );
+  const sections = tabs
+    .map((t) => document.querySelector<HTMLElement>(t.getAttribute('href') ?? ''))
+    .filter((s): s is HTMLElement => Boolean(s));
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        for (const tab of tabs) {
+          tab.setAttribute(
+            'aria-current',
+            tab.getAttribute('href') === `#${entry.target.id}` ? 'true' : 'false',
+          );
+        }
+      }
+    },
+    { rootMargin: '-20% 0px -70% 0px' },
+  );
+  for (const s of sections) observer.observe(s);
+</script>

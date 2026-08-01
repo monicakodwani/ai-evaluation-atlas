@@ -1,0 +1,79 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import AtlasLayout from './AtlasLayout.astro';
+import DraftNotice from '../components/DraftNotice.astro';
+import RelatedEntries from '../components/RelatedEntries.astro';
+import StatusBadge from '../components/StatusBadge.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import { CONTENT_STATUSES, labelOf } from '../data/vocabularies';
+import { formatDate, readingTimeMinutes } from '../lib/entries';
+
+interface Props {
+  guide: CollectionEntry<'guides'>;
+}
+
+const { guide } = Astro.props;
+const d = guide.data;
+const { Content, headings } = await render(guide);
+const minutes = readingTimeMinutes(guide.body);
+---
+
+<AtlasLayout
+  title={d.title}
+  description={d.summary}
+  currentPath={`guides/${d.id}/`}
+>
+  <header class="entry-header">
+    <p class="kicker">Guide {String(d.order).padStart(2, '0')}</p>
+    <h1>{d.title}</h1>
+    <p class="summary">{d.summary}</p>
+    <div class="guide-meta-line">
+      <StatusBadge value={d.status} />
+      <span>{labelOf(CONTENT_STATUSES, d.content_status)}</span>
+      <span>{minutes} min read</span>
+      <span>
+        Last reviewed {formatDate(d.last_reviewed)}
+        {d.reviewer && ` by ${d.reviewer}`}
+      </span>
+    </div>
+    {
+      d.key_terms.length > 0 && (
+        <p class="key-terms">
+          {d.key_terms.map((t) => (
+            <span class="badge badge-maturity">{t}</span>
+          ))}
+        </p>
+      )
+    }
+  </header>
+
+  <DraftNotice status={d.status} contentStatus={d.content_status} />
+
+  <div class="guide-layout" style="margin-top: 1.5rem;">
+    <article class="guide-prose">
+      <Content />
+
+      {
+        d.source_notes && (
+          <>
+            <hr />
+            <h2 id="source-notes">Source notes</h2>
+            <p>{d.source_notes}</p>
+          </>
+        )
+      }
+
+      {
+        d.related_entries.length > 0 && (
+          <>
+            <hr />
+            <h2 id="related-entries">Related Atlas entries</h2>
+            <RelatedEntries ids={d.related_entries} />
+          </>
+        )
+      }
+    </article>
+
+    <TableOfContents headings={headings} />
+  </div>
+</AtlasLayout>

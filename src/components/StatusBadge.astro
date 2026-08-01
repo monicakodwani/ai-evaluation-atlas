@@ -1,0 +1,14 @@
+---
+import { ENTRY_STATUSES, type EntryStatusKey } from '../data/vocabularies';
+
+interface Props {
+  value: EntryStatusKey | string;
+}
+
+const { value } = Astro.props;
+const term = ENTRY_STATUSES[value as EntryStatusKey];
+---
+
+<span class:list={['badge', `badge-status-${value}`]} title={term?.description}>
+  {term?.label ?? value}
+</span>

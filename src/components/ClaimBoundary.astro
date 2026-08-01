@@ -1,0 +1,28 @@
+---
+/**
+ * The Atlas's defining feature: a visually prominent statement of what an
+ * evaluation's results do NOT establish.
+ */
+interface Props {
+  claims: string[];
+  headingId?: string;
+}
+
+const { claims, headingId = 'not-establish' } = Astro.props;
+---
+
+{
+  claims.length > 0 && (
+    <section class="claim-boundary" aria-labelledby={headingId}>
+      <h2 id={headingId}>
+        <span class="sec-no">Claim boundary</span>
+        What it does not establish
+      </h2>
+      <ul class="claim-list">
+        {claims.map((c) => (
+          <li>{c}</li>
+        ))}
+      </ul>
+    </section>
+  )
+}

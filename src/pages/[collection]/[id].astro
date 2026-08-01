@@ -1,0 +1,24 @@
+---
+import EntryLayout from '../../layouts/EntryLayout.astro';
+import { getAllEntries, type AtlasEntryRef } from '../../lib/entries';
+import { COLLECTION_PATHS } from '../../data/vocabularies';
+
+export async function getStaticPaths() {
+  const all = await getAllEntries();
+  return all.map((ref) => ({
+    params: {
+      collection: COLLECTION_PATHS[ref.collection],
+      id: ref.entry.data.id,
+    },
+    props: { entryRef: ref },
+  }));
+}
+
+interface Props {
+  entryRef: AtlasEntryRef;
+}
+
+const { entryRef } = Astro.props;
+---
+
+<EntryLayout entryRef={entryRef} />
