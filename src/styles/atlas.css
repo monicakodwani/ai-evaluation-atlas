@@ -262,10 +262,11 @@ code {
 .atlas-nav a {
   text-decoration: none;
   color: var(--body-c);
-  font-size: 0.95rem;
-  padding: 0.35rem 0.65rem;
+  font-size: 0.92rem;
+  padding: 0.35rem 0.5rem;
   border-radius: 4px;
   border-bottom: 2px solid transparent;
+  white-space: nowrap;
 }
 
 .atlas-nav a:hover {
@@ -292,7 +293,23 @@ code {
   border-radius: 4px;
   background: var(--panel);
   color: var(--ink);
-  width: 11rem;
+  width: 9rem;
+}
+
+/* Between full desktop and the mobile menu, keep the widened nav on one line. */
+@media (max-width: 72rem) and (min-width: 46.01rem) {
+  .atlas-nav {
+    gap: 0.05rem;
+  }
+
+  .atlas-nav a {
+    font-size: 0.88rem;
+    padding: 0.3rem 0.4rem;
+  }
+
+  .nav-search input {
+    width: 7rem;
+  }
 }
 
 .nav-search input:focus {
@@ -310,6 +327,7 @@ code {
   color: var(--body-c);
   padding: 0.32rem 0.6rem;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .theme-toggle:hover,
@@ -991,10 +1009,22 @@ a:hover {
 }
 
 .tax-level {
-  border-left: 3px solid var(--navy);
-  padding: 0.2rem 0 0.2rem 1.2rem;
-  margin: 1.6rem 0;
+  border-left: 2px solid var(--rule-strong);
+  padding: 0.35rem 0 0.35rem 1.5rem;
+  margin: 2.8rem 0;
   position: relative;
+  max-width: 52rem;
+}
+
+.tax-level::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 0.55rem;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--navy);
 }
 
 .tax-level .level-index {
@@ -1012,9 +1042,9 @@ a:hover {
 .tax-level dl {
   display: grid;
   grid-template-columns: 11rem minmax(0, 1fr);
-  gap: 0.35rem 1rem;
+  gap: 0.7rem 1.4rem;
   font-size: 0.94rem;
-  margin-top: 0.6rem;
+  margin-top: 1rem;
 }
 
 .tax-level dt {
@@ -1168,7 +1198,8 @@ a:hover {
   padding: 1.2rem 1.4rem;
 }
 
-.claim-boundary h2 {
+.claim-boundary h2,
+.claim-boundary h3 {
   border-top: none;
   padding-top: 0;
   color: var(--rust);
@@ -1578,6 +1609,309 @@ a:hover {
 
 .method-cards {
   display: none;
+}
+
+/* ---------- 17b. Version 0.2 editorial components ---------- */
+
+/* Why this matters — one concise paragraph near the top of every page. */
+.why-matters {
+  border-left: 3px solid var(--teal);
+  background: var(--tint);
+  border-radius: 0 3px 3px 0;
+  padding: 0.9rem 1.2rem;
+  max-width: var(--prose);
+  margin-top: 1.3rem;
+}
+
+.why-matters .kicker {
+  margin-bottom: 0.25rem;
+}
+
+.why-matters p {
+  font-size: 0.98rem;
+}
+
+/* Common misconceptions — a defining visual feature. */
+.misconception-grid {
+  display: grid;
+  gap: 1.1rem;
+  margin-top: 1rem;
+  max-width: var(--prose);
+}
+
+.misconception-box {
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--rust);
+  border-radius: 3px;
+  padding: 1rem 1.3rem 1.1rem;
+}
+
+.mc-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.mc-label-myth {
+  color: var(--rust);
+}
+
+.mc-label-reality {
+  color: var(--green);
+  margin-top: 0.75rem;
+}
+
+.mc-myth {
+  font-family: var(--serif);
+  font-size: 1.06rem;
+  color: var(--ink);
+  margin-top: 0.15rem;
+}
+
+.mc-reality {
+  font-size: 0.97rem;
+  margin-top: 0.15rem;
+}
+
+/* Evidence boundaries — the merged claims section. */
+.evidence-boundaries {
+  max-width: var(--prose);
+}
+
+.eb-block {
+  margin-top: 1.1rem;
+}
+
+.eb-block h3 {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.eb-produces h3 {
+  color: var(--navy);
+}
+
+.eb-justified h3 {
+  color: var(--green);
+}
+
+.eb-combine h3 {
+  color: var(--teal);
+}
+
+.eb-produces p {
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 0.7rem 1rem;
+  font-size: 0.97rem;
+}
+
+.eb-combine ul.claim-list li::before {
+  content: '+';
+  color: var(--teal);
+  font-weight: 700;
+  top: 0.05rem;
+}
+
+/* Ongoing debate. */
+.debate-preface,
+.qta-preface {
+  font-size: 0.93rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+  max-width: var(--prose);
+}
+
+.debate-box {
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--teal);
+  background: var(--panel);
+  border-radius: 3px;
+  padding: 1.1rem 1.4rem 1.2rem;
+  margin-top: 1rem;
+  max-width: var(--prose);
+}
+
+.debate-question {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.debate-positions {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+}
+
+.debate-positions dt {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+
+.debate-positions dd {
+  font-size: 0.96rem;
+  margin-top: 0.1rem;
+}
+
+.debate-note {
+  margin-top: 0.9rem;
+  padding-top: 0.7rem;
+  border-top: 1px dashed var(--rule-strong);
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+/* Questions to ask — the closing section of every entry. */
+.questions-to-ask {
+  border-top: 2px solid var(--rule-strong);
+}
+
+.qta-list {
+  counter-reset: qta;
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+  max-width: var(--prose);
+  display: grid;
+  gap: 0.7rem;
+}
+
+.qta-list li {
+  counter-increment: qta;
+  position: relative;
+  padding-left: 2.3rem;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.qta-list li::before {
+  content: counter(qta, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0.14em;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--teal);
+  border: 1px solid var(--rule-strong);
+  border-radius: 3px;
+  padding: 0.05rem 0.3rem;
+}
+
+/* Learning path (homepage and How to Use). */
+.path-steps {
+  list-style: none;
+  padding: 0;
+  margin-top: 1.2rem;
+  display: grid;
+  gap: 0;
+  max-width: 46rem;
+}
+
+.path-steps li {
+  position: relative;
+  padding: 0.9rem 0 0.9rem 3.2rem;
+  border-left: 2px solid var(--rule-strong);
+  margin-left: 0.9rem;
+}
+
+.path-steps li::before {
+  content: counter(path-step, decimal-leading-zero);
+  counter-increment: path-step;
+  position: absolute;
+  left: -0.95rem;
+  top: 1rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  background: var(--navy);
+  color: var(--navy-ink);
+  border-radius: 3px;
+  padding: 0.12rem 0.35rem;
+}
+
+.path-steps {
+  counter-reset: path-step;
+}
+
+.path-steps .step-title {
+  font-family: var(--serif);
+  font-size: 1.12rem;
+  font-weight: 600;
+}
+
+.path-steps .step-title a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.path-steps .step-title a:hover {
+  color: var(--teal);
+  text-decoration: underline;
+}
+
+.path-steps p {
+  font-size: 0.93rem;
+  color: var(--body-c);
+  max-width: 38rem;
+}
+
+/* Homepage: why / who / problem. */
+.purpose-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.6rem 2.2rem;
+  max-width: 60rem;
+}
+
+.purpose-grid h3 {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.35rem;
+}
+
+.purpose-grid p {
+  font-size: 0.97rem;
+}
+
+/* Footer identity line. */
+.footer-tagline {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  color: var(--ink);
+  font-style: italic;
+}
+
+.footer-ethos {
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 0.35rem;
+}
+
+/* Map-not-territory epigraph on the Editorial Philosophy page. */
+.epigraph {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--navy);
+  border-top: 1px solid var(--rule);
+  padding-top: 1.6rem;
+  margin-top: 2.6rem;
+  max-width: var(--prose);
 }
 
 /* ---------- 18. Responsive ---------- */

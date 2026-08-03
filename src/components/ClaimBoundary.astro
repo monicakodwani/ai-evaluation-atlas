@@ -1,28 +1,29 @@
 ---
 /**
- * The Atlas's defining feature: a visually prominent statement of what an
- * evaluation's results do NOT establish.
+ * The unjustified-claims block inside an entry's Evidence Boundaries
+ * section — visually the strongest element on the page.
  */
 interface Props {
   claims: string[];
-  headingId?: string;
 }
 
-const { claims, headingId = 'not-establish' } = Astro.props;
+const { claims } = Astro.props;
 ---
 
-{
-  claims.length > 0 && (
-    <section class="claim-boundary" aria-labelledby={headingId}>
-      <h2 id={headingId}>
-        <span class="sec-no">Claim boundary</span>
-        What it does not establish
-      </h2>
+<div class="claim-boundary eb-block">
+  <h3>Claims it cannot support</h3>
+  {
+    claims.length > 0 ? (
       <ul class="claim-list">
         {claims.map((c) => (
           <li>{c}</li>
         ))}
       </ul>
-    </section>
-  )
-}
+    ) : (
+      <p>
+        The claim boundary for this entry has not been drafted yet — a
+        defining section of every completed Atlas entry.
+      </p>
+    )
+  }
+</div>

@@ -1,7 +1,7 @@
 ---
 id: evaluation-after-deployment
 title: Evaluation After Deployment
-order: 10
+order: 11
 summary: >-
   Release-time evidence decays. On monitoring, drift, sampled review,
   incidents, and observatories — the evaluation that starts when the

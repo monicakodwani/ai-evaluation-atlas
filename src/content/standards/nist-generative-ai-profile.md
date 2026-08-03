@@ -65,6 +65,30 @@ inappropriate_claims:
   - That the profile defines a compliance bar a system can pass — it
     prescribes no thresholds.
   - That profile use constitutes legal compliance in any jurisdiction.
+why_it_matters: >-
+  Organizations cite alignment with this profile as evidence of responsible generative-AI practice; anyone consuming those claims needs to know what that alignment does and does not demonstrate.
+evidence_produced: >-
+  Documentary evidence that an organization has mapped generative-AI risks
+  to the profile's suggested actions — coverage of a risk-management
+  process, not measured system behavior.
+combine_with:
+  - Direct technical evaluation of the systems the process governs — the
+    profile structures the work but does not perform it.
+  - Deployment monitoring, since profile alignment is a point-in-time
+    posture.
+  - Independent review of whether mapped actions were actually implemented.
+misconceptions:
+  - misconception: Following the profile means generative-AI risks are controlled.
+    reality: >-
+      The profile organizes risk identification and suggests actions; it
+      does not prescribe metrics, thresholds, or tests, and alignment with
+      it does not verify that any mitigation works.
+questions_to_ask:
+  - Which suggested actions were adopted, which were skipped, and why?
+  - What measurements stand behind each mapped risk?
+  - Who verified implementation — the organization itself, or an
+    independent party?
+  - Is the mapping current with the systems actually deployed?
 known_failure_modes:
   - Profile alignment cited as a safety assurance for a specific model or
     product without accompanying measurement.
@@ -83,7 +107,7 @@ source_status: >-
   and the July 2024 date are as reported there and unverified; a dedicated
   source record for the profile document itself has not yet been created.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - risk-management

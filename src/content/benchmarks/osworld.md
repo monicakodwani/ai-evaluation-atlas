@@ -66,6 +66,39 @@ inappropriate_claims:
     the benchmark's environment coverage.
   - That a single-run success rate characterizes a stochastic agent's
     dependable performance.
+why_it_matters: >-
+  Computer-use agents are moving into real workflows, and the gap between environment success rates and safe deployed behavior is exactly where overclaiming happens.
+evidence_produced: >-
+  End-state task success rates for computer-use agents in real
+  applications, under a specified scaffold, budget, and number of runs —
+  capability evidence within the environment's task distribution.
+combine_with:
+  - Trajectory and process review, since end states can be reached through
+    unsafe or unauthorized steps the checker does not score.
+  - Prompt-injection and permission-boundary testing before any claim
+    about safe operation on a user's machine.
+  - Repeated runs with variance reported, given agent stochasticity.
+misconceptions:
+  - misconception: OSWorld success means the agent can safely use a computer.
+    reality: >-
+      It means the agent reached scored end states on bounded tasks.
+      Safety properties — respecting permissions, resisting injected
+      instructions, avoiding destructive shortcuts — are not what the task
+      checkers measure.
+  - misconception: A single success rate characterizes the agent.
+    reality: >-
+      The number belongs to a model-plus-scaffold-plus-budget
+      configuration, and run-to-run variance is large; a different
+      scaffold or a second run can move it substantially.
+questions_to_ask:
+  - How many runs produced this number, and what was the variance?
+  - What scaffold, tools, and budget — and are they reported as part of
+    the result?
+  - Which task families drive the success rate?
+  - Were any safety or authorization behaviors observed during the runs,
+    and did anyone look?
+  - How would performance change on applications and tasks outside the
+    environment's coverage?
 known_failure_modes:
   - Agents finding environment-specific shortcuts that satisfy checkers
     without the intended competence.
@@ -82,7 +115,7 @@ source_status: >-
   Drafted from working research reports, which cite Xie et al., 2024, as
   the OSWorld paper. Details not yet independently verified.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - agents

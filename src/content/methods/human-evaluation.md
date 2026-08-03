@@ -110,6 +110,68 @@ inappropriate_claims:
   - That a single averaged Likert score is a stable measurement of
     quality — averaging conceals disagreement and treats an ordinal
     response as an error-free interval scale.
+evidence_produced: >-
+  Human judgments under a specified protocol: ratings, preferences, or
+  adjudications from a particular rater pool, whose measured agreement
+  bounds what the resulting labels can support.
+combine_with:
+  - Automated or benchmark scoring for scale, reserving human judgment
+    for the contested constructs and the samples where it is actually
+    needed.
+  - AI-as-a-judge for volume, with the human labels serving as the
+    validation reference for the judge — never the reverse.
+  - Field or deployment evaluation when the question is whether ratings
+    collected under a lab protocol predict anything about real use.
+misconceptions:
+  - misconception: Human evaluation is the gold standard.
+    reality: >-
+      It is the reference standard only when reliability is measured and
+      the raters' expertise matches the construct. An unmeasured panel is
+      just another uncalibrated instrument.
+  - misconception: Disagreement between raters is noise to average away.
+    reality: >-
+      Disagreement often carries signal — genuine ambiguity, cultural
+      variation, or a contested construct. Averaging it away discards the
+      finding and overstates the precision of the result.
+  - misconception: If humans preferred it, it is better.
+    reality: >-
+      A preference win rate is evidence about that rater pool, interface,
+      and criterion. Lay preference tracks style and confidence, and has
+      been found to diverge from expert judgment.
+questions_to_ask:
+  - Who were the evaluators — how were they recruited, and what
+    population do they actually represent?
+  - What expertise did the construct require, and did the raters have it?
+  - Were disagreements measured with a chance-corrected statistic, and
+    how were they resolved — majority vote, adjudication, or silent
+    discard?
+  - How were the rubrics designed, and were raters trained and calibrated
+    on them before scoring began?
+  - Could the study be re-run from what is reported — instructions,
+    interface, item sampling, compensation, adjudication rules?
+  - If the content was disturbing, how were the raters protected?
+debates:
+  - question: Should rater disagreement be resolved away or preserved?
+    positions:
+      - label: Aggregate to a single label
+        view: >-
+          Most uses of human evaluation need one label per item. With
+          trained raters and clear guidelines, much disagreement really
+          is error — fatigue, misreading, scale misuse — and majority
+          voting or adjudication suppresses it correctly, yielding stable
+          labels that downstream decisions can actually use.
+      - label: Preserve disagreement as signal
+        view: >-
+          For contested constructs — harm, offensiveness, quality —
+          disagreement reflects genuine human variation, not error.
+          Forcing a single label erases minority judgments and
+          manufactures an artificially confident ground truth;
+          distributions over judgments are the more honest measurement.
+    note: >-
+      Mainstream practice aggregates; a research line summarized in the
+      working reports argues for disagreement-aware designs. Which is
+      right depends on whether the construct plausibly has a single true
+      label at all.
 limitations:
   - Expensive and slow; expert time is scarcest exactly where it is most
     needed, and longitudinal or large-sample designs are rare.
@@ -191,7 +253,7 @@ source_status: >-
   against primary sources, and dedicated primary source records remain to
   be added.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - human-evaluation

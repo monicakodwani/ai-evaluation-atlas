@@ -1,7 +1,7 @@
 ---
 id: human-judgment-and-disagreement
 title: Human Judgment and Disagreement
-order: 4
+order: 5
 summary: >-
   Human evaluation is the reference standard for contested qualities — yet
   its own reliability is rarely measured. On disagreement as data, rater

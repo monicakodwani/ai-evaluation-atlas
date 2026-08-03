@@ -1,8 +1,9 @@
 ---
 /**
  * Detail page for any Atlas entry. Every entry type renders through this
- * layout so the section order — including the prominent "What it does not
- * establish" boundary — stays consistent across the whole Atlas.
+ * layout so the section order stays consistent across the whole Atlas:
+ * what it is → misconceptions → evidence boundaries → strengths and limits
+ * → ongoing debate → evidence quality → sources → questions to ask.
  */
 import { render } from 'astro:content';
 import AtlasLayout from './AtlasLayout.astro';
@@ -12,12 +13,20 @@ import EntryBadge from '../components/EntryBadge.astro';
 import EntryMetadata from '../components/EntryMetadata.astro';
 import EvidenceClassBadge from '../components/EvidenceClassBadge.astro';
 import MaturityBadge from '../components/MaturityBadge.astro';
+import MisconceptionList from '../components/MisconceptionList.astro';
+import OngoingDebate from '../components/OngoingDebate.astro';
+import QuestionsToAsk from '../components/QuestionsToAsk.astro';
 import RelatedEntries from '../components/RelatedEntries.astro';
 import SourceList from '../components/SourceList.astro';
 import StatusBadge from '../components/StatusBadge.astro';
 import { getCollection } from 'astro:content';
 import { COLLECTION_PATHS } from '../data/vocabularies';
-import { atlasUrl, formatDate, type AtlasEntryRef } from '../lib/entries';
+import {
+  atlasUrl,
+  entryTypeOf,
+  formatDate,
+  type AtlasEntryRef,
+} from '../lib/entries';
 
 interface Props {
   entryRef: AtlasEntryRef;
@@ -63,12 +72,20 @@ const no = () => {
 
   <DraftNotice status={d.status} contentStatus={d.content_status} />
 
+  {
+    d.why_it_matters && (
+      <aside class="why-matters" aria-label="Why this matters">
+        <p class="kicker">Why this matters</p>
+        <p>{d.why_it_matters}</p>
+      </aside>
+    )
+  }
+
   <div class="entry-body">
     <div class="entry-main">
       <section aria-labelledby="what-it-is">
         <h2 id="what-it-is"><span class="sec-no">{no()}</span>What it is</h2>
         {d.definition && <p>{d.definition}</p>}
-        {d.why_it_matters && <p>{d.why_it_matters}</p>}
         {
           hasBody && (
             <div class="guide-prose">
@@ -78,34 +95,57 @@ const no = () => {
         }
       </section>
 
-      <section aria-labelledby="useful-for" class="appropriate-claims">
-        <h2 id="useful-for">
-          <span class="sec-no">{no()}</span>What it is useful for
+      {
+        d.misconceptions.length > 0 && (
+          <MisconceptionList items={d.misconceptions} sectionNo={no()} />
+        )
+      }
+
+      <section class="evidence-boundaries" aria-labelledby="evidence-boundaries-h">
+        <h2 id="evidence-boundaries-h">
+          <span class="sec-no">{no()}</span>Evidence boundaries
         </h2>
+        <p>
+          Every evaluation approach produces a particular kind of evidence.
+          This section states what that evidence is, which claims it can and
+          cannot carry, and when it should be combined with other methods.
+        </p>
+
         {
-          d.appropriate_claims.length > 0 ? (
-            <ul class="claim-list">
-              {d.appropriate_claims.map((c) => (
-                <li>{c}</li>
-              ))}
-            </ul>
-          ) : (
-            <p>Appropriate claims for this entry have not been drafted yet.</p>
+          d.evidence_produced && (
+            <div class="eb-block eb-produces">
+              <h3>What evidence it produces</h3>
+              <p>{d.evidence_produced}</p>
+            </div>
           )
         }
-      </section>
 
-      <section>
-        <span class="visually-hidden">{no()}</span>
+        <div class="eb-block eb-justified appropriate-claims">
+          <h3>Claims it can support</h3>
+          {
+            d.appropriate_claims.length > 0 ? (
+              <ul class="claim-list">
+                {d.appropriate_claims.map((c) => (
+                  <li>{c}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>Justified claims for this entry have not been drafted yet.</p>
+            )
+          }
+        </div>
+
         <ClaimBoundary claims={d.inappropriate_claims} />
+
         {
-          d.inappropriate_claims.length === 0 && (
-            <div class="claim-boundary">
-              <h2>What it does not establish</h2>
-              <p>
-                The claim boundary for this entry has not been drafted yet — a
-                defining section of every completed Atlas entry.
-              </p>
+          d.combine_with.length > 0 && (
+            <div class="eb-block eb-combine">
+              <h3>When to combine it with other methods</h3>
+              <ul class="claim-list">
+                {d.combine_with.map((c) => (
+                  <li>{c}</li>
+                ))}
+              </ul>
             </div>
           )
         }
@@ -150,6 +190,12 @@ const no = () => {
               </>
             )}
           </section>
+        )
+      }
+
+      {
+        d.debates.length > 0 && (
+          <OngoingDebate debates={d.debates} sectionNo={no()} />
         )
       }
 
@@ -236,6 +282,12 @@ const no = () => {
           )
         }
       </section>
+
+      <QuestionsToAsk
+        questions={d.questions_to_ask}
+        entryType={entryTypeOf(entryRef)}
+        sectionNo={no()}
+      />
     </div>
 
     <EntryMetadata ref={entryRef} />

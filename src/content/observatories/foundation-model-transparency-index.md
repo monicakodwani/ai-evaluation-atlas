@@ -62,6 +62,35 @@ inappropriate_claims:
   - That a high transparency score establishes the disclosed practices are
     adequate, safe, or truthfully described.
   - That transparency scores rank the safety of developers' models.
+why_it_matters: >-
+  Transparency scores get cited as proxies for responsible practice; keeping "what developers disclose" separate from "what they do" is the entire point of reading the index well.
+evidence_produced: >-
+  Rubric-based scores of developers' public disclosure across lifecycle
+  dimensions — a measurement of what is disclosed, not of whether
+  disclosed practices are adequate or truthful.
+combine_with:
+  - Independent verification of specific disclosed practices before
+    treating them as facts.
+  - Critical reading of the underlying system cards and documentation the
+    scores summarize.
+  - Regulatory and incident records, which capture behavior disclosure
+    does not.
+misconceptions:
+  - misconception: A high transparency score means responsible practice.
+    reality: >-
+      The index scores disclosure. A developer can document questionable
+      practices thoroughly and score well; another can behave well and
+      disclose little.
+  - misconception: Falling index scores mean the industry is behaving worse.
+    reality: >-
+      Falling scores mean less is being disclosed — a retreat in
+      transparency, which may or may not track a change in practice.
+questions_to_ask:
+  - Which indicators drive the score being cited, and which are near zero?
+  - How much of the input is self-reported by developers?
+  - What value judgments does the rubric embed about what transparency
+    means?
+  - What would verification — rather than disclosure scoring — require?
 related_entries:
   - system-cards
   - model-cards
@@ -72,7 +101,7 @@ source_status: >-
   Drafted from working research reports; rubric details and edition
   findings need verification against the index's publications.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - transparency

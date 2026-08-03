@@ -17,6 +17,11 @@ definition: >-
   by whether the tests pass, conventionally reported as pass@k. The working
   reports describe the item set as small and function-level, which bounds
   what the score can say about software engineering more broadly.
+why_it_matters: >-
+  HumanEval established execution-based scoring for code generation and
+  anchored several years of progress claims about coding models. It is
+  still widely quoted, so readers need to know exactly what a near-ceiling
+  score on small function problems does and does not show.
 claimed_constructs:
   - capability
   - accuracy
@@ -73,6 +78,44 @@ inappropriate_claims:
     informative, given saturation and contamination.
   - That passing the benchmark's test cases establishes code correctness or
     security beyond what those specific tests check.
+evidence_produced: >-
+  Pass rates (conventionally pass@k) from executing generated code against
+  fixed test suites on small function-level problems — checkable evidence
+  about test-passing, not about software engineering.
+combine_with:
+  - Repository-level execution-based suites when the claim concerns
+    realistic engineering work rather than function completion.
+  - Contamination checks before interpreting frontier scores on this
+    long-public item set.
+  - Code review and security-focused evaluation before any deployment
+    claim, since passing the provided tests establishes nothing beyond
+    them.
+misconceptions:
+  - misconception: >-
+      A high HumanEval score means the model writes production-ready code.
+    reality: >-
+      The items are small, self-contained functions scored by limited test
+      suites. Repositories, dependencies, ambiguous requirements, and
+      maintenance — most of real software work — are outside the
+      instrument.
+  - misconception: >-
+      Execution-based scoring makes the number objective, so it can be
+      taken at face value.
+    reality: >-
+      Execution removes grader judgment, not the other problems.
+      Incomplete test oracles, memorized solutions, and a saturated
+      ceiling all still distort what the score means.
+questions_to_ask:
+  - Could the model have seen these long-public problems in training, and
+    did anyone check?
+  - Is the reported figure pass@1 or a higher k, and under what sampling
+    settings?
+  - Is the model at or near the ceiling, where differences no longer
+    discriminate?
+  - Has the claim slid from "passes these function-level tests" to "can
+    code" or "can do software engineering"?
+  - What do the test suites actually check — and what, such as security or
+    maintainability, do they leave unchecked?
 known_failure_modes:
   - Score inflation from solutions memorized during training.
   - Overfitting to the benchmark's problem style rather than general coding
@@ -94,7 +137,7 @@ source_status: >-
   problems; the item count, authorship, and saturation and contamination
   claims are unverified against primary sources.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - benchmark

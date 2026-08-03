@@ -15,6 +15,11 @@ definition: >-
   and organizes them for search and analysis. The working reports attribute
   its operation to the Responsible AI Collaborative, with origins connected
   to Partnership on AI support.
+why_it_matters: >-
+  Almost everything else in evaluation happens before deployment; incident
+  databases are one of the few public records of what actually goes wrong
+  afterward. Read carefully, they anchor risk taxonomies in documented
+  failures — read carelessly, they become a fake harm statistic.
 claimed_constructs:
   - social-impact
   - safety
@@ -64,6 +69,33 @@ inappropriate_claims:
     safety.
   - That aggregation of reports constitutes evaluation evidence about any
     particular system.
+evidence_produced: >-
+  A public, traceable record of reported incidents and near-harms —
+  evidence that specific failures were reported and documented, with
+  counts reflecting reporting effort and visibility as much as underlying
+  harm.
+combine_with:
+  - Exposure or deployment data before any rate or trend-in-harm claim —
+    counts alone have no denominator.
+  - Root-cause analysis of individual incidents, which the database
+    records but does not perform.
+  - System-level evaluation for claims about any particular system.
+misconceptions:
+  - misconception: Incident counts measure how much harm AI is causing.
+    reality: >-
+      Counts measure reports. They rise with deployment, media attention,
+      and reporting effort; without a denominator they cannot be converted
+      into rates or risk.
+  - misconception: No recorded incidents means a system or category is safe.
+    reality: >-
+      Absence of reports is not absence of harm — many harms are
+      invisible, unattributed, or unreported, and coverage tracks media
+      visibility.
+questions_to_ask:
+  - What would the denominator have to be for this count to become a rate?
+  - How were duplicates and disputed reports handled?
+  - Who reports incidents of this type, and who never would?
+  - Would the harm you care about even be visible to this database?
 related_entries:
   - oecd-ai
   - continuous-evaluation
@@ -75,7 +107,7 @@ source_status: >-
   characterizations need verification against the database's own
   documentation.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - incidents

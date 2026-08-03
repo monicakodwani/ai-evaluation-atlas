@@ -43,6 +43,27 @@ inappropriate_claims:
     unverifiable, which is a different (and repairable) defect.
   - That using a standardized harness by itself makes an evaluation
     reproducible if the configuration is still unreported.
+misconceptions:
+  - misconception: If a result was produced with a standard harness, it is reproducible.
+    reality: >-
+      Harnesses standardize execution, not disclosure. Without the exact
+      prompts, settings, versions, and scoring configuration, the same
+      harness can produce different numbers.
+  - misconception: An unreproducible result is a wrong result.
+    reality: >-
+      It is an unverifiable one — a different, repairable defect. The
+      problem is that the claim must be trusted rather than checked, not
+      that it has been refuted.
+questions_to_ask:
+  - Could you re-run this evaluation from what is published — exact prompts,
+    few-shot examples, decoding settings, model version, and scoring code?
+  - Which model snapshot was tested, and is that snapshot still accessible,
+    or has the API name silently moved on?
+  - If a judge model scored the outputs, are its identity, version, and
+    judging prompt disclosed?
+  - Has anyone independently re-run this result — and if their number
+    differed, was the gap traced to disclosure, version drift, or both?
+  - Is naming a harness standing in for actual configuration disclosure?
 known_failure_modes:
   - Silent provider-side model updates behind stable API names.
   - Reported numbers produced with undisclosed prompt engineering.
@@ -60,7 +81,7 @@ source_status: >-
   Drafted from working research reports; disclosure-practice findings need
   verification against the underlying studies.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - measurement

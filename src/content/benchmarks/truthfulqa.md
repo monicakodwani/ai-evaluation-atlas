@@ -17,6 +17,12 @@ definition: >-
   reports, responses are scored by human raters or by learned graders,
   which makes results dependent on the grading mechanism as well as the
   model under test.
+why_it_matters: >-
+  TruthfulQA scores are routinely cited as evidence that a model "tells the
+  truth" — a leap from resisting one curated misconception set to a broad
+  disposition the instrument has never been validated to measure. It is a
+  standing example of how a narrow instrument gets read as a broad
+  construct.
 claimed_constructs:
   - factuality
 evaluation_levels:
@@ -73,6 +79,36 @@ inappropriate_claims:
     specialized domains, or non-English contexts the items do not cover.
   - That score differences reflect model behavior alone, when grader choice
     and grader error are part of the measurement.
+evidence_produced: >-
+  Scores on a fixed set of questions targeting common misconceptions — how
+  often a model reproduces imitative falsehoods under this instrument's
+  format and scoring rule.
+combine_with:
+  - Factuality evaluation on deployment-relevant queries, ideally with
+    retrieval in place, before any claim about truthfulness in use.
+  - Human or expert adjudication where items are contested — several of
+    the benchmark's construct debates concern the answer key itself.
+misconceptions:
+  - misconception: A high TruthfulQA score means the model tells the truth in use.
+    reality: >-
+      It means fewer imitative falsehoods on this item set under its format
+      and scoring. Truthfulness in deployment depends on the queries users
+      actually ask, retrieval, decoding, and context the benchmark does not
+      contain.
+  - misconception: Truthfulness is a single property one benchmark can capture.
+    reality: >-
+      The instrument targets one specific failure mode — reproducing common
+      misconceptions — not honesty, calibration, or factual coverage in
+      general.
+questions_to_ask:
+  - Which failure mode do the items actually target, and is that the one
+    your use case cares about?
+  - How old and how public is the item set — could contamination or
+    familiarity inflate scores?
+  - Was the multiple-choice or generation variant used, and how was
+    generation scored?
+  - Do contested answer-key items affect the comparison being cited?
+  - Would the score survive on fresh, deployment-relevant queries?
 related_entries:
   - benchmark-based-evaluation
   - benchmark-contamination
@@ -88,7 +124,7 @@ source_status: >-
   needs to be created and verified. Contamination and construct-validity
   claims are unverified against primary sources.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - benchmark

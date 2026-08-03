@@ -30,6 +30,8 @@ strengths: []
 limitations: []
 appropriate_claims: []
 inappropriate_claims: []
+# evidence_produced / combine_with / misconceptions / questions_to_ask /
+# debates are also supported — see templates/method-entry.md for the shapes.
 known_failure_modes: []
 related_entries: [standards-and-assurance]
 related_guides: []

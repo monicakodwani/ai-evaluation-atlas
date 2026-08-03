@@ -41,6 +41,29 @@ inappropriate_claims:
     model, prompt, or usage changes.
   - That a benchmark's name guarantees its content and scoring are what
     they were when cited results were produced.
+misconceptions:
+  - misconception: Drift means the model is degrading.
+    reality: >-
+      The model may be unchanged. Drift is divergence between the evidence
+      and the current system-in-context — and it arrives just as often
+      through prompts, users, input distributions, or revisions to the
+      benchmark itself.
+  - misconception: A stable benchmark name means a stable instrument.
+    reality: >-
+      Datasets and scoring code get revised while the name stays the same.
+      Results cited under the same benchmark name can describe different
+      instruments.
+questions_to_ask:
+  - When was this evaluation run, and which exact model version, prompts,
+    and benchmark version does it describe?
+  - What has changed since then — model updates, scaffolding changes,
+    usage shifts, benchmark revisions?
+  - Is there a defined trigger for re-evaluation, or does the result stand
+    until someone remembers to check?
+  - Do longitudinal comparisons use the same instrument version
+    throughout, or is measured "progress" partly an artifact?
+  - Could a silent model update behind a stable API name have invalidated
+    this comparison?
 known_failure_modes:
   - Silent model updates behind stable API names invalidating published
     comparisons.
@@ -56,7 +79,7 @@ source_status: >-
   Drafted from working research reports; concept-level synthesis with no
   unverified specifics beyond report attributions.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - monitoring

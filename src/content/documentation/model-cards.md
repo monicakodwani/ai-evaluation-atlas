@@ -88,6 +88,34 @@ adoption_evidence: >-
   Working reports describe model cards as common among major model
   releases, with content and reproducibility varying widely. Adoption of
   the genre is well supported; consistency of its contents is not.
+evidence_produced: >-
+  Structured public disclosure about a model — evidence of what its
+  developer chose to state about intended use, evaluation, and
+  limitations. Disclosure, not verification.
+combine_with:
+  - Independent evaluation that reproduces at least the card's key claims.
+  - Version comparison across releases, since silent changes are
+    themselves informative.
+  - The primary sources the card summarizes, where they are published.
+misconceptions:
+  - misconception: A model card is evidence the model was evaluated well.
+    reality: >-
+      A card is evidence the developer published selected results. The
+      evaluations behind it may be strong or weak; the card format itself
+      verifies nothing.
+  - misconception: A complete-looking card means a transparent model.
+    reality: >-
+      Cards routinely omit the details reproduction would need — prompts,
+      settings, uncertainty, subgroup results, failed evaluations — while
+      remaining polished and complete in appearance.
+questions_to_ask:
+  - What is conspicuously absent — subgroups, uncertainty, failed tests,
+    exact configurations?
+  - Can any claim in the card be independently reproduced from what is
+    published?
+  - Has the card been updated since release, and is its version history
+    visible?
+  - Who is the card's audience, and what incentives shaped the text?
 known_failure_modes:
   - Selective disclosure, where favorable results are reported and
     unfavorable or ambiguous ones omitted without any indication.
@@ -114,7 +142,7 @@ source_status: >-
   from those reports and not yet checked against the original paper or a
   systematic sample of published cards.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - documentation

@@ -66,6 +66,35 @@ inappropriate_claims:
     adaptive conditions.
   - That the absence of a risk from a card means the risk was assessed and
     ruled out.
+why_it_matters: >-
+  System cards are becoming de facto compliance artifacts; the difference between disclosure and verification determines what they can actually prove.
+evidence_produced: >-
+  Public disclosure of a deployed system's evaluations, mitigations, and
+  known limitations, as selected and framed by its developer.
+combine_with:
+  - Independent testing of the deployed system, since cards cannot verify
+    themselves.
+  - Monitoring over time against the card's claims, especially after
+    updates.
+  - Cross-reading with regulatory disclosures and incident reports.
+misconceptions:
+  - misconception: A published system card proves the system was rigorously evaluated.
+    reality: >-
+      It proves the developer disclosed selected evaluations and results.
+      Rigor, sufficiency, and independence of those evaluations are
+      separate questions the card cannot settle.
+  - misconception: If a risk is not in the card, it was assessed and ruled out.
+    reality: >-
+      Absence from a card is not evidence of absence — it may mean the
+      risk was not tested, not found, or not disclosed.
+questions_to_ask:
+  - Are prompts, settings, judge identities, and uncertainty disclosed —
+    or only headline results?
+  - Has the card been updated post-release as issues emerged?
+  - Which limitations are named specifically, and which are generic
+    boilerplate?
+  - What would an independent tester check first that the card does not
+    address?
 known_failure_modes:
   - Cards communicating selected favorable findings while the evidentiary
     details needed for scrutiny remain internal.
@@ -80,7 +109,7 @@ source_status: >-
   Drafted from working research reports. Genre history and disclosure-gap
   findings not yet verified against primary sources.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - documentation

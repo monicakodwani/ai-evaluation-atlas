@@ -78,6 +78,67 @@ inappropriate_claims:
     are validated measures of the constructs benchmarks claim.
   - That standardized execution certifies a model's capability or safety
     — the harness only controls how instruments are administered.
+evidence_produced: >-
+  Traceable benchmark scores: numbers tied to a named harness version, task
+  configuration, and execution setup, so a published result can in
+  principle be rerun. The evidence is about execution provenance, not about
+  the validity of the benchmarks executed.
+combine_with:
+  - Contamination and saturation checks on the underlying benchmarks — the
+    harness runs them faithfully whether or not they still discriminate
+    between systems.
+  - Prompt-sensitivity analysis when comparisons are close, since scores
+    move with template and few-shot choices the harness parameterizes but
+    does not resolve.
+  - Evaluation the harness does not cover — human evaluation, system-level
+    testing — before any claim that goes beyond model-on-benchmark
+    performance.
+misconceptions:
+  - misconception: Using the standard harness makes benchmark results valid.
+    reality: >-
+      Reproducible execution is not valid measurement. The harness controls
+      how an instrument is administered; it cannot repair contamination,
+      saturation, or a benchmark that never measured its named construct.
+  - misconception: Scores from the same harness are comparable across papers.
+    reality: >-
+      Comparability requires matching harness version, task revision,
+      prompt template, and model configuration. Naming the software is not
+      naming the configuration.
+  - misconception: The harness's task formulation is the benchmark's correct form.
+    reality: >-
+      Every harness encodes one choice among defensible prompt formats and
+      scoring rules. Wide adoption made it a convention, not a validated
+      formulation.
+questions_to_ask:
+  - Which harness version and task revision were used, and does the paper
+    or release actually state them?
+  - Do the compared systems share the same prompt template, few-shot
+    examples, and decoding settings?
+  - Are cross-paper comparisons in this claim run under matched
+    configurations, or merely under the same harness name?
+  - Has the underlying benchmark been checked for contamination for these
+    particular models?
+  - Would the reported ranking survive a different but equally defensible
+    task formulation?
+debates:
+  - question: Should the field standardize on a single evaluation harness?
+    positions:
+      - label: Converge on shared infrastructure
+        view: >-
+          Fragmented ad hoc scripts are a major reason published scores
+          cannot be compared or reproduced. One widely adopted, versioned
+          harness turns "we evaluated on X" into a checkable claim and
+          concentrates engineering scrutiny on a single codebase.
+      - label: Preserve implementation plurality
+        view: >-
+          A single harness bakes one prompt format and scoring rule into
+          the field's results and hides how sensitive scores are to those
+          choices. Independent implementations that disagree are a feature
+          — they expose fragility a monoculture would conceal.
+    note: >-
+      In practice several major harnesses coexist, and the working reports
+      treat cross-harness score differences as a known but imperfectly
+      quantified phenomenon.
 adoption_evidence: >-
   Working research reports describe lm-evaluation-harness as the academic
   standard or default harness for benchmark execution. This is an adoption
@@ -99,7 +160,7 @@ source_status: >-
   Stub drafted from working research reports; the repository and its
   documentation have not yet been checked directly.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - harness

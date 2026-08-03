@@ -1,7 +1,7 @@
 ---
 id: red-teaming-versus-risk-estimation
 title: Red Teaming Versus Risk Estimation
-order: 7
+order: 8
 summary: >-
   Red teaming proves failures exist; risk estimation asks how likely and
   how costly they are. Confusing the two is one of the field's most

@@ -1,7 +1,7 @@
 ---
 id: ai-as-a-judge
 title: When Is AI-as-a-Judge Appropriate?
-order: 5
+order: 6
 summary: >-
   AI judges made evaluation scale — and imported a new class of systematic
   bias. Where judge-based scoring is defensible, where it breaks, and how

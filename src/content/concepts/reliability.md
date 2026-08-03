@@ -72,6 +72,48 @@ inappropriate_claims:
     single-run difference between two models is a stable ranking.
   - That raw percent agreement demonstrates reliable human measurement,
     especially when label prevalence is skewed.
+misconceptions:
+  - misconception: A reliable evaluation is a valid one.
+    reality: >-
+      Consistency is not truth. Raters and re-runs can agree perfectly on a
+      criterion that measures the wrong thing — reliability bounds precision,
+      not meaning.
+  - misconception: A single run is enough if the benchmark is large.
+    reality: >-
+      Item count addresses only one variance source. Prompt choice, decoding
+      randomness, judge identity, and model-version drift survive any number
+      of items, and each can move the headline score.
+questions_to_ask:
+  - How many runs produced this number, and what varied between them?
+  - Is the reported difference between systems larger than the run-to-run
+    and prompt-to-prompt variance — and was that variance measured at all?
+  - For human labels, what chance-corrected agreement did raters reach, and
+    does the claimed precision exceed that ceiling?
+  - Which variance sources — items, prompts, seeds, judges, model snapshot —
+    were actually sampled, and which were silently held fixed?
+  - Could the model behind an API name have changed between the measurements
+    being compared?
+debates:
+  - question: Is rater disagreement noise to be resolved or signal to be preserved?
+    positions:
+      - label: Disagreement is error
+        view: >-
+          Measurement needs a reference. Disagreement usually reflects
+          underspecified guidelines, insufficient training, or inattention,
+          and the remedy is better instructions, calibration, and
+          adjudication. Scores against labels nobody agrees on mean nothing.
+      - label: Disagreement is data
+        view: >-
+          On subjective or contested criteria — offensiveness, helpfulness,
+          harm — disagreement reflects genuine differences in values and
+          interpretation. Collapsing it to a majority label erases the
+          phenomenon; the honest move is to model the distribution of
+          judgments.
+    note: >-
+      Much current work splits the difference by criterion type — treating
+      disagreement on factual questions as error to reduce and disagreement
+      on contested ones as structure to report. The working reports treat
+      this as an open methodological question, not settled practice.
 reliability_evidence: >-
   Meta-research summarized in working reports indicates that uncertainty
   reporting and inter-rater reliability are uncommon in benchmark and
@@ -106,7 +148,7 @@ source_status: >-
   rarely reliability is reported, and specific agreement figures, are not
   yet verified against primary sources.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - measurement

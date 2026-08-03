@@ -1,0 +1,75 @@
+---
+import AtlasLayout from '../../layouts/AtlasLayout.astro';
+import { atlasUrl } from '../../lib/entries';
+---
+
+<AtlasLayout
+  title="Editorial Philosophy"
+  description="How to read the AI Evaluation Atlas: evidence-informed, transparent about interpretation, and written to encourage critical thinking rather than passive acceptance."
+  currentPath="editorial-philosophy/"
+>
+  <header class="entry-header">
+    <p class="kicker">How to read this Atlas</p>
+    <h1>Editorial Philosophy</h1>
+  </header>
+
+  <div class="guide-prose" style="margin-top: 1.8rem;">
+    <p>
+      The AI Evaluation Atlas is an independent research project created to
+      organize, explain, and encourage discussion about AI evaluation.
+    </p>
+    <p>
+      Artificial intelligence evaluation is a rapidly evolving field. Many
+      topics covered in this Atlas remain active areas of research where
+      reasonable experts disagree about definitions, methods, evidence, and
+      best practices.
+    </p>
+    <p>This Atlas attempts to distinguish between:</p>
+    <ul>
+      <li>formal standards;</li>
+      <li>regulatory requirements;</li>
+      <li>widely adopted practices;</li>
+      <li>research conventions;</li>
+      <li>emerging methods;</li>
+      <li>the author’s own synthesis and interpretation.</li>
+    </ul>
+    <p>
+      Whenever possible, entries are grounded in primary sources including
+      research papers, technical documentation, standards, and official
+      reports. Each entry shows its evidence class, its maturity, and the
+      verification status of its sources, so you can see how firm the ground
+      is beneath any particular claim.
+    </p>
+    <p>
+      However, the organization of the Atlas, the proposed taxonomy, the
+      comparisons between methods, and many of the broader interpretations
+      represent my own effort to synthesize a fragmented field. They should
+      not be interpreted as official guidance, universal consensus, or
+      endorsement by any institution, employer, funding agency, publisher,
+      standards body, or research organization.
+    </p>
+    <p>
+      Where the field genuinely disagrees, the Atlas says so: entries carry
+      <em>Ongoing debate</em> sections that summarize competing positions
+      rather than resolving them, and <em>Evidence boundaries</em> sections
+      that state plainly which claims a method's results cannot carry. When
+      the Atlas takes a position — and it does — the reasoning is on the
+      page, where you can argue with it.
+    </p>
+    <p>
+      I encourage readers to consult original sources, challenge the ideas
+      presented here, compare alternative viewpoints, and develop their own
+      understanding. The <a href={atlasUrl('methodology/')}>Methodology</a>
+      page explains how entries are classified and verified, and every page
+      links to a <a href={atlasUrl('guides/')}>guide</a> or source where the
+      thinking can be checked.
+    </p>
+    <p>
+      The purpose of the Atlas is not to provide final answers. Its purpose
+      is to make AI evaluation easier to navigate and to encourage more
+      rigorous thinking about what evaluation results actually mean.
+    </p>
+
+    <p class="epigraph">Every Atlas is a map, not the territory.</p>
+  </div>
+</AtlasLayout>

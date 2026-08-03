@@ -37,6 +37,24 @@ strengths: []
 limitations: []
 appropriate_claims: []      # claims results CAN support
 inappropriate_claims: []    # claims results CANNOT support — rendered prominently
+# evidence_produced: >-     # one or two sentences: the KIND of evidence produced
+# combine_with: []          # when to pair with other methods (prose items)
+# misconceptions:           # misconception/reality pairs (defining visual feature)
+#   - misconception: One sentence stating the common misreading.
+#     reality: >-
+#       One or two sentences stating what is actually the case.
+# questions_to_ask: []      # closing critical-thinking questions; omit to use
+#                           # the per-type defaults in src/data/default-questions.ts
+# debates:                  # genuine open disagreements, presented fairly
+#   - question: The disputed question?
+#     positions:
+#       - label: Position A
+#         view: >-
+#           That position, summarized fairly.
+#       - label: Position B
+#         view: >-
+#           The competing position, summarized fairly.
+#     note: >-              # optional: where the evidence currently stands
 # reliability_evidence: >-   (optional prose)
 # validity_evidence: >-      (optional prose)
 # reproducibility_notes: >-  (optional prose)

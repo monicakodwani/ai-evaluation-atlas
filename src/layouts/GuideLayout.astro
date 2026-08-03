@@ -35,7 +35,20 @@ const minutes = readingTimeMinutes(guide.body);
         Last reviewed {formatDate(d.last_reviewed)}
         {d.reviewer && ` by ${d.reviewer}`}
       </span>
+      <button
+        type="button"
+        class="theme-toggle"
+        id="print-guide"
+        aria-label="Print this guide"
+      >
+        Print
+      </button>
     </div>
+    <script>
+      document
+        .getElementById('print-guide')
+        ?.addEventListener('click', () => window.print());
+    </script>
     {
       d.key_terms.length > 0 && (
         <p class="key-terms">

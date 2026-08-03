@@ -1,7 +1,7 @@
 ---
 id: from-model-scores-to-system-assurance
 title: From Model Scores to System Assurance
-order: 9
+order: 10
 summary: >-
   The road from a benchmark number to a justified deployment decision runs
   through system evaluation, documentation, and a structured assurance

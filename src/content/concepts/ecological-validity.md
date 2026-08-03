@@ -44,6 +44,32 @@ inappropriate_claims:
     deployed performance without evidence bridging the two.
   - That adding harder benchmark items raises ecological validity — item
     difficulty and deployment realism are different dimensions.
+misconceptions:
+  - misconception: Harder test items make an evaluation more realistic.
+    reality: >-
+      Difficulty and realism are orthogonal. An olympiad problem is very
+      hard and nothing like deployment; a mundane, ambiguous user request
+      may be easy to state and exactly what the system will face.
+  - misconception: >-
+      Ecological validity requires testing in production, so controlled
+      evaluation is pointless.
+    reality: >-
+      It is a matter of degree, not a binary. Realistic task sampling,
+      workflow studies, and staged rollouts each raise it — the question
+      is whether test conditions resemble the conditions your claim is
+      about.
+questions_to_ask:
+  - What would deployment actually look like for this claim — users,
+    inputs, stakes, interfaces — and how much of that did the evaluation
+    contain?
+  - Were test inputs drawn from real usage, or authored by researchers who
+    already knew what the system handles well?
+  - If the product involves humans in the loop, did the evaluation include
+    any human interaction at all?
+  - What evidence bridges the gap between these test conditions and the
+    deployment claim being made?
+  - Would the result survive the ambiguous, adversarial, and out-of-scope
+    inputs real users produce?
 known_failure_modes:
   - Evaluating the model alone when deployment behavior is dominated by
     prompts, retrieval, interfaces, and users.
@@ -59,7 +85,7 @@ source_status: >-
   Drafted from working research reports; the interaction-coverage figures
   cited there need verification.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - validity

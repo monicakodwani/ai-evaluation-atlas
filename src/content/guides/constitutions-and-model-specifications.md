@@ -1,7 +1,7 @@
 ---
 id: constitutions-and-model-specifications
 title: Constitutions and Model Specifications
-order: 6
+order: 7
 summary: >-
   Written behavior specifications have become central governance artifacts —
   simultaneously training signal, evaluation target, and public commitment.

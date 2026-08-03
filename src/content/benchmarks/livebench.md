@@ -15,6 +15,11 @@ definition: >-
   working reports describe it as a contamination-limited design — items
   are fresh at release, so scores are less likely to be inflated by direct
   training exposure than scores on long-public static benchmarks.
+why_it_matters: >-
+  Rotating item pools are the field's main structural answer to benchmark
+  contamination, and LiveBench is the prominent working example. Its
+  design shows what freshness buys and what it cannot — freshness
+  addresses one threat to a score's meaning, not validity itself.
 claimed_constructs:
   - capability
   - accuracy
@@ -71,6 +76,45 @@ inappropriate_claims:
     still be a poor measure of the construct it is claimed to test.
   - That scores from different releases of the benchmark can be compared as
     if they came from the same instrument.
+evidence_produced: >-
+  Comparative model scores on freshly released, objectively graded items
+  at a stated benchmark version — evidence that is dated by design and
+  tied to that release's item pool.
+combine_with:
+  - >-
+    Fixed public benchmarks with explicit contamination checks when
+    longitudinal comparability matters, since rotating pools break
+    cross-release comparison.
+  - >-
+    Construct-focused scrutiny or human evaluation for the abilities the
+    items claim to test — freshness contributes nothing to validity.
+  - >-
+    Contamination checks of its own once a release has aged, because
+    released items enter web crawls like any other public data.
+misconceptions:
+  - misconception: Contamination-resistant means the scores are valid.
+    reality: >-
+      Freshness addresses one specific threat — direct training exposure
+      to the test items. A fresh item can still be a poor measure of the
+      construct, and developers can still tune to the benchmark's
+      recurring task distribution.
+  - misconception: >-
+      LiveBench scores can be tracked over time like a fixed benchmark's.
+    reality: >-
+      The item pool changes between releases, so cross-release
+      comparisons conflate model change with instrument change. Scores
+      are comparable within a release, not across them.
+questions_to_ask:
+  - Which release of the benchmark was used, and were the items still
+    fresh relative to the model's training cutoff when it was tested?
+  - Are all the models being compared evaluated on the same release and
+    item pool?
+  - How was item quality controlled, given that a rotating pool is harder
+    to audit than a fixed public set?
+  - Could the developer have tuned to the benchmark's recurring task
+    styles even without seeing the specific items?
+  - What is the score being read as evidence of, beyond absence of direct
+    contamination?
 known_failure_modes:
   - Item exposure and derivative discussion accumulating after each
     release.
@@ -97,7 +141,7 @@ source_status: >-
   been created or checked, and the description of scoring and release
   mechanics needs verification against the primary paper.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - contamination

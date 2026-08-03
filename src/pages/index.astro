@@ -3,7 +3,6 @@ import AtlasLayout from '../layouts/AtlasLayout.astro';
 import EntryCard from '../components/EntryCard.astro';
 import { LIFECYCLE_CONTENT } from '../data/lifecycle';
 import { atlasUrl, getAllEntries } from '../lib/entries';
-import { getCollection } from 'astro:content';
 import {
   ATLAS_DESCRIPTION,
   ATLAS_NAME,
@@ -14,12 +13,30 @@ import {
 const all = await getAllEntries();
 const featured = all.filter((ref) => ref.entry.data.featured).slice(0, 6);
 
-const guides = (await getCollection('guides')).sort(
-  (a, b) => a.data.order - b.data.order,
-);
-const previewGuides = guides.slice(0, 4);
+const learningPath = [
+  {
+    title: 'What Counts as AI Evaluation?',
+    href: atlasUrl('guides/what-counts-as-ai-evaluation/'),
+    text: 'What "evaluation" now covers, why models are not systems, and why the right method depends on the claim.',
+  },
+  {
+    title: 'Evaluation Is Measurement',
+    href: atlasUrl('guides/evaluation-is-measurement/'),
+    text: 'Constructs, reliability, validity, uncertainty — the toolkit for judging any evaluation result.',
+  },
+  {
+    title: 'Reading an AI Evaluation Report',
+    href: atlasUrl('guides/reading-an-ai-evaluation-report/'),
+    text: 'Ten things to check in any paper, leaderboard, or system card — with a printable checklist.',
+  },
+  {
+    title: 'The Taxonomy',
+    href: atlasUrl('taxonomy/'),
+    text: 'The conceptual map: evaluation objects, method families, and the five evidence classes.',
+  },
+];
 
-const entryPoints = [
+const referenceCollections = [
   {
     title: 'Methods',
     href: atlasUrl('explore/?type=method'),
@@ -65,16 +82,16 @@ const structuredData = {
     <h1>AI Evaluation Atlas</h1>
     <p class="subheading">{ATLAS_SUBTITLE}</p>
     <p class="lede">
-      AI evaluation now includes far more than benchmark accuracy. It spans
-      human judgment, AI-as-a-judge, red teaming, agent environments,
-      standards, audits, and post-deployment monitoring. The Atlas organizes
-      these approaches and asks a harder question: what evidence does each one
-      actually provide?
+      Evaluation results now drive real decisions — what gets deployed,
+      procured, regulated, and trusted. Yet scores are routinely asked to
+      carry claims they cannot support. The Atlas teaches the reasoning:
+      what each kind of evaluation actually measures, what evidence it
+      produces, and what its results can and cannot establish.
     </p>
     <div class="actions">
-      <a class="btn btn-primary" href={atlasUrl('explore/')}>Explore the Atlas</a>
-      <a class="btn btn-secondary" href={atlasUrl('methodology/')}
-        >How the Atlas works</a
+      <a class="btn btn-primary" href={atlasUrl('how-to-use/')}>Start here</a>
+      <a class="btn btn-secondary" href={atlasUrl('explore/')}
+        >Explore the Atlas</a
       >
     </div>
   </div>
@@ -91,23 +108,63 @@ const structuredData = {
     </div>
   </section>
 
-  <section aria-labelledby="entry-points-heading">
+  <section aria-labelledby="purpose-heading">
     <div class="section-head">
-      <h2 id="entry-points-heading">Four ways in</h2>
+      <h2 id="purpose-heading">Why this Atlas exists</h2>
     </div>
-    <ul class="entry-points">
+    <div class="purpose-grid">
+      <div>
+        <h3>The problem</h3>
+        <p>
+          AI evaluation has become a sprawl of benchmarks, judges, red
+          teams, audits, and standards — each producing numbers that get
+          quoted far beyond what they measure. The field's instruments have
+          outrun its habits of interpretation.
+        </p>
+      </div>
+      <div>
+        <h3>Who it is for</h3>
+        <p>
+          Researchers, practitioners, policymakers, auditors, and students —
+          anyone who has to produce an evaluation, or decide how much weight
+          to put on someone else's.
+        </p>
+      </div>
+      <div>
+        <h3>What it does</h3>
+        <p>
+          It teaches the reasoning. Every entry separates what an instrument
+          measures from what its results can support, corrects common
+          misconceptions, surfaces live debates, and ends with the questions
+          worth asking.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="learn-heading">
+    <div class="section-head">
+      <h2 id="learn-heading">Learn how evaluation works</h2>
+      <a class="more-link" href={atlasUrl('how-to-use/')}
+        >Full reading path →</a
+      >
+    </div>
+    <p style="max-width: 46rem;">
+      Four stops build the core of the Atlas's approach — from what
+      evaluation is, to how to judge any evaluation you meet.
+    </p>
+    <ol class="path-steps">
       {
-        entryPoints.map((p, i) => (
-          <li class="entry-point">
-            <p class="index-no">{String(i + 1).padStart(2, '0')}</p>
-            <h3>
-              <a href={p.href}>{p.title}</a>
-            </h3>
-            <p>{p.text}</p>
+        learningPath.map((step) => (
+          <li>
+            <p class="step-title">
+              <a href={step.href}>{step.title}</a>
+            </p>
+            <p>{step.text}</p>
           </li>
         ))
       }
-    </ul>
+    </ol>
   </section>
 
   <section aria-labelledby="lifecycle-heading">
@@ -144,11 +201,15 @@ const structuredData = {
     featured.length > 0 && (
       <section aria-labelledby="featured-heading">
         <div class="section-head">
-          <h2 id="featured-heading">Featured entries</h2>
-          <a class="more-link" href={atlasUrl('explore/')}>
-            All entries →
+          <h2 id="featured-heading">The major methods</h2>
+          <a class="more-link" href={atlasUrl('explore/?type=method')}>
+            All methods →
           </a>
         </div>
+        <p style="max-width: 46rem; margin-bottom: 1.1rem;">
+          Six entries anchor the reference side of the Atlas — each with its
+          evidence boundaries stated plainly.
+        </p>
         <ul class="card-grid">
           {featured.map((ref) => (
             <EntryCard ref={ref} />
@@ -158,26 +219,20 @@ const structuredData = {
     )
   }
 
-  <section aria-labelledby="guides-heading">
+  <section aria-labelledby="collections-heading">
     <div class="section-head">
-      <h2 id="guides-heading">Guides</h2>
-      <a class="more-link" href={atlasUrl('guides/')}>All guides →</a>
+      <h2 id="collections-heading">Reference collections</h2>
+      <a class="more-link" href={atlasUrl('explore/')}>All entries →</a>
     </div>
-    <ul class="card-grid">
+    <ul class="entry-points">
       {
-        previewGuides.map((g) => (
-          <li class="entry-card guide-card">
-            <p class="type-line">
-              <span>Guide {String(g.data.order).padStart(2, '0')}</span>
-              {g.data.content_status !== 'complete' &&
-                g.data.content_status !== 'substantive-draft' && (
-                  <span class="badge badge-status-draft">Draft in progress</span>
-                )}
-            </p>
+        referenceCollections.map((p, i) => (
+          <li class="entry-point">
+            <p class="index-no">{String(i + 1).padStart(2, '0')}</p>
             <h3>
-              <a href={atlasUrl(`guides/${g.data.id}/`)}>{g.data.title}</a>
+              <a href={p.href}>{p.title}</a>
             </h3>
-            <p class="summary">{g.data.summary}</p>
+            <p>{p.text}</p>
           </li>
         ))
       }
@@ -188,10 +243,11 @@ const structuredData = {
     <h2 class="visually-hidden" id="status-heading">Project status</h2>
     <div class="status-note">
       <p>
-        <strong>Version {ATLAS_VERSION}.</strong> Version 0 establishes the
-        Atlas structure, taxonomy, and initial entries. Source verification and
-        content expansion are ongoing. See the
-        <a href={atlasUrl('methodology/')}>methodology</a> and the
+        <strong>Version {ATLAS_VERSION}.</strong> The Atlas is a living
+        reference: evidence-informed, transparent about interpretation, and
+        open to revision. Read the
+        <a href={atlasUrl('editorial-philosophy/')}>editorial philosophy</a>,
+        the <a href={atlasUrl('methodology/')}>methodology</a>, and the
         <a href={atlasUrl('changelog/')}>changelog</a>.
       </p>
     </div>

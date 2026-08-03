@@ -1,0 +1,172 @@
+---
+import AtlasLayout from '../../layouts/AtlasLayout.astro';
+import { atlasUrl } from '../../lib/entries';
+
+const path = [
+  {
+    title: 'What Counts as AI Evaluation?',
+    href: atlasUrl('guides/what-counts-as-ai-evaluation/'),
+    text: 'The lay of the land: what "evaluation" now covers, why models are not systems, and why the right method depends on the claim being made.',
+  },
+  {
+    title: 'Evaluation Is Measurement',
+    href: atlasUrl('guides/evaluation-is-measurement/'),
+    text: 'The core intellectual toolkit: constructs, reliability, validity, and uncertainty — and a checklist for evaluating any evaluation.',
+  },
+  {
+    title: 'Reading an AI Evaluation Report',
+    href: atlasUrl('guides/reading-an-ai-evaluation-report/'),
+    text: 'Put the toolkit to work: a walkthrough of how to critique a real evaluation paper or system card, ending in a printable checklist.',
+  },
+  {
+    title: 'The Taxonomy',
+    href: atlasUrl('taxonomy/'),
+    text: 'The conceptual map: what can be evaluated, the twelve method families, and the five evidence classes the whole Atlas is organized around.',
+  },
+  {
+    title: 'Explore the methods',
+    href: atlasUrl('explore/?type=method'),
+    text: 'Six substantive entries on the major approaches — benchmarks, human evaluation, AI judges, red teaming, agent evaluation, standards and assurance.',
+  },
+  {
+    title: 'Benchmarks and suites',
+    href: atlasUrl('explore/?type=benchmark'),
+    text: 'Specific instruments, each with its evidence boundaries: what a score on it can and cannot support.',
+  },
+  {
+    title: 'Standards and governance',
+    href: atlasUrl('explore/?type=standard'),
+    text: 'What formal frameworks actually require — and the gap between requiring evaluation and specifying how.',
+  },
+  {
+    title: 'The remaining guides',
+    href: atlasUrl('guides/'),
+    text: 'Deeper editorial treatments of judges, red teaming, agents, assurance, and post-deployment evaluation, in any order.',
+  },
+];
+---
+
+<AtlasLayout
+  title="How to Use This Atlas"
+  description="A recommended reading order for newcomers, and how to get the most out of the Atlas as a reference: evidence classes, statuses, evidence boundaries, and questions to ask."
+  currentPath="how-to-use/"
+>
+  <header class="entry-header">
+    <p class="kicker">Start here</p>
+    <h1>How to Use This Atlas</h1>
+    <p class="summary">
+      The Atlas is a reference work, designed to be explored rather than
+      read cover to cover. But if you are new to AI evaluation, there is a
+      path through it that builds the ideas in the right order.
+    </p>
+  </header>
+
+  <aside class="why-matters" aria-label="Why this matters">
+    <p class="kicker">Why this matters</p>
+    <p>
+      AI evaluation results increasingly drive real decisions — what gets
+      deployed, procured, regulated, and trusted. Reading those results well
+      is a skill. The Atlas exists to teach it, not just to catalogue the
+      instruments.
+    </p>
+  </aside>
+
+  <section aria-labelledby="reading-order">
+    <div class="section-head">
+      <h2 id="reading-order">If you are new here, read in this order</h2>
+    </div>
+    <ol class="path-steps">
+      {
+        path.map((step) => (
+          <li>
+            <p class="step-title">
+              <a href={step.href}>{step.title}</a>
+            </p>
+            <p>{step.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section aria-labelledby="how-entries-work">
+    <div class="section-head">
+      <h2 id="how-entries-work">How entries are built</h2>
+    </div>
+    <div class="guide-prose">
+      <p>
+        Every entry follows the same skeleton, and the skeleton is the
+        argument. <strong>What it is</strong> explains the method or
+        instrument. <strong>Common misconceptions</strong> corrects the ways
+        it is most often misread. <strong>Evidence boundaries</strong> — the
+        heart of every entry — states what evidence it produces, which
+        claims that evidence can support, which claims it cannot, and when
+        it should be combined with other methods.
+        <strong>Ongoing debate</strong> presents live disagreements without
+        pretending they are settled. And every entry ends with
+        <strong>Questions to ask</strong> — the questions worth raising
+        whenever the method appears in a paper, product claim, or policy
+        document.
+      </p>
+      <p>
+        The badges are part of the reading too. The <em>evidence class</em>
+        tells you how formalized a practice is — which is not a quality
+        ranking; a formal standard can be underspecified while an
+        experimental method is technically strong. The <em>status</em>
+        badges tell you how far the Atlas itself has verified an entry's
+        sources. Draft and needs-verification labels are worn openly:
+        honest incompleteness over polished fabrication.
+      </p>
+      <p>
+        If you want to know how any of this is decided, read the
+        <a href={atlasUrl('methodology/')}>Methodology</a> and the
+        <a href={atlasUrl('editorial-philosophy/')}>Editorial Philosophy</a> —
+        the second explains the spirit of the thing: evidence-informed,
+        transparent about interpretation, and open to revision.
+      </p>
+    </div>
+  </section>
+
+  <section aria-labelledby="by-need">
+    <div class="section-head">
+      <h2 id="by-need">Shortcuts by need</h2>
+    </div>
+    <div class="purpose-grid">
+      <div>
+        <h3>Evaluating a claim</h3>
+        <p>
+          Someone cites a score or a passed audit. Find the instrument in
+          <a href={atlasUrl('explore/')}>Explore</a> and read its Evidence
+          boundaries and Questions to ask.
+        </p>
+      </div>
+      <div>
+        <h3>Designing an evaluation</h3>
+        <p>
+          Start from the <a href={atlasUrl('lifecycle/')}>Lifecycle</a> to
+          see what your stage demands, then use
+          <a href={atlasUrl('compare/')}>Compare</a> to weigh candidate
+          methods side by side.
+        </p>
+      </div>
+      <div>
+        <h3>Reviewing a paper or system card</h3>
+        <p>
+          Use
+          <a href={atlasUrl('guides/reading-an-ai-evaluation-report/')}>
+            Reading an AI Evaluation Report</a
+          > and its printable checklist.
+        </p>
+      </div>
+      <div>
+        <h3>Learning the vocabulary</h3>
+        <p>
+          The <a href={atlasUrl('glossary/')}>Glossary</a> gives working
+          definitions; the
+          <a href={atlasUrl('taxonomy/')}>Taxonomy</a> shows how the terms
+          relate.
+        </p>
+      </div>
+    </div>
+  </section>
+</AtlasLayout>

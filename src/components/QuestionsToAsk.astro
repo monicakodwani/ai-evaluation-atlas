@@ -1,0 +1,33 @@
+---
+/**
+ * Questions to Ask — the closing section of every entry. Tailored questions
+ * come from frontmatter; entries without them fall back to questions for
+ * their entry type.
+ */
+import { DEFAULT_QUESTIONS } from '../data/default-questions';
+import type { EntryTypeKey } from '../data/vocabularies';
+
+interface Props {
+  questions: string[];
+  entryType: EntryTypeKey;
+  headingId?: string;
+  sectionNo?: string;
+}
+
+const { questions, entryType, headingId = 'questions-to-ask', sectionNo } = Astro.props;
+const items = questions.length > 0 ? questions : DEFAULT_QUESTIONS[entryType];
+---
+
+<section class="questions-to-ask" aria-labelledby={headingId}>
+  <h2 id={headingId}>
+    {sectionNo && <span class="sec-no">{sectionNo}</span>}
+    Questions to ask
+  </h2>
+  <p class="qta-preface">
+    Whenever this appears in a paper, product claim, or policy document,
+    these are the questions worth asking:
+  </p>
+  <ol class="qta-list">
+    {items.map((q) => <li>{q}</li>)}
+  </ol>
+</section>

@@ -79,6 +79,47 @@ inappropriate_claims:
     is evidence that any particular model is safe.
   - That two Inspect-produced scores are comparable without matching task
     revision, prompt template, model version, and sandbox configuration.
+evidence_produced: >-
+  Execution records: logged evaluation runs — task definitions, prompts,
+  model responses, and scores — produced under an inspectable, rerunnable
+  configuration. The evidence concerns how an evaluation was administered,
+  not whether the underlying instrument measures anything.
+combine_with:
+  - Validity and contamination analysis of the instruments being run — the
+    harness standardizes administration and inherits whatever problems the
+    instrument has.
+  - Human or expert review of transcripts for agent evaluations, where
+    automated scorers can miss failure modes a careful reader would catch.
+  - Cross-harness replication when a result matters, since agreement across
+    independently implemented task definitions is stronger evidence than
+    one harness's output.
+misconceptions:
+  - misconception: Running an evaluation in a standard harness makes the results valid.
+    reality: >-
+      A harness makes execution reproducible and inspectable. Validity
+      lives in the instrument — the items, the scoring rule, the construct
+      — and the harness inherits whatever problems the instrument has.
+  - misconception: Two Inspect scores on the same benchmark are directly comparable.
+    reality: >-
+      Only if task revision, prompt template, model version, decoding
+      settings, and sandbox configuration all match. The harness records
+      these choices; it does not equalize them.
+  - misconception: Government-built tooling implies government-endorsed results.
+    reality: >-
+      Inspect is open infrastructure anyone can use for any evaluation. A
+      score produced with it carries no institutional endorsement of the
+      evaluation or the model.
+questions_to_ask:
+  - Which task version and prompt template produced this score, and are
+    they published alongside it?
+  - Were sandbox images and dependency versions pinned, or could
+    environment drift change the result?
+  - Does the scorer check what the task claims to measure, or a proxy —
+    string match, exit code — that can be satisfied without the capability?
+  - Has anyone rerun the evaluation from the logged configuration and
+    matched the number?
+  - In the claim being made, is the harness or the instrument doing the
+    evidential work — and does the claim confuse the two?
 adoption_evidence: >-
   Working research reports describe Inspect as released by the UK AI
   Security Institute and adopted by several frontier developers, alongside
@@ -103,7 +144,7 @@ source_status: >-
   official documentation have not yet been checked directly, and adoption
   claims are unverified.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - harness

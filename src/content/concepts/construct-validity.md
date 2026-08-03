@@ -68,6 +68,49 @@ inappropriate_claims:
     measurement of reasoning or truthfulness.
   - That a single correlation between two benchmarks establishes convergent
     validity across models, domains, or deployment contexts.
+misconceptions:
+  - misconception: If a benchmark is widely used and cited, it must be measuring something real.
+    reality: >-
+      Adoption measures convenience and coordination, not validity. A heavily
+      cited instrument can lack every kind of validity evidence and still
+      dominate leaderboards.
+  - misconception: Validity is a yes-or-no property a benchmark either has or lacks.
+    reality: >-
+      Validity is an accumulating case built from several evidence types for
+      a specific use. The same instrument can be valid for one claim and
+      invalid for another.
+questions_to_ask:
+  - What construct does this instrument claim to measure, and where is that
+    construct defined independently of the item set?
+  - What validity evidence — content, criterion, convergent, discriminant —
+    is offered beyond the benchmark's name?
+  - Could the score be moved by construct-irrelevant factors such as answer
+    format, verbosity, option position, or prompt template?
+  - Which part of the construct do the items not cover, and would the claim
+    survive if that part were tested?
+  - If two instruments for the same named construct disagree, which one does
+    this claim rely on, and why that one?
+debates:
+  - question: Should AI evaluation import psychometric validity theory wholesale, or build its own measurement framework?
+    positions:
+      - label: Import the framework
+        view: >-
+          Validity evidence types describe the logic of inferring a property
+          from a score, and that logic is medium-independent. The framework
+          is mature, battle-tested, and AI evaluation's problems — proxy
+          substitution, construct-irrelevant variance — are exactly the ones
+          it was built to catch.
+      - label: Adapt rather than transplant
+        view: >-
+          Psychometrics assumes stable populations of test-takers and
+          trait-like constructs. Models are not a population, their behavior
+          shifts with prompts and versions, and constructs like "capability"
+          may not be traits at all — so the tools need rebuilding, not
+          copying.
+    note: >-
+      Both positions agree current practice supplies almost no validity
+      evidence of any kind; the disagreement is about which toolkit to
+      build, not whether one is needed.
 validity_evidence: >-
   Working research reports characterize construct validity in AI evaluation
   as usually assumed rather than established; a large meta-review of
@@ -104,7 +147,7 @@ source_status: >-
   meta-review figures are cited there but not yet checked against primary
   sources.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - measurement

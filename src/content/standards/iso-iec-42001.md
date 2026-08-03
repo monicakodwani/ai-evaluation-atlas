@@ -81,6 +81,36 @@ inappropriate_claims:
     regulators may reference it.
   - That the certificate covers products; its scope is the management
     system of the organization named on it.
+why_it_matters: >-
+  Certification against this standard is becoming a procurement signal, and buyers routinely read it as a product-safety attribute — which it is not.
+evidence_produced: >-
+  A certification attesting that an organization's AI management system
+  conformed to the standard's process requirements at audit time, within
+  the certified scope.
+combine_with:
+  - System-level technical evaluation — certification governs processes,
+    not the behavior of any particular model or product.
+  - Deployment monitoring, since certification is periodic and systems
+    change between audits.
+  - Scrutiny of the certification's scope and the certifier's access and
+    competence.
+misconceptions:
+  - misconception: An ISO/IEC 42001-certified organization has safe AI.
+    reality: >-
+      Certification attests that management processes exist and are
+      followed within a defined scope. It does not test, and cannot
+      establish, that any specific system is safe, fair, or reliable.
+  - misconception: Certification covers the organization's products.
+    reality: >-
+      The unit of certification is the management system. Products built
+      under it inherit process discipline, not verified properties.
+questions_to_ask:
+  - What scope was certified, and does the system you care about fall
+    inside it?
+  - Who performed the audit, with what access and over what period?
+  - What does the certificate demonstrate about processes — and what would
+    it miss about performance?
+  - Has anything material changed since the last audit?
 known_failure_modes:
   - Certification presented as a product-safety or model-quality signal in
     procurement and marketing.
@@ -102,7 +132,7 @@ source_status: >-
   attribution, the ISO/IEC 42006 companion-standard details, and
   certification-uptake claims are unverified against ISO publications.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - management-system

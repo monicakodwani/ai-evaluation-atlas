@@ -1,5 +1,5 @@
 ---
-import { AUTHOR_SITE, ISSUES_URL, REPO_URL } from '../config';
+import { ATLAS_ETHOS, ATLAS_TAGLINE, AUTHOR_SITE, ISSUES_URL, REPO_URL } from '../config';
 import { atlasUrl } from '../lib/entries';
 import VersionLabel from './VersionLabel.astro';
 ---
@@ -11,15 +11,17 @@ import VersionLabel from './VersionLabel.astro';
         AI Evaluation Atlas
         <VersionLabel />
       </p>
-      <p>
-        A public map of how AI systems are tested, judged, audited, and
-        monitored. Maintained by
-        <a href={AUTHOR_SITE}>Monica Kodwani</a>.
+      <p class="footer-tagline">{ATLAS_TAGLINE}</p>
+      <p class="footer-ethos">{ATLAS_ETHOS}</p>
+      <p style="margin-top: 0.7rem;">
+        Maintained by <a href={AUTHOR_SITE}>Monica Kodwani</a>.
       </p>
     </div>
     <nav class="col" aria-label="Footer">
       <p class="title">Atlas</p>
       <ul>
+        <li><a href={atlasUrl('how-to-use/')}>How to use this Atlas</a></li>
+        <li><a href={atlasUrl('editorial-philosophy/')}>Editorial philosophy</a></li>
         <li><a href={atlasUrl('methodology/')}>Methodology</a></li>
         <li><a href={atlasUrl('changelog/')}>Changelog</a></li>
         <li><a href={atlasUrl('glossary/')}>Glossary</a></li>

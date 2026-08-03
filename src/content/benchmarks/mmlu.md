@@ -16,6 +16,11 @@ definition: >-
   professional subject areas and scores a model by the share of items where
   it selects the correct option. The instrument measures answer selection on
   a fixed English-language item set, not open-ended knowledge use.
+why_it_matters: >-
+  For several years MMLU was the field's default broad-knowledge scoreboard,
+  and it still appears in model cards and marketing. How it aged —
+  saturation, contamination, label errors — is the clearest available case
+  study in why benchmark scores have expiry dates.
 claimed_constructs:
   - capability
   - accuracy
@@ -74,6 +79,45 @@ inappropriate_claims:
     to any deployed application.
   - That an aggregate MMLU number characterizes performance in specific
     subjects or professional domains, which vary widely beneath the average.
+evidence_produced: >-
+  Exact-match accuracy on a fixed set of English multiple-choice items
+  spanning many subjects — evidence about answer selection under specific
+  prompt settings, not about open-ended knowledge use.
+combine_with:
+  - Contamination checks before citing scores for any recently trained
+    model, since the item set has been public for years.
+  - Harder or held-out knowledge instruments when comparing frontier
+    models, where MMLU no longer discriminates.
+  - Domain-specific evaluation when the claim concerns a particular subject
+    or profession, since the aggregate masks wide subject-level variation.
+misconceptions:
+  - misconception: MMLU measures general knowledge or intelligence.
+    reality: >-
+      It measures multiple-choice answer selection on a fixed English item
+      set. The "massive multitask" in its name describes item coverage, not
+      a validated construct.
+  - misconception: >-
+      Comparing frontier models on MMLU still tells you which one knows
+      more.
+    reality: >-
+      Leading models cluster near the ceiling of a contaminated public set;
+      differences there reflect memorization, noise, and prompt artifacts
+      more than capability.
+  - misconception: The headline score describes performance in each subject.
+    reality: >-
+      The average hides large subject-to-subject variation — two models
+      with the same aggregate can differ sharply in any given domain.
+questions_to_ask:
+  - Which prompt format, few-shot examples, and answer ordering were used —
+    and would the ranking survive changing them?
+  - Was contamination checked for the specific model being scored, or is it
+    assumed away?
+  - Is the model near the instrument's ceiling, where score differences
+    stop being informative?
+  - Does the claim concern a specific subject or profession, and if so,
+    were per-subject results reported?
+  - Is the score being read as "knowledge" or "understanding" rather than
+    as answer selection on this item set?
 known_failure_modes:
   - Score inflation from test items memorized during training.
   - Rankings shifting under answer-order or prompt-format changes.
@@ -95,7 +139,7 @@ source_status: >-
   figures, and saturation claims are reported there but have not been
   independently verified against primary sources.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - benchmark

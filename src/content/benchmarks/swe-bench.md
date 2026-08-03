@@ -17,6 +17,12 @@ definition: >-
   Verified (for which contamination has been flagged) and SWE-bench Pro
   (described as designed to resist contamination), and treat the family as
   a leading instrument for coding-agent comparison.
+why_it_matters: >-
+  SWE-bench resolved rates have become the headline number for coding
+  agents, quoted in release announcements and product comparisons. Whether
+  those comparisons mean anything depends on what the number actually
+  carries — and on the confounds it inherits from scaffolds,
+  contamination, and gameable checkers.
 claimed_constructs:
   - capability
 evaluation_levels:
@@ -81,6 +87,71 @@ inappropriate_claims:
     and need checking per result.
   - That resolving these benchmark issues transfers to an organization's
     own repositories, languages, tooling, and review standards.
+evidence_produced: >-
+  Resolved rates: the share of a fixed set of real repository issues for
+  which a scaffold-plus-model system produced a change that passed the
+  repository's tests, under a stated variant, budget, and configuration.
+combine_with:
+  - >-
+    Agent-trajectory evaluation, because the outcome score leaves tool
+    choices, cost, and unsafe intermediate steps invisible.
+  - >-
+    Contamination checks whenever the variant's issues and fixes predate
+    the model's training cutoff — they are public GitHub history.
+  - >-
+    Trials on your own repositories, languages, and review standards
+    before treating a resolved rate as evidence for product selection.
+misconceptions:
+  - misconception: >-
+      Solving SWE-bench issues means the system can do a software
+      engineer's job.
+    reality: >-
+      The instrument scores one slice of the job — producing a patch that
+      passes existing tests on curated public issues. Requirements work,
+      design, review, debugging in unfamiliar code, and maintainability
+      are all outside the score.
+  - misconception: The resolved rate is a property of the model.
+    reality: >-
+      It is a property of the model plus its scaffold, retries, and
+      budget. Analyses cited in the working reports find scaffolding
+      choices can shift results by more than the gap between model
+      generations.
+  - misconception: If the tests pass, the task was genuinely solved.
+    reality: >-
+      Test suites are incomplete oracles, and the evaluation pipeline
+      itself has reportedly been gamed — an agent can satisfy the outcome
+      checker by editing test configuration rather than fixing the code.
+questions_to_ask:
+  - Which variant was run — original, Verified, Pro — and on the full
+    item set or a subset?
+  - What scaffold, retry policy, and budget produced this number, and are
+    they reported precisely enough to reproduce?
+  - Were the issues and their fixes public before the model's training
+    cutoff, and did anyone check for contamination?
+  - Was the harness audited for checker gaming, or were only the final
+    pass/fail counts recorded?
+  - How many runs per item, and what is the variance across runs?
+  - Do the benchmark's repositories and languages resemble the codebases
+    the claim is being applied to?
+debates:
+  - question: Is outcome-only scoring the right target for coding agents?
+    positions:
+      - label: Score the outcome
+        view: >-
+          Whether the tests pass is auditable, scalable, and free of
+          judge subjectivity. Process metrics invite gaming of a
+          different kind, and what ultimately matters to a user is
+          whether the issue got fixed.
+      - label: Score the trajectory too
+        view: >-
+          Outcome-only scoring cannot distinguish a clean fix from a
+          lucky, wasteful, or unsafe one, and it is exactly what makes
+          checker gaming profitable. Cost, actions taken, and code
+          quality are part of what resolving an issue means in practice.
+    note: >-
+      The working reports treat outcome scores as the reporting
+      convention while documenting gaming and scaffold sensitivity as
+      standing reasons to inspect trajectories alongside them.
 known_failure_modes:
   - Evaluation-pipeline gaming, where the agent manipulates test
     configuration instead of solving the task.
@@ -110,7 +181,7 @@ source_status: >-
   unverified figures and must be confirmed against primary sources before
   citation.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - code

@@ -56,6 +56,26 @@ const entrySchema = z.object({
   limitations: z.array(z.string()).default([]),
   appropriate_claims: z.array(z.string()).default([]),
   inappropriate_claims: z.array(z.string()).default([]),
+  /** One or two sentences: what kind of evidence this method/instrument produces. */
+  evidence_produced: z.string().optional(),
+  /** When to pair this with other evaluation methods (prose items). */
+  combine_with: z.array(z.string()).default([]),
+  /** Misconception/reality pairs — a defining visual feature of entry pages. */
+  misconceptions: z
+    .array(z.object({ misconception: z.string(), reality: z.string() }))
+    .default([]),
+  /** Critical-thinking questions rendered at the end of the entry. */
+  questions_to_ask: z.array(z.string()).default([]),
+  /** Genuine open disagreements, presented without declaring a winner. */
+  debates: z
+    .array(
+      z.object({
+        question: z.string(),
+        positions: z.array(z.object({ label: z.string(), view: z.string() })).min(2),
+        note: z.string().optional(),
+      }),
+    )
+    .default([]),
   reliability_evidence: z.string().optional(),
   validity_evidence: z.string().optional(),
   reproducibility_notes: z.string().optional(),

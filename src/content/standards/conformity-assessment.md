@@ -68,6 +68,35 @@ inappropriate_claims:
     independent assessment.
   - That conformity at release says anything about behavior after model,
     prompt, or usage changes.
+why_it_matters: >-
+  Regulatory regimes lean on conformity assessment as their enforcement joint; whether it is self-declared or independent decides how much weight the attestation can bear.
+evidence_produced: >-
+  An attestation — self-declared or third-party — that specified
+  requirements from a named normative reference were met at assessment
+  time.
+combine_with:
+  - Independent technical testing where the requirements are process
+    obligations rather than measured properties.
+  - Post-market monitoring, since conformity is assessed at a point in
+    time and systems drift.
+  - Publication or retention of the underlying evidence, so the
+    attestation can be checked rather than trusted.
+misconceptions:
+  - misconception: A declaration of conformity means the system is safe.
+    reality: >-
+      It means stated requirements were attested as met — and for most AI
+      requirements today those are documentation and process obligations,
+      not measured performance thresholds.
+  - misconception: Conformity assessment implies independent scrutiny.
+    reality: >-
+      In current AI regulation much conformity assessment is provider
+      self-assessment; whether a third party was involved is exactly the
+      thing to check.
+questions_to_ask:
+  - Who assessed — the provider itself, or an accredited third party?
+  - Against which normative reference, in which version?
+  - What evidence was examined, and is it retained and inspectable?
+  - Does the attestation survive the updates made since it was issued?
 known_failure_modes:
   - Paper compliance — documentation that satisfies the checklist while the
     underlying evaluation work is thin.
@@ -82,7 +111,7 @@ source_status: >-
   Drafted from working research reports; regulatory specifics deliberately
   kept generic pending verification against primary legal texts.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - certification

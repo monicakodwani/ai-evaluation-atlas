@@ -1,7 +1,7 @@
 ---
 id: evaluating-agents-and-tool-use
 title: Evaluating Agents and Tool Use
-order: 8
+order: 9
 summary: >-
   Agents act over many steps, call tools, and hold permissions — and
   inherited single-turn evaluation habits break on every one of those

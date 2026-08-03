@@ -2,7 +2,7 @@
  * Central Atlas configuration. The version number is displayed in the footer,
  * About, Changelog, and Methodology pages — change it here only.
  */
-export const ATLAS_VERSION = '0.1';
+export const ATLAS_VERSION = '0.2';
 
 export const ATLAS_NAME = 'AI Evaluation Atlas';
 
@@ -24,3 +24,9 @@ export const ISSUES_URL = `${REPO_URL}/issues`;
 
 /** Site-wide <title> suffix. */
 export const TITLE_SUFFIX = 'AI Evaluation Atlas | Monica Kodwani';
+
+/** One-line editorial identity, shown in the footer. */
+export const ATLAS_TAGLINE = 'A living reference for understanding AI evaluation.';
+
+/** Three-word philosophy shown beneath the tagline. */
+export const ATLAS_ETHOS = 'Independent · Evidence-informed · Open to revision';

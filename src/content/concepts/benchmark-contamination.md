@@ -72,6 +72,28 @@ inappropriate_claims:
     models trained on other data.
   - That a benchmark shown clean at release stays clean — items enter web
     crawls after publication.
+misconceptions:
+  - misconception: Contamination only matters when exact test items appear in training data.
+    reality: >-
+      Paraphrases, published solutions, tutorials, and derivative datasets
+      also inflate scores — and exact-match detection misses all of them.
+  - misconception: A benchmark checked clean at release stays clean.
+    reality: >-
+      Contamination is time-dependent. Public items enter web crawls after
+      publication, so exposure grows with every training-data refresh, and a
+      one-time check certifies only the past.
+questions_to_ask:
+  - How old is this benchmark relative to the model's training cutoff, and
+    has anyone checked for overlap since release?
+  - Was a contamination check run for this specific model-benchmark pair —
+    and with which method, given that methods can disagree?
+  - Could indirect leakage — solutions, discussions, derivative sets —
+    affect the score even if no exact item was trained on?
+  - For a closed model whose training data cannot be searched, what evidence
+    could establish cleanliness — and is its absence being read as proof of
+    it?
+  - Would the comparison survive being re-run on a contamination-resistant
+    instrument, such as rotating, time-stamped, or private items?
 known_failure_modes:
   - Silent inflation, where memorized items raise scores without any
     observable difference in the reported number.
@@ -97,7 +119,7 @@ source_status: >-
   behind the reported dirty-rate figures are not yet identified or checked;
   all quantitative claims in this entry are hedged and unverified.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - contamination

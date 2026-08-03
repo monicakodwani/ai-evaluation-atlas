@@ -67,6 +67,35 @@ inappropriate_claims:
     approval — participation is voluntary and non-binding per the reports.
   - That a model tested by the institute has therefore been comprehensively
     evaluated for all deployment risks.
+why_it_matters: >-
+  Government evaluation is the main lever for frontier-model scrutiny independent of developers; understanding its access limits calibrates how much assurance it can provide.
+evidence_produced: >-
+  External evaluation findings on frontier models produced under
+  negotiated access, plus open evaluation tooling — government-side
+  evidence whose coverage depends on voluntary developer cooperation.
+combine_with:
+  - Developer-published evaluations, read comparatively — differences
+    between internal and external findings are informative.
+  - Independent researcher access programs, which cover what government
+    programs do not.
+  - Binding regulatory mechanisms where they exist, since institute
+    testing is non-compulsory.
+misconceptions:
+  - misconception: Government-tested means certified or approved.
+    reality: >-
+      Participation is voluntary and findings are non-binding; the
+      institute cannot compel access or block a deployment. Testing is
+      scrutiny, not certification.
+  - misconception: Institute evaluation covers a model's full risk surface.
+    reality: >-
+      Programs are scoped — particular capabilities, particular access
+      levels, particular time windows. Coverage claims need the scope
+      stated.
+questions_to_ask:
+  - What access did the institute have — weights, systems, or API-level?
+  - Which findings are public, and at what level of detail?
+  - What was in scope, and what explicitly was not?
+  - What follows institutionally from an adverse finding?
 related_entries:
   - inspect-ai
   - red-teaming
@@ -79,7 +108,7 @@ source_status: >-
   Drafted from working research reports; institutional history and program
   details need verification against official publications.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - government

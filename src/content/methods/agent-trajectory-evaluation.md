@@ -115,6 +115,49 @@ inappropriate_claims:
     outcomes only.
   - That sandboxed trajectory results transfer to deployment, where tools,
     permissions, adversaries, and environment state differ.
+evidence_produced: >-
+  Process records — full action sequences (tool calls and arguments, data
+  accessed, state changed, permission events, error handling, retries,
+  cost) showing how an outcome was reached, not just whether it was.
+combine_with:
+  - Outcome benchmarks — trajectory inspection tells you whether an
+    outcome score can be trusted; the outcome score tells you which runs
+    are worth inspecting.
+  - Red teaming for adversarial trajectory properties — prompt-injection
+    resistance and permission violations under attack, which cooperative
+    task suites do not exercise.
+  - Deployment monitoring, since sandboxed trajectories cannot show how
+    the agent behaves against real tools, real users, and real
+    adversaries.
+misconceptions:
+  - misconception: A passed task is a solved task.
+    reality: >-
+      A pass records the final state, not how it was reached. Agents have
+      been scored as successful by exploiting the scoring pipeline itself
+      — only the trajectory shows the difference.
+  - misconception: A single-run success rate is a reliability estimate.
+    reality: >-
+      One run is one sample from a highly stochastic process, and
+      reported gaps between single-run and repeated-run success are
+      large. Without repeated runs, the number describes an event, not a
+      performance.
+  - misconception: An agent benchmark score measures the model.
+    reality: >-
+      It measures a model-scaffold-environment triple. Scaffold changes
+      alone can move scores by more than a model-generation gap.
+questions_to_ask:
+  - How many runs is the reported success rate built on, and what was the
+    dispersion across them?
+  - What was the retry policy — and is the headline number pass-at-1 or
+    pass-at-k with k unreported?
+  - Were any trajectories actually inspected, or does the claim rest on
+    final states alone?
+  - What scaffold produced the score, and would the claim survive a
+    scaffold change?
+  - Were security properties — prompt injection, permission boundaries,
+    unsafe side effects — scored, or only task completion?
+  - Could the agent act on the evaluation apparatus itself, and would the
+    scoring pipeline have detected it?
 known_failure_modes:
   - Outcome gaming, where an agent exploits the evaluation pipeline itself
     (for example, editing test or configuration files) and is scored as
@@ -175,7 +218,7 @@ source_status: >-
   named security-evaluation environments are unverified against primary
   sources.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - agents

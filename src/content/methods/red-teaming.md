@@ -109,6 +109,70 @@ inappropriate_claims:
     rather than performance against one attack distribution and one judge.
   - That failure to elicit a dangerous capability shows the model provides
     no uplift — unevaluated pathways remain untested by definition.
+evidence_produced: >-
+  Existence proofs — demonstrated failures (transcripts, attack recipes,
+  elicited behaviors) under specified conditions of attacker access, skill,
+  and attempt budget. Not rates, prevalence estimates, or evidence of
+  absence.
+combine_with:
+  - Benchmark-based evaluation for the non-adversarial baseline — refusal
+    and capability scores on fixed suites tell you where to point the
+    adversarial search.
+  - Deployment monitoring and incident reporting, which supply the
+    base-rate and prevalence evidence a red-team finding lacks by
+    construction.
+  - Structured assurance cases when findings must support a release
+    decision — a list of demonstrated failures is not, by itself, a risk
+    argument.
+misconceptions:
+  - misconception: A successful jailbreak measures deployment risk.
+    reality: >-
+      It demonstrates a possible failure mode. It does not estimate
+      prevalence, likelihood, or downstream harm.
+  - misconception: A clean red-team exercise shows the system is safe.
+    reality: >-
+      It shows the team found nothing with the attacks it tried. The
+      searched attack space is a vanishing fraction of the one that
+      exists.
+  - misconception: Attack-success percentages make red teaming quantitative.
+    reality: >-
+      The percentage is relative to one attack distribution, one attempt
+      budget, and one judge. Change any of them and the number changes.
+questions_to_ask:
+  - Who attacked — with what skill, access, budget, and number of
+    attempts, and were those reported?
+  - Was the attack suite static, or did attackers adapt to the defenses
+    they observed?
+  - How were claimed successes validated — human review, or an AI judge
+    that adversarial outputs could also fool?
+  - Is the finding being used to claim that a failure exists, or how
+    likely it is? Only the first is supported.
+  - Were negative results reported with the elicitation effort behind
+    them, or presented as evidence of safety?
+  - Would the demonstrated attack still work after mitigation, against an
+    adversary who knows the mitigation?
+debates:
+  - question: Can safety be benchmarked?
+    positions:
+      - label: Standardized suites make safety measurable
+        view: >-
+          Shared attack suites and severity taxonomies turn safety from
+          anecdote into a comparable, trackable quantity. Without them,
+          every claim is a one-off transcript — no comparison across
+          systems, no regression testing of mitigations, no progress
+          measurement.
+      - label: Safety is adversarial and contextual
+        view: >-
+          A static suite measures refusal behavior on known attacks.
+          Adversaries adapt, deployments differ, and harm depends on
+          context the suite cannot contain — so a suite score measures
+          what the suite contains, not safety.
+    note: >-
+      The jailbreak literature summarized in the working reports
+      repeatedly finds defenses that pass static suites failing under
+      adaptive attacks, which limits what a suite score can license;
+      standardized suites retain clear value for regression testing and
+      comparison within their fixed coverage.
 reliability_evidence: >-
   Rarely quantified. Attack-success rates vary with attempt budget, attacker
   skill, elicitation method, and judge choice, and exercises are seldom
@@ -168,7 +232,7 @@ source_status: >-
   Adoption claims, named safety-policy examples, and uplift-study findings
   are unverified against primary sources.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - red-teaming

@@ -14,6 +14,12 @@ definition: >-
   requests and responses alongside scores. The design goal is transparency
   and reproducibility: a reader can inspect what was actually sent to and
   returned by each model rather than trusting an aggregate number.
+why_it_matters: >-
+  HELM's request-and-response logging set a transparency bar most
+  leaderboards still do not meet — a reader can audit exactly what each
+  model was asked and answered rather than trusting an aggregate score. It
+  is also a working demonstration that reproducible execution and valid
+  measurement are separate layers of evidence.
 claimed_constructs:
   - reliability
   - transparency
@@ -64,6 +70,41 @@ inappropriate_claims:
     instrument and the harness are separate layers of the evidence.
   - That coverage in a holistic suite equals coverage of deployment-relevant
     behavior.
+evidence_produced: >-
+  Auditable evaluation records: scores accompanied by the raw requests and
+  responses behind them, produced under recorded configurations. The
+  evidence establishes what was measured and how — not that the scenarios
+  measure what they claim.
+combine_with:
+  - Validity and contamination analysis of the underlying scenarios, whose
+    problems the infrastructure inherits rather than fixes.
+  - Deeper, domain-specific evaluation wherever a breadth-first suite flags
+    something worth investigating.
+  - Version tracking of provider APIs when comparing over time, since
+    silent model updates can change results under an unchanged
+    configuration.
+misconceptions:
+  - misconception: Transparent logging makes HELM results valid.
+    reality: >-
+      Logging makes results auditable — anyone can see exactly what was
+      asked and scored. Whether a scenario measures its claimed construct
+      is a separate question the logs cannot answer.
+  - misconception: Holistic coverage means the important things were measured.
+    reality: >-
+      Breadth-first design covers many scenarios shallowly. Holistic
+      describes the suite's ambition across dimensions, not completeness
+      with respect to any deployment's actual risks.
+questions_to_ask:
+  - Has anyone in this discussion actually inspected the logged requests
+    and responses behind the cited score?
+  - Which scenario version and configuration produced the number, and has
+    the provider's model changed since the run?
+  - Is the cited scenario near saturation or known contamination for these
+    models?
+  - Does the claim treat breadth of coverage as if it were depth of
+    evidence about one specific capability or risk?
+  - Would the comparison hold if the models were queried today, given
+    silent provider-side updates?
 related_entries:
   - helm
   - lm-evaluation-harness
@@ -78,7 +119,7 @@ source_status: >-
   Drafted from working research reports; infrastructure details drawn from
   the HELM paper record and reports, not yet independently verified.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - harness

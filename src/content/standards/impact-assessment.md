@@ -115,6 +115,35 @@ adoption_evidence: >-
   42005:2025) that structures the process without setting universal
   thresholds. These specifics are drawn from working research material and
   are unverified.
+evidence_produced: >-
+  A structured prospective analysis of a system's potential effects on
+  people and society — documentary evidence of anticipation, whose weight
+  depends on who conducted it, who was consulted, and whether predictions
+  are ever checked.
+combine_with:
+  - Participation of affected stakeholders, without which foreseeable
+    harms are routinely missed.
+  - Post-deployment outcome evaluation, to test the assessment's
+    predictions against what actually happened.
+  - Independent review where the assessment is self-conducted.
+misconceptions:
+  - misconception: A completed impact assessment means impacts are managed.
+    reality: >-
+      It means impacts were anticipated on paper. Whether mitigations
+      exist, work, and are maintained is separate evidence the assessment
+      itself does not provide.
+  - misconception: Impact assessments are box-ticking by nature.
+    reality: >-
+      Quality varies enormously with process: assessments with real
+      stakeholder participation and follow-up verification are different
+      instruments from compliance forms, even under the same name.
+questions_to_ask:
+  - Who conducted it, and with what independence from the deployment
+    decision?
+  - Were affected groups actually consulted, and did their input change
+    anything?
+  - Are the assessment's predictions revisited after deployment?
+  - Is the assessment public, and can its reasoning be examined?
 known_failure_modes:
   - Box-ticking, where the questionnaire is completed to satisfy the
     requirement without a substantive analysis behind it.
@@ -144,7 +173,7 @@ source_status: >-
   are unverified against primary legal and standards texts, and no source
   records exist yet for this entry.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - governance

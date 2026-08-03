@@ -1,7 +1,7 @@
 ---
 id: benchmarks-and-their-limits
 title: Benchmarks and Their Limits
-order: 3
+order: 4
 summary: >-
   What a benchmark actually fixes, the ways its numbers decay —
   contamination, saturation, configuration sensitivity — and when it is

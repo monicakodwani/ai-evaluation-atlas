@@ -93,6 +93,58 @@ inappropriate_claims:
     where prompts, retrieval, tools, and users reshape behavior.
   - That small leaderboard differences are meaningful without uncertainty
     estimates or contamination checks.
+evidence_produced: >-
+  Comparative task scores: how systems perform on a fixed item set under a
+  defined scoring rule and configuration, at a point in time.
+combine_with:
+  - Human or expert evaluation when the construct is contested or the
+    stakes are high — benchmark scores cannot validate themselves.
+  - Contamination checks whenever the item set has been public.
+  - System-level and workflow evaluation before any deployment claim,
+    since model-level scores do not transfer on their own.
+misconceptions:
+  - misconception: A higher benchmark score means the model is better.
+    reality: >-
+      Only for the construct, task, and conditions represented by that
+      benchmark — and only below its ceiling, with contamination ruled
+      out.
+  - misconception: A benchmark measures the ability named in its title.
+    reality: >-
+      A benchmark measures performance on its items under its scoring
+      rule. Whether that reflects "reasoning" or "knowledge" is a validity
+      claim that requires separate evidence.
+  - misconception: Running many benchmarks adds up to a complete evaluation.
+    reality: >-
+      More instruments widen task coverage but cannot supply what none of
+      them contains — deployment conditions, adversarial pressure, human
+      interaction, and consequences.
+questions_to_ask:
+  - What construct is being measured — and where is it defined, beyond the
+    benchmark's name?
+  - How representative is the dataset of the situations you care about?
+  - Could contamination affect results, and did anyone check?
+  - Is the benchmark near saturation for the systems being compared?
+  - Were prompts, decoding settings, model versions, and scoring code
+    reported precisely enough to re-run it?
+  - Does this benchmark resemble deployment?
+debates:
+  - question: Should benchmarks remain public?
+    positions:
+      - label: Keep them public
+        view: >-
+          Public benchmarks make evaluation reproducible, auditable, and
+          free. Anyone can verify a claim, and gatekeeping test sets would
+          concentrate evaluation power in a few institutions.
+      - label: Move to private or rotating sets
+        view: >-
+          Public items leak into training corpora, so public benchmarks
+          decay into memorization tests. Only held-out, gated, or
+          continuously refreshed items preserve discriminative value.
+    note: >-
+      Hybrid designs — public tasks with private held-out splits, or
+      rotating live sets — try to keep both properties. The working
+      reports treat all of these as active experiments rather than settled
+      practice.
 reliability_evidence: >-
   Rarely reported. Meta-research on benchmark papers found that only a small
   minority report uncertainty estimates or statistical tests; run-to-run and

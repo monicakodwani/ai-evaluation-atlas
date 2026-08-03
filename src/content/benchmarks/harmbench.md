@@ -17,6 +17,11 @@ definition: >-
   contribution as reproducibility — a common taxonomy and attack protocol
   that makes red-teaming results comparable across models and attack
   pipelines — rather than coverage of all possible attacks.
+why_it_matters: >-
+  Standardized harm suites are how "safety" most often gets a number;
+  reading that number as safety itself — rather than refusal behavior
+  against known attacks — is one of the field’s most consequential
+  shortcuts.
 claimed_constructs:
   - safety
   - harmful-content
@@ -79,6 +84,69 @@ inappropriate_claims:
   - That a guardrail passing this static suite will hold under adaptive
     attack — the working reports document guardrails that pass static
     suites and fail adaptive ones.
+evidence_produced: >-
+  Attack success rates: the fraction of designated harmful behaviors that
+  each standardized attack method elicited from a model, as classified by
+  an automated judge, comparable across models run under the shared
+  protocol.
+combine_with:
+  - >-
+    Adaptive, human-expert red teaming, since a finite standardized
+    attack suite cannot find novel attacks and the working reports
+    document guardrails that pass static suites and fail adaptive ones.
+  - >-
+    Judge validation — auditing a sample of the automated judge's harm
+    classifications against human labels for the model under test.
+  - >-
+    System-level evaluation of the deployed configuration, because
+    model-level attack results do not include the guardrails, filters,
+    and monitoring that shape what users can actually elicit.
+misconceptions:
+  - misconception: A low attack success rate means the model is safe.
+    reality: >-
+      It means the included attack methods mostly failed. No finite
+      attack suite establishes absence of vulnerabilities, and adaptive
+      attackers are not limited to the methods in the suite.
+  - misconception: The reported harm numbers are ground truth.
+    reality: >-
+      An automated judge classifies each output as harmful or not, and
+      its errors propagate directly into the headline metric — attack
+      success rates can move without any change in model behavior.
+  - misconception: Attack success rates estimate real-world misuse risk.
+    reality: >-
+      They measure elicitation under test conditions. Frequency of
+      real-world misuse, severity of harm, and residual risk after
+      deployment safeguards are all outside the instrument.
+questions_to_ask:
+  - Which attack methods and behavior categories were included, and were
+    any adaptive or novel attacks run beyond the standard suite?
+  - Was the automated judge's accuracy checked against human labels for
+    this particular model's outputs?
+  - Was the mitigation being reported trained or tuned on the same attack
+    set used to evaluate it?
+  - Is the claim about the bare model or the deployed system with its
+    guardrails — and which one was actually tested?
+  - How large a change in attack success rate is within the judge's error
+    noise?
+debates:
+  - question: Can automated red teaming substitute for human red teaming?
+    positions:
+      - label: Automate it
+        view: >-
+          Standardized automated attacks are reproducible, comparable,
+          and cheap enough to run on every model and every mitigation.
+          Human red teaming is expensive, hard to repeat, and covers a
+          small, idiosyncratic slice of the attack space.
+      - label: Humans remain essential
+        view: >-
+          Real attackers adapt, and a fixed attack suite is exactly what
+          mitigations silently overfit to. Only adaptive human or
+          human-directed attack finds the failures that matter, and
+          static suites give a false floor on robustness.
+    note: >-
+      Careful practice treats these as complements — standardized suites
+      for regression tracking and comparison, adaptive attack for
+      discovering what the suites miss.
 known_failure_modes:
   - Mitigations overfitting to the included attack methods while remaining
     bypassable by unlisted or adaptive attacks.
@@ -104,7 +172,7 @@ source_status: >-
   checked. The behavior taxonomy, attack methods, and judge design need
   verification against the primary paper before this entry is expanded.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - red-teaming

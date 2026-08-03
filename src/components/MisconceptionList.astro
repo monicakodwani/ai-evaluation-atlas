@@ -1,0 +1,34 @@
+---
+/**
+ * Common Misconceptions — paired misconception/reality boxes, one of the
+ * Atlas's defining visual features.
+ */
+interface Props {
+  items: Array<{ misconception: string; reality: string }>;
+  headingId?: string;
+  sectionNo?: string;
+}
+
+const { items, headingId = 'misconceptions', sectionNo } = Astro.props;
+---
+
+{
+  items.length > 0 && (
+    <section class="misconceptions" aria-labelledby={headingId}>
+      <h2 id={headingId}>
+        {sectionNo && <span class="sec-no">{sectionNo}</span>}
+        Common misconceptions
+      </h2>
+      <div class="misconception-grid">
+        {items.map((m) => (
+          <div class="misconception-box">
+            <p class="mc-label mc-label-myth">Misconception</p>
+            <p class="mc-myth">{m.misconception}</p>
+            <p class="mc-label mc-label-reality">Reality</p>
+            <p class="mc-reality">{m.reality}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}

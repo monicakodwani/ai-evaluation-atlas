@@ -16,6 +16,11 @@ definition: >-
   aspect set as including accuracy, calibration, robustness, fairness,
   toxicity, and efficiency, with scenario-specific scoring rules and logged
   request-response records intended to support reproduction.
+why_it_matters: >-
+  HELM is the field's most prominent attempt to replace single-number
+  leaderboards with multi-aspect, transparently logged reporting. It shows
+  what more honest benchmarking looks like — and that breadth of
+  measurement does not by itself solve validity.
 claimed_constructs:
   - capability
   - accuracy
@@ -75,6 +80,45 @@ inappropriate_claims:
     represent.
   - That HELM fairness or toxicity scores are validated measures of those
     constructs rather than scores on particular operationalizations.
+evidence_produced: >-
+  Per-scenario, per-metric score profiles across several aspects of model
+  behavior, with logged request-response records — comparative evidence
+  richer than a single accuracy number but still confined to fixed
+  scenarios.
+combine_with:
+  - System-level evaluation in the target application before any deployment
+    claim, since no scenario collection represents a specific workflow.
+  - Contamination checks on the component datasets, which inherit the
+    exposure of the public benchmarks they are built from.
+  - Human or expert review when fairness or toxicity conclusions matter,
+    since those scores reflect particular operationalizations of contested
+    constructs.
+misconceptions:
+  - misconception: >-
+      "Holistic" means a HELM result is a complete verdict on a model.
+    reality: >-
+      Holistic describes multi-aspect reporting, not completeness. Each
+      aspect is measured by particular scenarios with their own validity
+      limits, and deployed behavior is outside all of them.
+  - misconception: >-
+      HELM's fairness and toxicity numbers are validated measures of
+      fairness and toxicity.
+    reality: >-
+      They are scores on specific operationalizations of those constructs;
+      a different scenario choice would produce different numbers under the
+      same names.
+questions_to_ask:
+  - Which scenarios and metrics does the cited claim actually rest on — the
+    full suite or a favorable selection?
+  - Do the trade-offs the suite exists to expose show up — how does the
+    model do on calibration, robustness, and toxicity where its accuracy is
+    strong?
+  - Do the underlying datasets carry contamination or saturation from their
+    public origins?
+  - How were fairness and toxicity operationalized in the scenarios being
+    cited?
+  - Has the scenario set changed between the results being compared, and
+    are the runs actually comparable?
 related_entries:
   - benchmark-based-evaluation
   - helm-infrastructure
@@ -92,7 +136,7 @@ source_status: >-
   testing based on item response theory) have not been independently
   verified against primary sources.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - benchmark

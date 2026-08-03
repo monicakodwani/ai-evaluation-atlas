@@ -26,6 +26,16 @@ const guides = (await getCollection('guides')).sort(
     </p>
   </header>
 
+  <aside class="why-matters" aria-label="Why this matters">
+    <p class="kicker">Why this matters</p>
+    <p>
+      The reference entries tell you what each instrument is; the guides
+      teach the reasoning that connects them — how to think about
+      measurement, judges, red teams, and assurance rather than just look
+      them up.
+    </p>
+  </aside>
+
   <ul class="card-grid as-list" style="margin-top: 2rem;">
     {
       guides.map((g) => {

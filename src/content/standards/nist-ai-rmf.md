@@ -23,6 +23,13 @@ definition: >-
   and fairness — but leaves their operationalization to the user of the
   framework. Adoption is voluntary; no conformity or certification
   mechanism is attached to the framework itself.
+why_it_matters: >-
+  The AI RMF is the most widely referenced articulation of AI risk as an
+  organizational and lifecycle problem, and "aligned with the NIST AI RMF"
+  now appears in procurement, policy, and marketing language. Reading such
+  claims correctly requires knowing what the framework fixes — vocabulary
+  and process — and what it deliberately does not: metrics, methods, and
+  thresholds.
 claimed_constructs:
   - compliance
 evaluation_levels:
@@ -86,6 +93,72 @@ inappropriate_claims:
   - That two organizations claiming RMF alignment have comparable risk
     postures — with methods and thresholds unfixed, alignment claims are
     not commensurable.
+evidence_produced: >-
+  Documentation of organizational process — records that risks were
+  identified, mapped, measured by organization-chosen methods, and
+  assigned management responses. It produces no evidence about the
+  behavior of any system unless the implementing organization adds
+  measurement of its own.
+combine_with:
+  - System-level technical evaluation — benchmarks, red-teaming,
+    monitoring — to give the Measure function actual content; the
+    framework says to measure, not how.
+  - Independent audit or conformity assessment when an alignment claim
+    needs to carry weight beyond self-declaration, since the RMF attaches
+    no verification mechanism of its own.
+  - An assurance case or impact assessment to connect the framework's
+    process outputs to explicit claims about a specific deployed system.
+misconceptions:
+  - misconception: Following the AI RMF means the risks are controlled.
+    reality: >-
+      The framework structures risk work; it prescribes no metrics,
+      thresholds, or tests. Whether a mapped risk is actually controlled
+      depends entirely on measurement the framework leaves to the
+      implementer.
+  - misconception: RMF alignment is a certifiable compliance status.
+    reality: >-
+      The framework is voluntary guidance with no conformity or
+      certification mechanism attached. "Alignment" is a
+      self-description, not an audited status.
+  - misconception: The trustworthiness characteristics are things the
+      framework measures.
+    reality: >-
+      The framework names them and leaves operationalization to the user.
+      Two organizations can both "address" fairness with evidence that
+      shares nothing but the word.
+questions_to_ask:
+  - Which of the four functions does this alignment claim actually cover,
+    and what artifacts exist for each?
+  - What methods and metrics did the organization choose for the Measure
+    function, and who judged them adequate?
+  - Did anyone outside the organization verify the alignment claim, or is
+    it self-declared?
+  - Can the organization point to a specific risk that was identified,
+    measured, and changed a decision — or only to process documentation?
+  - Is "RMF-aligned" being offered where the real question is whether a
+    particular system behaves acceptably?
+debates:
+  - question: Is the framework's refusal to prescribe metrics and
+      thresholds a strength or its central weakness?
+    positions:
+      - label: Deliberate flexibility
+        view: >-
+          No single metric set could be appropriate across medical
+          imaging, hiring, language generation, and infrastructure
+          control. Fixing thresholds centrally would produce false
+          precision and instant obsolescence; the framework's job is
+          structure, and specificity belongs in profiles, standards, and
+          domain practice.
+      - label: Unfalsifiable by design
+        view: >-
+          A framework that any measurement choice can satisfy cannot
+          distinguish rigorous risk management from paperwork. Without
+          reference methods or minimum evidence expectations,
+          "RMF-aligned" claims are incommensurable and unauditable.
+    note: >-
+      Companion profiles and crosswalks to certifiable standards are the
+      main attempts to add specificity without abandoning generality; the
+      working reports treat the underlying tension as unresolved.
 known_failure_modes:
   - Framework alignment used as a marketing or procurement signal without
     underlying measurement.
@@ -108,7 +181,7 @@ source_status: >-
   release date, the list of trustworthiness characteristics, and reported
   2026 revision activity are unverified against NIST publications.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - risk-management

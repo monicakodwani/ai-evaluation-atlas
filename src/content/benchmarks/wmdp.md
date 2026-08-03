@@ -17,6 +17,12 @@ definition: >-
   hazardous-domain knowledge, which is related to but distinct from the
   ability, intent, access, and resources needed to cause real-world harm.
   The published set is filtered to limit direct operational value.
+why_it_matters: >-
+  Dangerous-capability claims in release decisions and policy documents
+  increasingly rest on proxy benchmarks like WMDP. Misreading a knowledge
+  proxy as a risk estimate cuts both ways — it can overstate safety after
+  an unlearning intervention, or overstate danger from a high score that
+  measured recallable facts, not uplift.
 claimed_constructs:
   - misuse
   - safety
@@ -70,6 +76,35 @@ inappropriate_claims:
     user skill, access, detection, and the model's incremental contribution.
   - That passing this benchmark constitutes a completed dangerous-capability
     evaluation.
+evidence_produced: >-
+  Multiple-choice accuracy on a filtered set of hazardous-domain knowledge
+  items — a proxy measurement of retained knowledge, deliberately distant
+  from operational misuse capability.
+combine_with:
+  - Expert red teaming and uplift studies before any claim about actual
+    misuse risk — knowledge proxies cannot carry those claims.
+  - Recovery testing after unlearning interventions, since removed
+    performance can return under fine-tuning or prompting.
+misconceptions:
+  - misconception: A low WMDP score means the model is safe from misuse.
+    reality: >-
+      It means reduced performance on a filtered knowledge proxy. It does
+      not show the capability is unrecoverable, nor does it measure uplift,
+      execution skill, or the many misuse pathways the items do not cover.
+  - misconception: A high WMDP score means the model is dangerous.
+    reality: >-
+      Hazardous-domain knowledge is not operational capability, intent, or
+      access. The instrument was designed as a measurable proxy precisely
+      because direct misuse testing is unsafe — the distance is by design.
+questions_to_ask:
+  - Is the claim about knowledge (which this measures) or misuse risk
+    (which it does not)?
+  - After an unlearning intervention, was recovery under fine-tuning or
+    prompting tested?
+  - Which domains drive the score, and does the aggregate hide them?
+  - What did the deliberate filtering of items leave outside the
+    measurement?
+  - Would the decision at stake need an uplift study rather than a proxy?
 known_failure_modes:
   - Treating proxy-knowledge reduction as proof of misuse prevention while
     the underlying capability is recoverable through fine-tuning or
@@ -88,7 +123,7 @@ source_status: >-
   WMDP Benchmark: Measuring and Reducing Malicious Use with Unlearning."
   Details not yet independently verified.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - safety

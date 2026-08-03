@@ -56,6 +56,36 @@ inappropriate_claims:
   - That continuous metrics validate themselves — automated monitors,
     especially AI-judge-based ones, inherit the validity problems of their
     scoring mechanisms.
+combine_with:
+  - Pre-deployment benchmark and system evaluation, which establish the
+    baselines that drift is measured against — monitoring without a
+    baseline has nothing to detect change from.
+  - Sampled human review alongside automated monitors, since AI-judge-based
+    monitoring inherits the judge's biases and validity limits.
+  - Incident reporting and tracking, so failures the monitors miss still
+    feed back into re-evaluation.
+misconceptions:
+  - misconception: Our monitoring dashboards are continuous evaluation.
+    reality: >-
+      Latency and uptime dashboards track infrastructure, not behavior. A
+      system can be fully green while its answers quietly degrade —
+      quality drift is invisible to operational metrics.
+  - misconception: Continuous evaluation replaces pre-deployment evaluation.
+    reality: >-
+      It complements it. Monitoring detects change against a baseline that
+      pre-deployment evaluation established; without that baseline there
+      is nothing to drift from.
+questions_to_ask:
+  - What is actually measured continuously — output quality and safety, or
+    only infrastructure health?
+  - How were the baselines set, and what deviation triggers action by
+    whom?
+  - What fraction of live traffic receives human review, and is that
+    sample representative of subgroups and edge cases?
+  - Do model and prompt changes pass through canary evaluation before full
+    rollout, or ship directly?
+  - If output quality degraded tomorrow, how long before this setup would
+    notice — and who would be told?
 known_failure_modes:
   - Quality drift invisible to infrastructure dashboards.
   - Sampled review too sparse or unrepresentative to catch subgroup-specific
@@ -71,7 +101,7 @@ source_status: >-
   Drafted from working research reports; maturity characterization per the
   reports, not independently verified.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - monitoring

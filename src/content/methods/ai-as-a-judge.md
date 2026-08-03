@@ -103,6 +103,70 @@ inappropriate_claims:
     spots, not independent validation.
   - That a leaderboard built on one proprietary judge is an objective
     ranking rather than that judge's preference ordering.
+evidence_produced: >-
+  Judge verdicts: scores, labels, or preference orderings assigned by a
+  named judge model under a fixed prompt and rubric — evidence about the
+  judged outputs as filtered through the judge's own error structure.
+combine_with:
+  - Human evaluation on a sample to validate the judge for the specific
+    task and domain before trusting it at scale, and periodically after,
+    to catch drift.
+  - Exact-match or execution-based scoring wherever checkable ground
+    truth exists, reserving the judge for genuinely open-ended outputs.
+  - Adversarial testing of the judge itself whenever its verdicts feed
+    safety scoring or gating decisions, since candidate outputs can
+    attack the evaluator.
+misconceptions:
+  - misconception: AI judges replace human evaluation.
+    reality: >-
+      AI judges replace some forms of scoring under some conditions. They
+      are themselves evaluation instruments that require validation —
+      against human judgment.
+  - misconception: Using several judges cancels out their biases.
+    reality: >-
+      Ensembling reduces variance, not the systematic biases — position,
+      verbosity, self-preference — that judge models share because they
+      share training recipes and preference data.
+  - misconception: High average agreement with humans validates the judge.
+    reality: >-
+      Validation is task- and domain-specific, and aggregate agreement
+      can conceal failures exactly at decision thresholds and on the
+      hard, safety-critical cases that matter most.
+questions_to_ask:
+  - Which model — and which version, on which date — acted as judge?
+  - Has the judge been validated against human judgment for this task and
+    domain, or for a different one?
+  - How sensitive are the verdicts to prompt wording and response order —
+    was ordering swapped or randomized?
+  - Would another judge model disagree — and does this judge share a
+    model family or constitution with the system it is scoring?
+  - What happens to the reported numbers if the judge model silently
+    updates?
+  - Is a judge verdict the sole evidence behind any safety or compliance
+    claim in this document?
+debates:
+  - question: Can AI judges replace human evaluators?
+    positions:
+      - label: For a growing share of tasks, yes
+        view: >-
+          On well-specified tasks, judge–human agreement already rivals
+          human–human agreement at a fraction of the cost, and a judge
+          applies a rubric with a consistency no fatigued human panel
+          matches. The economics of evaluating millions of open-ended
+          outputs leave no realistic alternative, and the range of tasks
+          where judges suffice keeps widening as models improve.
+      - label: No — they relocate the validation burden
+        view: >-
+          Judges share systematic biases across model families, agree far
+          less with experts than with lay raters in specialist domains,
+          and become circular when they share a family or constitution
+          with the system they score. Every judge needs human-anchored
+          validation for each new task, so human evaluation remains the
+          foundation the method stands on.
+    note: >-
+      The synthesis in the working reports splits the question by stakes:
+      acceptable for iteration and triage, marginal for leaderboards, not
+      acceptable alone for safety or regulatory evidence.
 limitations:
   - Position bias — swapping the order of paired responses changes
     verdicts; studies report swap-consistency well below perfect across
@@ -188,7 +252,7 @@ source_status: >-
   figures, and study attributions are unverified against primary sources.
   The foundational LLM-as-a-judge source record is itself unverified.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - llm-as-a-judge

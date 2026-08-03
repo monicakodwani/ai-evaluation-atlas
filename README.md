@@ -20,10 +20,11 @@ package.json              scripts: dev, build, preview, check
 public/                   favicon, social card (static assets)
 templates/                copyable frontmatter templates (not built)
 src/
-├── config.ts             version number, names, URLs  ← edit version here
+├── config.ts             version number, names, tagline, URLs  ← edit version here
 ├── content.config.ts     frontmatter schemas (build fails on bad values)
 ├── data/
 │   ├── vocabularies.ts   ALL controlled vocabularies and labels
+│   ├── default-questions.ts  fallback "Questions to Ask" per entry type
 │   ├── glossary.ts       glossary terms
 │   ├── lifecycle.ts      lifecycle-page editorial content
 │   └── taxonomy.ts       taxonomy-page editorial content
@@ -48,6 +49,8 @@ src/
 | Route | Page |
 |---|---|
 | `/ai-evaluation-atlas/` | Homepage |
+| `/ai-evaluation-atlas/how-to-use/` | Start here: reading order and shortcuts |
+| `/ai-evaluation-atlas/editorial-philosophy/` | How the Atlas should be read |
 | `/ai-evaluation-atlas/explore/` | Searchable, filterable directory |
 | `/ai-evaluation-atlas/taxonomy/` | Three taxonomy views |
 | `/ai-evaluation-atlas/lifecycle/` | Lifecycle map (design → retirement) |
@@ -106,8 +109,15 @@ HTML pages.
 3. Fill in the frontmatter. Every categorical field takes values from
    `src/data/vocabularies.ts` — anything else fails the build with the file
    and field named.
-4. Write the claim boundary first: `appropriate_claims` and
-   `inappropriate_claims` are the heart of every entry.
+4. Write the evidence boundaries first: `evidence_produced`,
+   `appropriate_claims`, `inappropriate_claims`, and `combine_with` are the
+   heart of every entry. Then add the teaching apparatus:
+   `misconceptions` (misconception/reality pairs), `questions_to_ask`
+   (entries without them fall back to per-type defaults in
+   `src/data/default-questions.ts`), and — only where a genuine
+   disagreement exists — `debates` with fairly summarized positions. Give
+   every entry a `why_it_matters`; it renders as a prominent block near
+   the top.
 5. Set honest statuses: `status` (source verification) and `content_status`
    (completeness). Draft and needs-verification entries get visible badges
    automatically — that is a feature, not a problem.

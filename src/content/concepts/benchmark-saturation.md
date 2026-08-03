@@ -39,6 +39,28 @@ inappropriate_claims:
     is a property of the item set, not of the construct.
   - That small gaps between frontier models on a saturated benchmark are
     evidence of meaningful differences.
+misconceptions:
+  - misconception: Saturation means the capability is solved.
+    reality: >-
+      The ceiling belongs to the item set, not the construct. Models can max
+      out an instrument while still failing harder or differently framed
+      versions of the same task.
+  - misconception: Near the ceiling, small gaps still rank models correctly.
+    reality: >-
+      At saturation, remaining differences are dominated by label errors,
+      formatting sensitivity, and chance. The rank order is an artifact of
+      the instrument's residue, not stable capability evidence.
+questions_to_ask:
+  - Where do the systems being compared score relative to this benchmark's
+    ceiling — and relative to its estimated label-error rate?
+  - Are the cited differences larger than the instrument's noise near the
+    ceiling?
+  - Does this benchmark still discriminate among the specific systems in
+    the comparison, or only among weaker ones?
+  - When a harder successor replaced this benchmark, did it address only
+    difficulty, or also contamination and construct validity?
+  - Is this saturated number being quoted because it is still informative,
+    or because it is familiar?
 known_failure_modes:
   - Continuing to cite saturated leaderboard gaps in marketing and model
     comparisons.
@@ -58,7 +80,7 @@ source_status: >-
   Drafted from working research reports; specific saturation claims about
   named benchmarks need verification.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - measurement

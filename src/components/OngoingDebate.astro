@@ -1,0 +1,47 @@
+---
+/**
+ * Ongoing Debate — a genuine disagreement in the field, with competing
+ * perspectives summarized fairly and no winner declared unless the evidence
+ * warrants one (in which case the `note` says so).
+ */
+interface Props {
+  debates: Array<{
+    question: string;
+    positions: Array<{ label: string; view: string }>;
+    note?: string | undefined;
+  }>;
+  headingId?: string;
+  sectionNo?: string;
+}
+
+const { debates, headingId = 'ongoing-debate', sectionNo } = Astro.props;
+---
+
+{
+  debates.length > 0 && (
+    <section class="debates" aria-labelledby={headingId}>
+      <h2 id={headingId}>
+        {sectionNo && <span class="sec-no">{sectionNo}</span>}
+        Ongoing debate
+      </h2>
+      <p class="debate-preface">
+        These are live disagreements among researchers and practitioners. The
+        Atlas summarizes the positions rather than settling them.
+      </p>
+      {debates.map((d) => (
+        <div class="debate-box">
+          <p class="debate-question">{d.question}</p>
+          <dl class="debate-positions">
+            {d.positions.map((p) => (
+              <div>
+                <dt>{p.label}</dt>
+                <dd>{p.view}</dd>
+              </div>
+            ))}
+          </dl>
+          {d.note && <p class="debate-note">{d.note}</p>}
+        </div>
+      ))}
+    </section>
+  )
+}

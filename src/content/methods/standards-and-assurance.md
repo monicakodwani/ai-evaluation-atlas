@@ -112,6 +112,70 @@ inappropriate_claims:
   - That the word "audited" or "certified," without scope, criteria,
     access level, and period attached, tells a reader anything
     decision-relevant.
+evidence_produced: >-
+  Organizational and documentary evidence — records that required
+  processes exist and were followed, audit findings against stated
+  criteria, and structured arguments assembling evidence behind a claim.
+  Evidence about organizations and documents, not direct evidence of
+  system behavior.
+combine_with:
+  - Direct technical evaluation — benchmarks, red teaming, trajectory
+    analysis — since process conformity is not behavioral evidence, and
+    an assurance case is only as strong as the measurements inside it.
+  - Deployment monitoring and incident reporting, which test whether the
+    processes an audit certified actually catch failures in operation.
+  - Independent challenge of the assurance argument itself — explicit
+    defeaters and external review — when a case supports a release
+    decision.
+misconceptions:
+  - misconception: A certificate means the system is safe.
+    reality: >-
+      A management-system certificate attests that required processes
+      exist and were audited. It says nothing about the behavior of any
+      system the organization ships.
+  - misconception: "\"Audited\" means independently and deeply examined."
+    reality: >-
+      An audit is defined by its scope, criteria, access, and
+      independence. Without those attached the word is marketing — and
+      many AI audits run on API access and documentation alone.
+  - misconception: An assurance case is a proof of safety.
+    reality: >-
+      It is an argument, as strong as its evidence and its author's
+      candor. A polished case built from developer-selected evidence is
+      assurance theater.
+questions_to_ask:
+  - What exactly was certified or audited — the organization's processes,
+    or a system's behavior?
+  - Who conducted the assessment, under what independence rules, and who
+    paid for it?
+  - What access did the assessor have — documents, API queries, or
+    training data and internals?
+  - What criteria and thresholds were applied, and who decided they were
+    adequate?
+  - What were the scope and period, and does the claim being made stay
+    inside them?
+  - For an assurance case — what counterevidence was considered, and what
+    was withheld?
+debates:
+  - question: Should trustworthiness be measured?
+    positions:
+      - label: Quantify it
+        view: >-
+          Regulation, procurement, and progress-tracking all need
+          comparable measures. Without quantified trustworthiness,
+          decisions default to vendor narrative and brand — and imperfect
+          metrics that improve under scrutiny beat no metrics at all.
+      - label: Scoring it is a category error
+        view: >-
+          Trustworthiness is plural — safety, fairness, robustness,
+          accountability — and contested. Collapsing it into scores
+          rewards gaming the metric, hides the value judgments in the
+          weighting, and lends false precision to what remains a
+          judgment.
+    note: >-
+      Both positions accept that current instruments are weak; they
+      disagree about whether the remedy is better measurement or
+      restraint about what measurement is asked to carry.
 reliability_evidence: >-
   Largely uncharacterized for AI. Whether two independent auditors applying
   the same process standard to the same organization would reach the same
@@ -165,7 +229,7 @@ source_status: >-
   requirements, and the black-box-audit citation have not yet been checked
   against primary sources.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - standards

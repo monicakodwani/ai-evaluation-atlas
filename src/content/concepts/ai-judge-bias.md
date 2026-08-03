@@ -42,6 +42,49 @@ inappropriate_claims:
     validity — a judge can be reliably wrong.
   - That agreement among multiple AI judges from similar families is
     independent corroboration.
+misconceptions:
+  - misconception: Averaging over multiple AI judges cancels out the bias.
+    reality: >-
+      Ensembling reduces random noise, not shared error. Judges trained on
+      overlapping data carry the same systematic preferences, and
+      correlated error survives averaging.
+  - misconception: A judge that scores consistently can be trusted.
+    reality: >-
+      Consistency is reliability, not validity. A judge can be perfectly
+      reliable and reliably wrong — biased in the same direction every
+      time.
+questions_to_ask:
+  - Which judge model and version scored these outputs — and could it be
+    favoring systems from its own model family?
+  - Were answer positions randomized and output lengths controlled, or
+    could position and verbosity bias account for the reported gap?
+  - What was the judge's agreement with human or expert raters on this
+    task and domain, not just in general?
+  - Do the "multiple independent judges" share a training lineage that
+    would correlate their errors?
+  - Could the evaluated system have learned to please the judge — longer
+    outputs, judge-favored style — rather than to be better?
+debates:
+  - question: Can AI-judge bias be engineered away?
+    positions:
+      - label: Treat it as an engineering problem
+        view: >-
+          Position randomization, length controls, rubric-anchored
+          prompts, and fine-tuned judge models each demonstrably reduce
+          specific named biases. With calibration against human panels,
+          judges can be made accurate enough for most evaluation uses at
+          a fraction of the cost of human rating.
+      - label: Shared error is structural
+        view: >-
+          Mitigations fix the biases we have already named. Judges drawn
+          from overlapping training distributions share systematic
+          preferences, so correlated, unnamed error remains — and without
+          independent human grounding there is no way to measure what is
+          left.
+    note: >-
+      Studies summarized in the working reports document both successful
+      mitigations for specific biases and persistent correlated error
+      across judge families; neither position is settled.
 known_failure_modes:
   - Length-gaming — systems learning to produce longer outputs because the
     judge rewards them.
@@ -60,7 +103,7 @@ source_status: >-
   Drafted from working research reports; specific bias magnitudes are
   reported there but not yet verified against the original studies.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - ai-judge

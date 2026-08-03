@@ -62,6 +62,28 @@ inappropriate_claims:
     compliance of any particular AI system.
   - That cross-country indicator differences measure real differences in
     outcomes rather than differences in definitions and reporting.
+why_it_matters: >-
+  Policymakers compare countries using observatory data; conflating differences in reporting and definitions with real differences in outcomes misleads policy.
+evidence_produced: >-
+  Cross-national aggregation of AI policies, indicators, and reported
+  incidents — comparative documentation of the policy landscape, not
+  testing of systems.
+combine_with:
+  - Primary national sources before relying on any specific country claim.
+  - System-level evaluation for any claim about actual systems.
+  - Denominator and methodology checks before cross-country comparisons.
+misconceptions:
+  - misconception: Observatory indicators measure real national outcomes.
+    reality: >-
+      They aggregate what countries report under varying definitions —
+      strong evidence about policy activity and reporting, weak evidence
+      about outcomes on the ground.
+questions_to_ask:
+  - Are the definitions behind an indicator comparable across the
+    countries being compared?
+  - What is the source and lag of the data for each country?
+  - Does the indicator measure policy activity or policy effect?
+  - What would this observatory not see even if it were widespread?
 related_entries:
   - ai-incident-database
   - foundation-model-transparency-index
@@ -71,7 +93,7 @@ source_status: >-
   Drafted from working research reports; scope details need verification
   against OECD.AI's own documentation.
 created: 2026-07-31
-last_reviewed: 2026-07-31
+last_reviewed: 2026-08-03
 reviewer: Monica Kodwani
 tags:
   - policy
