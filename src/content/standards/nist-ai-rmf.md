@@ -171,17 +171,24 @@ related_entries:
   - conformity-assessment
   - impact-assessment
   - assurance-case
+  - tevv-athlon
+  - nist-aria
 related_guides:
   - from-model-scores-to-system-assurance
+  - how-governments-evaluate-ai
 primary_sources:
   - src-nist-2023-ai-rmf
 secondary_sources: []
 source_status: >-
   Drafted from working research reports. Identifier (NIST AI 100-1),
-  release date, the list of trustworthiness characteristics, and reported
-  2026 revision activity are unverified against NIST publications.
+  release date, and the list of trustworthiness characteristics are
+  unverified against NIST publications. November 2026 research clarified
+  the revision status: AI RMF 1.0 remains the current version, with a
+  revision "in progress" directed by the July 2025 America's AI Action
+  Plan; a claimed April 2026 "AI RMF 2.0" draft is uncorroborated and
+  contradicted by later checks — do not cite it.
 created: 2026-07-31
-last_reviewed: 2026-08-03
+last_reviewed: 2026-11-11
 reviewer: Monica Kodwani
 tags:
   - risk-management
@@ -207,5 +214,7 @@ medical imaging, hiring, language generation, and infrastructure control —
 but it means that "we applied the AI RMF" is a claim about organizational
 process, never about measured system properties. A policymaker reading an
 RMF-alignment statement learns that risk-management activity occurred, not
-what was found. Working reports also note revision activity on the
-framework by 2026; the current status of any revision needs verification.
+what was found. As of November 2026, version 1.0 remains current, with a
+revision in progress under the July 2025 America's AI Action Plan; NIST's
+draft TEVV-Athlon framework is the companion effort that would give the
+Measure function the methodological content the RMF itself never fixed.

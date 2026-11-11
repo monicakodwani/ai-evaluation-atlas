@@ -2,7 +2,7 @@
  * Central Atlas configuration. The version number is displayed in the footer,
  * About, Changelog, and Methodology pages — change it here only.
  */
-export const ATLAS_VERSION = '0.2';
+export const ATLAS_VERSION = '0.3';
 
 export const ATLAS_NAME = 'AI Evaluation Atlas';
 

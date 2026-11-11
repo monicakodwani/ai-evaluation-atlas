@@ -14,10 +14,15 @@ summary: >-
 definition: >-
   The institute conducts evaluations of frontier models — including safety,
   security, and agent evaluations — under voluntary arrangements with
-  developers, and releases evaluation infrastructure for public use. The
-  working reports state it was established as the UK AI Safety Institute and
-  later renamed the AI Security Institute (reported as February 2025; needs
-  verification).
+  developers, and releases evaluation infrastructure for public use. It was
+  established as the UK AI Safety Institute and renamed the AI Security
+  Institute in February 2025. Its published record now spans open tooling
+  (the Inspect framework, co-developed with Meridian Labs), a methodology
+  statement ("Early lessons from evaluating frontier AI systems", October
+  2024), joint UK–US pre-deployment evaluations of named models (Claude
+  3.5 Sonnet, OpenAI o1), participation in the international joint testing
+  exercises, and — since December 2025 — an annual Frontier AI Trends
+  Report synthesizing two years of government-led testing.
 claimed_constructs:
   - safety
   - security
@@ -51,14 +56,24 @@ strengths:
     developers' own testing.
   - Releases open tooling (Inspect) that raises reproducibility standards
     beyond its own evaluations.
-  - Pre-deployment access arrangements with developers, per the reports.
+  - Pre-deployment access arrangements with developers, with published
+    joint UK–US evaluations of named models as worked examples.
+  - Publishes its methodology — preregistration of methods before model
+    access, separation of elicitation tasks from test tasks, Helpful-Only
+    model variants, tiered testing — making its practice checkable in a
+    way most government evaluation is not.
 limitations:
-  - Access is voluntary — the reports emphasize the institute cannot compel
-    testing access or block a deployment, so coverage depends on developer
-    cooperation.
-  - Evaluation methods and results are only partially public.
+  - Access is voluntary — the institute cannot compel testing access or
+    block a deployment, so coverage depends on developer cooperation.
+  - Evaluation methods and results are only partially public; no public
+    per-model pre-deployment report newer than OpenAI's o1 (December 2024)
+    was found, with findings apparently folded into the aggregate Trends
+    Report instead.
   - Government evaluation capacity is new and evolving; its authority and
     publication practices differ across jurisdictions.
+  - Its own methodology statement is explicit that evaluations are not
+    certification and that the science is too nascent to guarantee a
+    system is safe.
 appropriate_claims:
   - An external government team evaluated a model under its stated protocol
     and reported its findings.
@@ -100,15 +115,24 @@ related_entries:
   - inspect-ai
   - red-teaming
   - standards-and-assurance
+  - caisi
+  - japan-ai-safety-institute
 related_guides:
   - red-teaming-versus-risk-estimation
+  - how-governments-evaluate-ai
 primary_sources:
   - src-uk-aisi-inspect
+  - src-aisi-2024-early-lessons
+  - src-aisi-2025-frontier-trends
 source_status: >-
-  Drafted from working research reports; institutional history and program
-  details need verification against official publications.
+  Updated from November 2026 research: Inspect documentation and the
+  GOV.UK Frontier AI Trends factsheet were fetched directly; the "Early
+  lessons" methodology summary rests on partially JavaScript-blocked page
+  retrieval and its source record remains unverified. The widely cited
+  "more than 30 systems tested" figure appears only in secondary coverage,
+  not the official factsheet, and is deliberately not stated here.
 created: 2026-07-31
-last_reviewed: 2026-08-03
+last_reviewed: 2026-11-11
 reviewer: Monica Kodwani
 tags:
   - government

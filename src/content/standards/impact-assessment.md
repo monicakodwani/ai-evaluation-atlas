@@ -106,15 +106,19 @@ inappropriate_claims:
   - That the absence of a risk from an assessment means the risk was
     examined and ruled out, rather than not considered.
 adoption_evidence: >-
-  Working reports describe impact assessment as mandatory in several
-  jurisdictions — a Canadian federal directive requiring a
-  questionnaire-based algorithmic impact assessment with obligations scaled
-  to a calculated impact level, data-protection impact assessments required
-  under European data-protection law for certain high-risk processing, and
-  a published ISO/IEC impact-assessment standard (reported as ISO/IEC
-  42005:2025) that structures the process without setting universal
-  thresholds. These specifics are drawn from working research material and
-  are unverified.
+  Impact assessment is mandatory in several jurisdictions. Canada's
+  federal directive requires a scored, published algorithmic impact
+  assessment (65 risk and 41 mitigation questions, four impact levels
+  gating obligations — verified against the official tool page in November
+  2026; see the dedicated entry). OMB memorandum M-25-21 requires US
+  federal agencies to complete AI impact assessments with independent
+  review, alongside pre-deployment testing, for high-impact AI (verified
+  against the memorandum PDF). Data-protection impact assessments are
+  required under European data-protection law for certain high-risk
+  processing, and a published ISO/IEC impact-assessment standard (reported
+  as ISO/IEC 42005:2025) structures the process without setting universal
+  thresholds — these last two specifics remain unverified against primary
+  texts.
 evidence_produced: >-
   A structured prospective analysis of a system's potential effects on
   people and society — documentary evidence of anticipation, whose weight
@@ -161,19 +165,22 @@ related_entries:
   - nist-ai-rmf
   - iso-iec-42001
   - assurance-case
+  - canada-algorithmic-impact-assessment
 related_guides:
   - what-counts-as-ai-evaluation
   - from-model-scores-to-system-assurance
-primary_sources: []
+  - how-governments-evaluate-ai
+primary_sources:
+  - src-tbs-2026-canada-aia
+  - src-omb-2025-m-25-21
 secondary_sources: []
 source_status: >-
-  Drafted from working research reports. Jurisdictional specifics (the
-  Canadian directive and its questionnaire structure, European
-  data-protection requirements, the ISO/IEC standard identifier and year)
-  are unverified against primary legal and standards texts, and no source
-  records exist yet for this entry.
+  Updated from November 2026 research: the Canadian questionnaire
+  structure and the US federal requirement (OMB M-25-21) are now backed by
+  verified source records. European data-protection requirements and the
+  ISO/IEC 42005 identifier remain unverified against primary texts.
 created: 2026-07-31
-last_reviewed: 2026-08-03
+last_reviewed: 2026-11-11
 reviewer: Monica Kodwani
 tags:
   - governance

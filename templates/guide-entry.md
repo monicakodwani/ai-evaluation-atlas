@@ -3,7 +3,7 @@
 # The filename (without .md) MUST equal the id field.
 id: my-guide-id
 title: Guide title
-order: 11                  # position in the guides list (1–10 taken)
+order: 13                  # position in the guides list (1–12 taken)
 summary: >-
   One or two sentences shown on the guide card and in previews.
 status: draft              # verified | partially-verified | needs-verification | draft

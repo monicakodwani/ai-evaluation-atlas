@@ -100,18 +100,36 @@ questions_to_ask:
 known_failure_modes:
   - Paper compliance — documentation that satisfies the checklist while the
     underlying evaluation work is thin.
+adoption_evidence: >-
+  The EU AI Act is the leading worked example as of November 2026: most
+  standalone high-risk AI systems will be self-assessed by the provider
+  against technical-documentation requirements (test procedures, logs,
+  reports, accuracy and robustness metrics), with third-party notified-body
+  assessment mandatory mainly for biometrics. Exactly one harmonised
+  standard had been cited in the Official Journal (EN 18286, on AI quality
+  management) — and the testing-critical standards remained drafts, several
+  reportedly rejected at public enquiry per an unofficial tracker — which
+  is why the high-risk conformity regime was delayed to December 2027 and
+  August 2028.
 related_entries:
   - standards-and-assurance
   - iso-iec-42001
   - nist-ai-rmf
   - impact-assessment
+  - eu-ai-act
 related_guides:
   - from-model-scores-to-system-assurance
+  - how-governments-evaluate-ai
+primary_sources:
+  - src-ec-2026-ai-act-faq
 source_status: >-
-  Drafted from working research reports; regulatory specifics deliberately
-  kept generic pending verification against primary legal texts.
+  Drafted from working research reports; regulatory specifics kept generic
+  pending verification. The EU adoption evidence was added from November
+  2026 research: timeline facts come from the Commission's fetched FAQ,
+  while Annex-level wording and standards-pipeline vote outcomes remain
+  unverified against primary texts.
 created: 2026-07-31
-last_reviewed: 2026-08-03
+last_reviewed: 2026-11-11
 reviewer: Monica Kodwani
 tags:
   - certification
