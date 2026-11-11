@@ -1,7 +1,12 @@
 ---
 import AtlasHeader from '../components/AtlasHeader.astro';
 import AtlasFooter from '../components/AtlasFooter.astro';
-import { ATLAS_DESCRIPTION, TITLE_SUFFIX } from '../config';
+import {
+  ATLAS_DESCRIPTION,
+  TITLE_SUFFIX,
+  GATE_ENABLED,
+  GATE_PASSWORD_SHA256,
+} from '../config';
 import '../styles/atlas.css';
 
 interface Props {
@@ -30,7 +35,7 @@ const ogImage = new URL(`${base}/og/social-card.png`, Astro.site);
     <link rel="canonical" href={canonical} />
     <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
     <link rel="sitemap" href={`${base}/sitemap-index.xml`} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={GATE_ENABLED ? 'noindex, nofollow' : 'index, follow'} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="AI Evaluation Atlas" />
     <meta property="og:title" content={fullTitle} />
@@ -55,14 +60,182 @@ const ogImage = new URL(`${base}/og/social-card.png`, Astro.site);
         }
       })();
     </script>
+    <script is:inline define:vars={{ gateHash: GATE_PASSWORD_SHA256, gateEnabled: GATE_ENABLED }}>
+      /* Review gate: lock the page unless this browser already unlocked it. */
+      (function () {
+        if (!gateEnabled) return;
+        try {
+          if (window.localStorage.getItem('atlas-gate') === gateHash) return;
+        } catch (e) {
+          /* storage unavailable: fall through to the lock screen */
+        }
+        document.documentElement.dataset.gate = 'locked';
+      })();
+    </script>
     <slot name="head" />
   </head>
   <body>
+    {
+      GATE_ENABLED && (
+        <div class="gate-overlay">
+          <form class="gate-card" id="gate-form">
+            <p class="gate-kicker">AI Evaluation Atlas</p>
+            <h1>In review</h1>
+            <p class="gate-note">
+              This draft is open to invited readers while its content is being
+              verified. Enter the review password to continue.
+            </p>
+            <label for="gate-password">Password</label>
+            <input
+              id="gate-password"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              autofocus
+              required
+            />
+            <button type="submit">Enter</button>
+            <p class="gate-error" id="gate-error" role="alert" hidden>
+              That password is not right. Please try again.
+            </p>
+          </form>
+        </div>
+      )
+    }
     <a class="skip-link" href="#main-content">Skip to content</a>
     <AtlasHeader currentPath={currentPath} />
     <main id="main-content">
       <slot />
     </main>
     <AtlasFooter />
+    <script is:inline define:vars={{ gateHash: GATE_PASSWORD_SHA256, gateEnabled: GATE_ENABLED }}>
+      /* Review gate: check the entered password against the configured hash. */
+      (function () {
+        if (!gateEnabled) return;
+        var form = document.getElementById('gate-form');
+        if (!form) return;
+        var error = document.getElementById('gate-error');
+        form.addEventListener('submit', function (event) {
+          event.preventDefault();
+          var value = document.getElementById('gate-password').value;
+          if (!window.crypto || !window.crypto.subtle) {
+            error.textContent = 'This browser cannot verify the password; please use a current browser over HTTPS.';
+            error.hidden = false;
+            return;
+          }
+          window.crypto.subtle
+            .digest('SHA-256', new TextEncoder().encode(value))
+            .then(function (buffer) {
+              var hex = Array.from(new Uint8Array(buffer))
+                .map(function (b) {
+                  return b.toString(16).padStart(2, '0');
+                })
+                .join('');
+              if (hex === gateHash) {
+                try {
+                  window.localStorage.setItem('atlas-gate', gateHash);
+                } catch (e) {
+                  /* no storage: unlock lasts this page view only */
+                }
+                delete document.documentElement.dataset.gate;
+              } else {
+                error.hidden = false;
+              }
+            });
+        });
+      })();
+    </script>
+    <style>
+      /* Review gate: hidden unless the html element is marked locked. */
+      .gate-overlay {
+        display: none;
+      }
+      :global(html[data-gate='locked']) .gate-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+        background: #f6f4ef;
+      }
+      :global(html[data-gate='locked'][data-theme='dark']) .gate-overlay {
+        background: #15171a;
+      }
+      :global(html[data-gate='locked']) body > :not(.gate-overlay) {
+        display: none;
+      }
+      .gate-card {
+        width: 100%;
+        max-width: 22rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.65rem;
+        padding: 2rem;
+        border: 1px solid rgba(120, 113, 96, 0.35);
+        border-radius: 10px;
+        background: #fffdf8;
+        color: #28251e;
+        font-family: inherit;
+      }
+      :global(html[data-theme='dark']) .gate-card {
+        background: #1d2024;
+        color: #e8e6e1;
+        border-color: rgba(140, 140, 140, 0.35);
+      }
+      .gate-card h1 {
+        margin: 0;
+        font-size: 1.4rem;
+      }
+      .gate-kicker {
+        margin: 0;
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        opacity: 0.7;
+      }
+      .gate-note {
+        margin: 0 0 0.5rem;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        opacity: 0.85;
+      }
+      .gate-card label {
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+      .gate-card input {
+        padding: 0.55rem 0.7rem;
+        border: 1px solid rgba(120, 113, 96, 0.5);
+        border-radius: 6px;
+        font-size: 1rem;
+        background: inherit;
+        color: inherit;
+      }
+      .gate-card button {
+        margin-top: 0.35rem;
+        padding: 0.55rem 0.7rem;
+        border: none;
+        border-radius: 6px;
+        background: #28251e;
+        color: #fffdf8;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      :global(html[data-theme='dark']) .gate-card button {
+        background: #e8e6e1;
+        color: #1d2024;
+      }
+      .gate-error {
+        margin: 0;
+        font-size: 0.85rem;
+        color: #a53c2e;
+      }
+      :global(html[data-theme='dark']) .gate-error {
+        color: #e58274;
+      }
+    </style>
   </body>
 </html>

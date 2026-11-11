@@ -25,6 +25,19 @@ export const ISSUES_URL = `${REPO_URL}/issues`;
 /** Site-wide <title> suffix. */
 export const TITLE_SUFFIX = 'AI Evaluation Atlas | Monica Kodwani';
 
+/**
+ * Review gate. When enabled, every page shows a password screen once per
+ * browser (remembered in localStorage) and all pages carry a noindex robots
+ * tag. This is a courtesy curtain, NOT security: the full content is still
+ * delivered to every visitor's browser and is readable in the public repo.
+ * To change the password, replace the hash with the output of:
+ *   node -e "console.log(require('crypto').createHash('sha256').update('YOUR-PASSWORD').digest('hex'))"
+ * To open the site to everyone again, set GATE_ENABLED to false.
+ */
+export const GATE_ENABLED = true;
+export const GATE_PASSWORD_SHA256 =
+  '7c82602500857aa6ed0cf38c4c3e4ec645bdcaa82c00b9155eb08be100c778a9'; // "atlas"
+
 /** One-line editorial identity, shown in the footer. */
 export const ATLAS_TAGLINE = 'A living reference for understanding AI evaluation.';
 
